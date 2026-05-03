@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "unity-mcp-http": {
+      "url": "http://127.0.0.1:8080"
+    },
+    "unity-mcp": {
+      "command": "C:\\Users\\友子\\.local\\bin\\uvx.exe",
+      "args": [
+        "--offline",
+        "--from",
+        "mcpforunityserver==9.6.8",
+        "mcp-for-unity",
+        "--transport",
+        "stdio",
+        "--project-scoped-tools"
+      ]
+    }
+  }
+}

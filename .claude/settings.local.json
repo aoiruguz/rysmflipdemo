@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__unity-mcp-gateway__Unity_RunCommand",
+      "mcp__unity-mcp-gateway__Unity_SceneView_Capture2DScene",
+      "mcp__unity-mcp-gateway__Unity_Camera_Capture",
+      "mcp__unity-mcp-gateway__Unity_GetConsoleLogs",
+      "Bash(curl -X POST http://localhost:56127/run -H 'Content-Type: application/json' -d '{ *)",
+      "mcp__unity-mcp__Unity_GetConsoleLogs",
+      "mcp__unity-mcp__Unity_RunCommand",
+      "mcp__UnityMCP__execute_code",
+      "mcp__UnityMCP__manage_gameobject",
+      "mcp__UnityMCP__batch_execute",
+      "mcp__UnityMCP__manage_asset",
+      "mcp__UnityMCP__find_gameobjects"
+    ]
+  }
+}
