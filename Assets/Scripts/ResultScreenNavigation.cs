@@ -32,8 +32,8 @@ public class ResultScreenNavigation : MonoBehaviour
     {
         Debug.Log("[ResultScreenNavigation] Retry clicked");
 
-        // 不清理PlayDataCollector，保持选择的谱面
-        // SongSelectionManager.GetSelectedChart() 仍然会返回之前选择的谱面
+        // 清理PlayDataCollector，让PlayScene创建新的实例
+        PlayDataCollector.Cleanup();
 
         // 重新加载PlayScene
         SceneManager.LoadScene("PlayScene");
@@ -47,13 +47,10 @@ public class ResultScreenNavigation : MonoBehaviour
         Debug.Log("[ResultScreenNavigation] Back to menu clicked");
 
         // 清理PlayDataCollector
-        if (PlayDataCollector.Instance != null)
-        {
-            Destroy(PlayDataCollector.Instance.gameObject);
-        }
+        PlayDataCollector.Cleanup();
 
         // 返回歌曲选择界面
-        SceneManager.LoadScene("SongSelection");
+        SceneManager.LoadScene("Big Map");
     }
 
     void Update()

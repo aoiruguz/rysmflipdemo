@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 收集PlayScene中的游玩数据
@@ -13,33 +14,66 @@ public class PlayDataCollector : MonoBehaviour
     public PlayData CurrentPlayData { get; private set; }
 
     [Header("UI")]
-    public TextMeshProUGUI achievementScoreText;
+    public TextMeshProUGUI playCountText; // 改为显示播放量而不是达成率
+
+    private float gameStartTime; // 记录游戏开始时间
 
     void Awake()
     {
+        // 如果已经有实例存在
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
-            return;
+            // 检查是否是从其他场景（如延迟校准）带来的旧实例
+            // 如果旧实例的CurrentPlayData为null或未初始化，说明是旧实例，销毁它
+            if (Instance.CurrentPlayData == null || string.IsNullOrEmpty(Instance.CurrentPlayData.songName))
+            {
+                Debug.LogWarning("[PlayDataCollector] Destroying old instance with invalid data.");
+                Destroy(Instance.gameObject);
+                Instance = this;
+            }
+            else
+            {
+                // 旧实例有有效数据，保留它，销毁新实例
+                Debug.LogWarning("[PlayDataCollector] Keeping existing instance with valid data. Destroying this one.");
+                Destroy(gameObject);
+                return;
+            }
         }
-        Instance = this;
-        DontDestroyOnLoad(gameObject); // 保持数据在场景切换时不被销毁
+        else
+        {
+            Instance = this;
+        }
+
+        // 初始化PlayData，防止null引用
+        if (CurrentPlayData == null)
+        {
+            CurrentPlayData = new PlayData();
+        }
+
+        // 使用DontDestroyOnLoad，让数据能传递到结算页面
+        DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
-        // Initialize play data
+        // 只在PlayScene中初始化数据
+        // 检查是否在PlayScene中（通过查找NoteManager来判断）
+        NoteManager noteManager = FindObjectOfType<NoteManager>();
+        if (noteManager == null)
+        {
+            // 不在PlayScene中（可能在延迟校准或其他场景），不初始化
+            Debug.Log("[PlayDataCollector] Not in PlayScene, skipping initialization");
+            return;
+        }
+
+        // 在PlayScene中，重新初始化play data
         CurrentPlayData = new PlayData();
 
         // Get chart info
         ChartData chart = SongSelectionManager.GetSelectedChart();
         if (chart == null)
         {
-            NoteManager noteManager = FindObjectOfType<NoteManager>();
-            if (noteManager != null)
-            {
-                chart = noteManager.currentChart;
-            }
+            chart = noteManager.currentChart;
         }
 
         if (chart != null)
@@ -47,6 +81,13 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData.songName = chart.songName;
             CurrentPlayData.difficulty = chart.difficulty;
             CurrentPlayData.totalNotes = chart.notes.Count;
+
+            // 设置章节信息
+            CurrentPlayData.chapterIndex = chart.chapterIndex;
+            CurrentPlayData.isBossStage = chart.isBossStage;
+
+            // 检查是否为重复挑战（已通关的关卡）
+            CurrentPlayData.isReplay = ClearDataManager.IsChartCleared(chart);
         }
 
         Debug.Log("[PlayDataCollector] Initialized for PlayScene");
@@ -58,21 +99,23 @@ public class PlayDataCollector : MonoBehaviour
         }
 
         // Initialize UI
-        UpdateAchievementScoreUI();
+        UpdatePlayCountUI();
     }
 
     void Update()
     {
-        // Update achievement score UI in real-time
-        UpdateAchievementScoreUI();
+        // Update play count UI in real-time
+        UpdatePlayCountUI();
     }
 
     void OnDestroy()
     {
-        // Collect final data when leaving PlayScene
+        // 只在离开PlayScene且是当前实例时收集数据
+        // 注意：不要在这里收集，因为SongCompletionDetector已经在跳转前收集了
         if (Instance == this)
         {
-            CollectFinalData();
+            Instance = null; // 清理静态引用
+            Debug.Log("[PlayDataCollector] Instance destroyed");
         }
     }
 
@@ -81,6 +124,13 @@ public class PlayDataCollector : MonoBehaviour
     /// </summary>
     public void CollectFinalData()
     {
+        // 防止null引用
+        if (CurrentPlayData == null)
+        {
+            Debug.LogWarning("[PlayDataCollector] CurrentPlayData is null! Initializing new PlayData.");
+            CurrentPlayData = new PlayData();
+        }
+
         if (ScoreManager.Instance != null)
         {
             CurrentPlayData.perfectCount = ScoreManager.Instance.GetPerfectCount();
@@ -94,10 +144,48 @@ public class PlayDataCollector : MonoBehaviour
 
         CurrentPlayData.playTime = Time.time;
 
+        // 计算播放量和粉丝数
+        long playCount = ScoreCalculator.CalculatePlayCount(
+            CurrentPlayData.chapterIndex,
+            CurrentPlayData.isBossStage,
+            CurrentPlayData.perfectCount,
+            CurrentPlayData.greatCount,
+            CurrentPlayData.goodCount,
+            CurrentPlayData.missCount,
+            CurrentPlayData.maxCombo,
+            CurrentPlayData.isReplay);
+
+        long newFans = ScoreCalculator.CalculateFansGain(playCount, CurrentPlayData.isReplay);
+
+        // 保存粉丝数
+        FansDataManager.AddFans(newFans);
+
+        // 标记关卡为已通关（如果不是重复挑战）
+        if (!CurrentPlayData.isReplay)
+        {
+            ChartData chart = SongSelectionManager.GetSelectedChart();
+            if (chart != null)
+            {
+                ClearDataManager.MarkChartCleared(chart);
+            }
+        }
+
+        // 检查是否解锁新章节
+        long totalFans = FansDataManager.GetTotalFans();
+        int currentUnlocked = FansDataManager.GetUnlockedChapter();
+        for (int i = currentUnlocked + 1; i < 3; i++)
+        {
+            if (FansDataManager.IsChapterUnlocked(i))
+            {
+                FansDataManager.SetUnlockedChapter(i);
+            }
+        }
+
         // Log the collected data
         Debug.Log($"[PlayDataCollector] === Play Data Summary ===");
         Debug.Log($"Song: {CurrentPlayData.songName}");
         Debug.Log($"Difficulty: {CurrentPlayData.difficulty}");
+        Debug.Log($"Chapter: {CurrentPlayData.chapterIndex + 1}, Boss: {CurrentPlayData.isBossStage}, Replay: {CurrentPlayData.isReplay}");
         Debug.Log($"Perfect: {CurrentPlayData.perfectCount}");
         Debug.Log($"Great: {CurrentPlayData.greatCount}");
         Debug.Log($"Good: {CurrentPlayData.goodCount}");
@@ -106,6 +194,9 @@ public class PlayDataCollector : MonoBehaviour
         Debug.Log($"Total Notes: {CurrentPlayData.totalNotes}");
         Debug.Log($"Late: {CurrentPlayData.lateCount}, Fast: {CurrentPlayData.fastCount}");
         Debug.Log($"Accuracy: {CurrentPlayData.GetAccuracy():F2}%");
+        Debug.Log($"Play Count: {ScoreCalculator.FormatLargeNumber(playCount)}");
+        Debug.Log($"New Fans: {ScoreCalculator.FormatLargeNumber(newFans)}");
+        Debug.Log($"Total Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}");
     }
 
     /// <summary>
@@ -128,18 +219,40 @@ public class PlayDataCollector : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新达成率UI显示
+    /// 更新播放量UI显示
     /// </summary>
-    private void UpdateAchievementScoreUI()
+    private void UpdatePlayCountUI()
     {
-        if (achievementScoreText == null) return;
+        if (playCountText == null) return;
 
         // Get current data
         GetCurrentData();
 
-        // Calculate and display achievement score
-        int score = CurrentPlayData.GetAchievementScore();
-        achievementScoreText.text = score.ToString("D7"); // 7位数字，前面补0
+        // Calculate and display play count
+        long playCount = ScoreCalculator.CalculatePlayCount(
+            CurrentPlayData.chapterIndex,
+            CurrentPlayData.isBossStage,
+            CurrentPlayData.perfectCount,
+            CurrentPlayData.greatCount,
+            CurrentPlayData.goodCount,
+            CurrentPlayData.missCount,
+            CurrentPlayData.maxCombo,
+            CurrentPlayData.isReplay);
+
+        playCountText.text = ScoreCalculator.FormatLargeNumber(playCount);
+    }
+
+    /// <summary>
+    /// 清理PlayDataCollector实例（在结算页面使用完数据后调用）
+    /// </summary>
+    public static void Cleanup()
+    {
+        if (Instance != null)
+        {
+            Debug.Log("[PlayDataCollector] Cleaning up instance");
+            Destroy(Instance.gameObject);
+            Instance = null;
+        }
     }
 }
 
@@ -160,6 +273,11 @@ public class PlayData
     public float playTime;
     public int lateCount;
     public int fastCount;
+
+    // 新增：章节和关卡信息
+    public int chapterIndex = 0; // 章节索引 (0=第1章, 1=第2章, 2=第3章)
+    public bool isBossStage = false; // 是否为Boss关卡
+    public bool isReplay = false; // 是否为重复挑战已通关关卡
 
     /// <summary>
     /// 计算准确率（Perfect和Great算作准确）

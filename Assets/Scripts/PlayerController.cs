@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public float feedbackScaleMultiplier = 1.2f;
     public float feedbackDuration = 0.1f;
 
-    public int CurrentLane { get; private set; } = 1;
+    public int CurrentLane { get; private set; } = 3;
     public GameColor CurrentPresetColor { get; private set; } = GameColor.ColorA;
 
     private List<Note> notesInZone = new List<Note>();
@@ -183,14 +183,20 @@ public class PlayerController : MonoBehaviour
         {
             bool colorChanged = false;
 
+            // Easy 难度：只使用 J 键，固定为 ColorA（红色）
+            if (currentDifficulty == ChartDifficulty.Easy)
+            {
+                if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; }
+                // K 和 L 键在 Easy 难度下不使用
+            }
             // Normal 难度：只使用两种颜色
-            if (currentDifficulty == ChartDifficulty.Normal)
+            else if (currentDifficulty == ChartDifficulty.Normal)
             {
                 if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; } // 红色
                 if (keyboard.kKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorC; colorChanged = true; } // 蓝色
                 // L 键在 Normal 难度下不使用
             }
-            else // Easy 和 Hard 难度：使用三种颜色
+            else // Hard 难度：使用三种颜色
             {
                 if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; }
                 if (keyboard.kKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorB; colorChanged = true; }
@@ -201,14 +207,20 @@ public class PlayerController : MonoBehaviour
         }
         else // Accurate Mode
         {
+            // Easy 难度：只使用 J 键
+            if (currentDifficulty == ChartDifficulty.Easy)
+            {
+                if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA);
+                // K 和 L 键在 Easy 难度下不使用
+            }
             // Normal 难度：只使用两种颜色
-            if (currentDifficulty == ChartDifficulty.Normal)
+            else if (currentDifficulty == ChartDifficulty.Normal)
             {
                 if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA); // 红色
                 if (keyboard.kKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorC); // 蓝色
                 // L 键在 Normal 难度下不使用
             }
-            else // Easy 和 Hard 难度：使用三种颜色
+            else // Hard 难度：使用三种颜色
             {
                 if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA);
                 if (keyboard.kKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorB);
@@ -467,7 +479,14 @@ public class PlayerController : MonoBehaviour
         transform.localScale = originalScale;
         UpdateVisual();
     }
-
+    public void RefreshControlMode()
+    {
+        // 重新从全局设置读取模式
+        currentMode = (ControlMode)GameSettings.InputMode;
+        // 立即刷新颜色显示
+        UpdateVisual();
+        Debug.Log($"[PlayerController] Mode refreshed to: {currentMode}");
+    }
     private Color GetUnityColor(GameColor color)
     {
         switch (color)

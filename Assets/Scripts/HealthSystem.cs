@@ -114,23 +114,15 @@ public class HealthSystem : MonoBehaviour
     {
         Debug.Log("[HealthSystem] Game Over!");
 
-        // Collect final play data
-        if (PlayDataCollector.Instance != null)
+        // 通知 SongCompletionDetector 处理场景跳转
+        if (SongCompletionDetector.Instance != null)
         {
-            PlayDataCollector.Instance.CollectFinalData();
+            SongCompletionDetector.Instance.OnGameOver();
         }
-
-        // 显示Game Over文本
-        UIManager.Instance?.ShowSongClearText("Game Over");
-
-        // 等待一下再跳转
-        StartCoroutine(LoadGameOverSceneAfterDelay(2f));
-    }
-
-    private System.Collections.IEnumerator LoadGameOverSceneAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game Over");
+        else
+        {
+            Debug.LogWarning("[HealthSystem] No SongCompletionDetector found! Cannot transition to Game Over scene.");
+        }
     }
 
     public float GetHealthPercentage()

@@ -61,6 +61,13 @@ public class SongSelectionManager : MonoBehaviour
     public UnityEngine.UI.Button leftButton;
     public UnityEngine.UI.Button rightButton;
     public UnityEngine.UI.Image backgroundImage;
+    public UnityEngine.UI.Button easyButton;
+    public UnityEngine.UI.Button normalButton;
+    public UnityEngine.UI.Button hardButton;
+
+    [Header("Fans Display")]
+    public TextMeshProUGUI totalFansText; // 显示总粉丝数
+    public TextMeshProUGUI chapterProgressText; // 显示章节进度
 
     [Header("Songs List")]
     public List<SongData> songs = new List<SongData>();
@@ -100,6 +107,49 @@ public class SongSelectionManager : MonoBehaviour
         {
             Debug.LogWarning("No songs configured in SongSelectionManager!");
         }
+
+        // 显示粉丝数和章节进度
+        UpdateFansDisplay();
+    }
+
+    /// <summary>
+    /// 更新粉丝数和章节进度显示
+    /// </summary>
+    private void UpdateFansDisplay()
+    {
+        long totalFans = FansDataManager.GetTotalFans();
+        int unlockedChapter = FansDataManager.GetUnlockedChapter();
+
+        // 显示总粉丝数
+        if (totalFansText != null)
+        {
+            totalFansText.text = $"粉丝: {ScoreCalculator.FormatLargeNumber(totalFans)}";
+        }
+
+        // 显示章节进度
+        if (chapterProgressText != null)
+        {
+            int nextChapter = unlockedChapter + 1;
+            if (nextChapter < 3) // 还有下一章
+            {
+                long requiredFans = FansDataManager.GetRequiredFansForNextChapter(unlockedChapter);
+                long remainingFans = requiredFans - totalFans;
+                if (remainingFans > 0)
+                {
+                    chapterProgressText.text = $"第{nextChapter + 1}章解锁: 还需 {ScoreCalculator.FormatLargeNumber(remainingFans)} 粉丝";
+                }
+                else
+                {
+                    chapterProgressText.text = $"第{nextChapter + 1}章已解锁！";
+                }
+            }
+            else
+            {
+                chapterProgressText.text = "已解锁全部章节！";
+            }
+        }
+
+        Debug.Log($"[SongSelection] Total Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}, Unlocked Chapter: {unlockedChapter + 1}");
     }
 
     void OnDestroy()
@@ -158,6 +208,9 @@ public class SongSelectionManager : MonoBehaviour
         {
             rightButton.interactable = (currentSongIndex < songs.Count - 1);
         }
+
+        // Update difficulty button visibility
+        UpdateDifficultyButtons();
     }
 
     public void OnPreviousSong()
@@ -173,6 +226,28 @@ public class SongSelectionManager : MonoBehaviour
         if (currentSongIndex < songs.Count - 1)
         {
             LoadSongPreview(currentSongIndex + 1);
+        }
+    }
+
+    private void UpdateDifficultyButtons()
+    {
+        if (currentSongIndex < 0 || currentSongIndex >= songs.Count)
+            return;
+
+        SongData song = songs[currentSongIndex];
+
+        // Show/hide difficulty buttons based on chart availability
+        if (easyButton != null)
+        {
+            easyButton.gameObject.SetActive(song.easyChart != null);
+        }
+        if (normalButton != null)
+        {
+            normalButton.gameObject.SetActive(song.normalChart != null);
+        }
+        if (hardButton != null)
+        {
+            hardButton.gameObject.SetActive(song.hardChart != null);
         }
     }
 

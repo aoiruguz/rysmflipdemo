@@ -25,6 +25,11 @@ public class ResultScreenUI : MonoBehaviour
     public TextMeshProUGUI achievementRateText;
     public TextMeshProUGUI achievementScoreText;
 
+    [Header("Play Count & Fans Display")]
+    public TextMeshProUGUI playCountText; // 播放量
+    public TextMeshProUGUI newFansText; // 本局获得粉丝
+    public TextMeshProUGUI totalFansText; // 总粉丝数
+
     [Header("Combo Display")]
     public TextMeshProUGUI maxComboText;
     public TextMeshProUGUI totalNotesText;
@@ -128,7 +133,53 @@ public class ResultScreenUI : MonoBehaviour
         if (fastCountText != null)
             fastCountText.text = playData.fastCount.ToString();
 
+        // 播放量和粉丝数显示
+        DisplayPlayCountAndFans();
+
         Debug.Log($"[ResultScreenUI] Displayed results for {playData.songName}");
+    }
+
+    /// <summary>
+    /// 显示播放量和粉丝数
+    /// </summary>
+    private void DisplayPlayCountAndFans()
+    {
+        // 计算播放量
+        long playCount = ScoreCalculator.CalculatePlayCount(
+            playData.chapterIndex,
+            playData.isBossStage,
+            playData.perfectCount,
+            playData.greatCount,
+            playData.goodCount,
+            playData.missCount,
+            playData.maxCombo,
+            playData.isReplay);
+
+        // 计算本局获得粉丝
+        long newFans = ScoreCalculator.CalculateFansGain(playCount, playData.isReplay);
+
+        // 获取总粉丝数
+        long totalFans = FansDataManager.GetTotalFans();
+
+        // 显示播放量
+        if (playCountText != null)
+        {
+            playCountText.text = ScoreCalculator.FormatLargeNumber(playCount);
+        }
+
+        // 显示本局获得粉丝
+        if (newFansText != null)
+        {
+            newFansText.text = $"+{ScoreCalculator.FormatLargeNumber(newFans)}";
+        }
+
+        // 显示总粉丝数
+        if (totalFansText != null)
+        {
+            totalFansText.text = ScoreCalculator.FormatLargeNumber(totalFans);
+        }
+
+        Debug.Log($"[ResultScreenUI] Play Count: {ScoreCalculator.FormatLargeNumber(playCount)}, New Fans: +{ScoreCalculator.FormatLargeNumber(newFans)}, Total Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}");
     }
 
     /// <summary>
