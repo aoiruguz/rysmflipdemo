@@ -170,6 +170,9 @@ public class PlayDataCollector : MonoBehaviour
             }
         }
 
+        // 保存到新的存档系统
+        SaveLevelResultToSaveManager(playCount, newFans);
+
         // 检查是否解锁新章节
         long totalFans = FansDataManager.GetTotalFans();
         int currentUnlocked = FansDataManager.GetUnlockedChapter();
@@ -240,6 +243,42 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData.isReplay);
 
         playCountText.text = ScoreCalculator.FormatLargeNumber(playCount);
+    }
+
+    /// <summary>
+    /// 保存关卡结果到 SaveManager
+    /// </summary>
+    private void SaveLevelResultToSaveManager(long playCount, long newFans)
+    {
+        if (SaveManager.Instance == null)
+        {
+            Debug.LogWarning("[PlayDataCollector] SaveManager not found, skipping save");
+            return;
+        }
+
+        // 获取关卡名称（从 PlaySceneInitializer 获取）
+        PlaySceneInitializer initializer = FindObjectOfType<PlaySceneInitializer>();
+        string levelName = initializer != null ? initializer.GetCurrentLevelName() : "Unknown";
+
+        // 计算评级
+        string rank = CurrentPlayData.GetRank();
+
+        // 保存到 SaveManager
+        SaveManager.Instance.SaveLevelResult(
+            levelName,
+            CurrentPlayData.songName,
+            CurrentPlayData.difficulty,
+            CurrentPlayData.GetAchievementScore(),
+            rank,
+            CurrentPlayData.perfectCount,
+            CurrentPlayData.greatCount,
+            CurrentPlayData.goodCount,
+            CurrentPlayData.missCount,
+            CurrentPlayData.maxCombo,
+            newFans
+        );
+
+        Debug.Log($"[PlayDataCollector] Saved level result to SaveManager: {levelName} - {CurrentPlayData.difficulty}");
     }
 
     /// <summary>

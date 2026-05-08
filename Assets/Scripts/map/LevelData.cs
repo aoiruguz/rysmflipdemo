@@ -30,6 +30,23 @@ public class LevelData : ScriptableObject
     [Header("--- 难度配置 (数组按 E/N/H 顺序填写) ---")]
     public DifficultyDetail[] difficulties = new DifficultyDetail[3];
 
+    [Header("--- 开场剧情 ---")]
+    [Tooltip("开场剧情对话列表")]
+    public DialogueData[] openingDialogues = new DialogueData[0];
+
+    [Tooltip("每句对话显示时长（秒）")]
+    public float dialogDisplayDuration = 3f;
+
+    [Tooltip("对话切换延迟（秒）")]
+    public float dialogTransitionDelay = 0.5f;
+
+    [Header("--- 干扰系统 ---")]
+    [Tooltip("干扰技能触发次数（0表示不触发）")]
+    public int interferenceCount = 0;
+
+    [Tooltip("弹幕文本配置")]
+    public InterferenceTextConfig interferenceTextConfig;
+
     // 获取最佳成绩的方法，通常通过 SaveManager 获取，因为这是纯数据 SO。
     // 因为 SO 在磁盘上是只读的。
     public int GetBestScore(ChartDifficulty diff)

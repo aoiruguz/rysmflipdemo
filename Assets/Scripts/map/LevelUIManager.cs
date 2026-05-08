@@ -51,6 +51,7 @@ public class LevelUIManager : MonoBehaviour
     private LevelData currentLevelData;
     private ChartDifficulty selectedDifficulty = ChartDifficulty.Normal;
     private static ChartData selectedChart;
+    private static LevelData selectedLevelData; // 新增：存储选中的 LevelData
 
     private void Awake()
     {
@@ -172,7 +173,24 @@ public class LevelUIManager : MonoBehaviour
             if (detail.difficulty == diff)
             {
                 mapperText.text = "Chart: " + detail.mapper;
-                bestScoreText.text = "Best: " + data.GetBestScore(diff);
+
+                // 从 SaveManager 获取最高分
+                int highScore = 0;
+                string rank = "";
+                if (SaveManager.Instance != null)
+                {
+                    highScore = SaveManager.Instance.GetLevelHighScore(data.levelName, detail.chartAsset.songName, diff);
+                    rank = SaveManager.Instance.GetLevelRank(data.levelName, detail.chartAsset.songName, diff);
+                }
+
+                if (highScore > 0)
+                {
+                    bestScoreText.text = $"Best: {highScore} ({rank})";
+                }
+                else
+                {
+                    bestScoreText.text = "Best: ---";
+                }
                 break;
             }
         }
@@ -244,25 +262,33 @@ public class LevelUIManager : MonoBehaviour
             return;
         }
 
-        // 传递 chart 并跳转场景
+        // 传递 chart 和 LevelData 并跳转场景
         selectedChart = chartToLoad;
+        selectedLevelData = currentLevelData;
         Debug.Log($"[LevelUI] 加载关卡: {currentLevelData.levelName}, 难度: {selectedDifficulty}");
         SceneManager.LoadScene(gameSceneName);
     }
 
-    // 获取当前粉丝量（需要对接你的游戏数据系统）
+    // 获取当前粉丝量
     private int GetCurrentFans()
     {
-        // TODO: 从你的存档系统或游戏管理器获取粉丝量
-        // 示例：return GameManager.Instance.GetFans();
-        // 临时返回一个大数值用于测试
-        return 999999;
+        if (SaveManager.Instance != null)
+        {
+            return (int)SaveManager.Instance.GetTotalFans();
+        }
+        return (int)FansDataManager.GetTotalFans();
     }
 
     // 供其他场景获取选中的 chart
     public static ChartData GetSelectedChart()
     {
         return selectedChart;
+    }
+
+    // 供其他场景获取选中的 LevelData
+    public static LevelData GetCurrentLevelData()
+    {
+        return selectedLevelData;
     }
 
     public void ClosePanel()

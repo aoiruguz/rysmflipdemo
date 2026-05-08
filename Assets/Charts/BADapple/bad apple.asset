@@ -17,7 +17,7 @@ MonoBehaviour:
   displayBPM: 138
   previewMusic: {fileID: 8300000, guid: 91c452e19f5c3154eaf628550824386f, type: 3}
   enemyAvatar: {fileID: 0}
-  enemyInfo: "\u6211\u53BB \u51B0\uFF01"
+  enemyInfo: chewan?
   isLockedByDefault: 1
   requiredFans: -1
   difficulties:
@@ -33,3 +33,14 @@ MonoBehaviour:
     ratingLevel: 8
     mapper: "\u67DA\u5B50"
     chartAsset: {fileID: 11400000, guid: f05bf73cca97cee408079c0d9feb153a, type: 2}
+  openingDialogues:
+  - panelIndex: 1
+    speakerName: me
+    text: lajihua
+  - panelIndex: 2
+    speakerName: baka
+    text: super lajihua
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  interferenceCount: 3
+  interferenceTextConfig: {fileID: 11400000, guid: ce9610c6e799277498f0c0db0b057f81, type: 2}
