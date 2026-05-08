@@ -14,18 +14,21 @@ public class SongCompletionDetector : MonoBehaviour
 {
     public static SongCompletionDetector Instance { get; private set; }
 
-    [Header("Scene Transition Settings")]
-    [Tooltip("歌曲完成后要跳转的场景名称")]
-    public string targetSceneName = "Game Over";
+    [Header("Result Panel Settings")]
+    [Tooltip("结算界面 Panel")]
+    public GameObject resultPanel;
+
+    [Tooltip("显示结算界面时需要关闭的 Panel 列表")]
+    public GameObject[] panelsToHideOnResult;
 
     [Tooltip("是否启用完成检测（调延迟界面可以禁用此项）")]
     public bool enableCompletionDetection = true;
 
-    [Tooltip("完成后等待多少秒再跳转")]
-    public float delayBeforeTransition = 3f;
+    [Tooltip("完成后等待多少秒再显示结算界面")]
+    public float delayBeforeShowingResult = 2f;
 
-    [Tooltip("游戏失败后等待多少秒再跳转")]
-    public float delayBeforeGameOverTransition = 2f;
+    [Tooltip("游戏失败后等待多少秒再显示结算界面")]
+    public float delayBeforeGameOverResult = 2f;
 
     private NoteManager noteManager;
     private int totalNotes = 0;
@@ -122,8 +125,8 @@ public class SongCompletionDetector : MonoBehaviour
         // 显示 Game Over 文本
         UIManager.Instance?.ShowSongClearText("Game Over");
 
-        // 等待后跳转
-        StartCoroutine(LoadSceneAfterDelay(delayBeforeGameOverTransition));
+        // 等待后显示结算界面
+        StartCoroutine(ShowResultPanelAfterDelay(delayBeforeGameOverResult));
     }
 
     /// <summary>
@@ -157,35 +160,79 @@ public class SongCompletionDetector : MonoBehaviour
         // 显示完成信息
         UIManager.Instance?.ShowSongClearText(resultText);
 
-        // 等待指定时间
-        yield return new WaitForSeconds(delayBeforeTransition);
+        // 等待指定时间后显示结算界面
+        yield return new WaitForSeconds(delayBeforeShowingResult);
 
-        // 跳转场景
-        LoadScene();
+        // 显示结算界面
+        ShowResultPanel();
     }
 
     /// <summary>
-    /// 延迟后跳转场景
+    /// 延迟后显示结算界面
     /// </summary>
-    private IEnumerator LoadSceneAfterDelay(float delay)
+    private IEnumerator ShowResultPanelAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        LoadScene();
+        ShowResultPanel();
     }
 
     /// <summary>
-    /// 统一的场景跳转方法
+    /// 显示结算界面
     /// </summary>
-    private void LoadScene()
+    private void ShowResultPanel()
     {
-        if (!string.IsNullOrEmpty(targetSceneName))
+        // 停止音乐和Note生成
+        NoteManager noteManager = FindFirstObjectByType<NoteManager>();
+        if (noteManager != null)
         {
-            Debug.Log($"[SongCompletionDetector] Loading scene: {targetSceneName}");
-            SceneManager.LoadScene(targetSceneName);
+            noteManager.StopGame();
+        }
+
+        // 关闭指定的 Panel 列表
+        HidePanels();
+
+        if (resultPanel != null)
+        {
+            Debug.Log("[SongCompletionDetector] Showing result panel");
+            resultPanel.SetActive(true);
+
+            // 通知 ResultScreenUI 更新显示
+            ResultScreenUI resultUI = resultPanel.GetComponent<ResultScreenUI>();
+            if (resultUI != null)
+            {
+                resultUI.DisplayResultsFromPlayData(PlayDataCollector.Instance?.CurrentPlayData);
+            }
         }
         else
         {
-            Debug.LogWarning("[SongCompletionDetector] No target scene specified!");
+            Debug.LogWarning("[SongCompletionDetector] Result panel not assigned!");
+        }
+    }
+
+    /// <summary>
+    /// 关闭指定的 Panel 列表
+    /// </summary>
+    private void HidePanels()
+    {
+        if (panelsToHideOnResult == null || panelsToHideOnResult.Length == 0)
+        {
+            return;
+        }
+
+        int hiddenCount = 0;
+        foreach (GameObject panel in panelsToHideOnResult)
+        {
+            if (panel != null && panel.activeSelf)
+            {
+                panel.SetActive(false);
+                hiddenCount++;
+                Debug.Log($"[SongCompletionDetector] Hidden panel: {panel.name}");
+            }
+        }
+
+        if (hiddenCount > 0)
+        {
+            Debug.Log($"[SongCompletionDetector] Hidden {hiddenCount} panel(s)");
         }
     }
 

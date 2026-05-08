@@ -56,6 +56,9 @@ public class NoteManager : MonoBehaviour
     /// <summary>游戏是否已开始</summary>
     private bool isGameStarted = false;
 
+    /// <summary>游戏是否已停止（用于结算时停止生成Note和音乐）</summary>
+    private bool isGameStopped = false;
+
     /// <summary>音乐开始播放的实时时间戳</summary>
     private float musicStartTime;
     
@@ -206,8 +209,8 @@ private int totalNotes = 0;
      List<NoteData> notes = currentChart.notes;
         bool musicPlayed = false;
 
-        // 主循环：持续生成Note直到所有Note都处理完毕
-        while (noteIndex < notes.Count || !musicPlayed)
+        // 主循环：持续生成Note直到所有Note都处理完毕或游戏停止
+        while ((noteIndex < notes.Count || !musicPlayed) && !isGameStopped)
 {
           // 获取当前歌曲时间（相对于音乐开始）
         float currentTimeMs = GetCurrentSongTimeMs();
@@ -321,5 +324,30 @@ private int totalNotes = 0;
         {
             detector.OnNoteProcessed();
         }
+    }
+
+    /// <summary>
+    /// 停止游戏（停止音乐和Note生成）
+    /// 在显示结算界面时调用
+    /// </summary>
+    public void StopGame()
+    {
+        isGameStopped = true;
+
+        // 停止音乐播放
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+            Debug.Log("[NoteManager] Music stopped");
+        }
+
+        // 销毁所有还在场景中的Note
+        Note[] remainingNotes = FindObjectsByType<Note>(FindObjectsSortMode.None);
+        foreach (Note note in remainingNotes)
+        {
+            Destroy(note.gameObject);
+        }
+
+        Debug.Log("[NoteManager] Game stopped, all remaining notes destroyed");
     }
 }

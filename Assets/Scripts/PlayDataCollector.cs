@@ -50,8 +50,8 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData = new PlayData();
         }
 
-        // 使用DontDestroyOnLoad，让数据能传递到结算页面
-        DontDestroyOnLoad(gameObject);
+        // 不再使用 DontDestroyOnLoad，因为结算界面已合并到 PlayScene
+        // DontDestroyOnLoad(gameObject);
     }
 
     void Start()

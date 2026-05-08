@@ -1,0 +1,2203 @@
+{
+    "songName": "Start",
+    "difficulty": "Hard",
+    "bpm": 0.0,
+    "offset": 0.0,
+    "notes": [
+        {
+            "spawnTime": -1460.0,
+            "hitTime": 540.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": -919.0,
+            "hitTime": 1081.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": -379.0,
+            "hitTime": 1621.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": -244.0,
+            "hitTime": 1756.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 162.0,
+            "hitTime": 2162.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 702.0,
+            "hitTime": 2702.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 1243.0,
+            "hitTime": 3243.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 1783.0,
+            "hitTime": 3783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 1918.0,
+            "hitTime": 3918.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 2324.0,
+            "hitTime": 4324.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 2864.0,
+            "hitTime": 4864.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 3405.0,
+            "hitTime": 5405.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 3945.0,
+            "hitTime": 5945.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 4081.0,
+            "hitTime": 6081.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 4486.0,
+            "hitTime": 6486.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 5027.0,
+            "hitTime": 7027.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 5567.0,
+            "hitTime": 7567.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 6108.0,
+            "hitTime": 8108.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 6243.0,
+            "hitTime": 8243.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 6648.0,
+            "hitTime": 8648.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 7189.0,
+            "hitTime": 9189.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 7729.0,
+            "hitTime": 9729.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 8270.0,
+            "hitTime": 10270.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 8810.0,
+            "hitTime": 10810.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 9351.0,
+            "hitTime": 11351.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 9891.0,
+            "hitTime": 11891.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 10432.0,
+            "hitTime": 12432.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 10972.0,
+            "hitTime": 12972.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 11108.0,
+            "hitTime": 13108.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 11243.0,
+            "hitTime": 13243.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 11513.0,
+            "hitTime": 13513.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 11648.0,
+            "hitTime": 13648.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 11783.0,
+            "hitTime": 13783.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 12054.0,
+            "hitTime": 14054.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 12594.0,
+            "hitTime": 14594.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 13135.0,
+            "hitTime": 15135.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 13675.0,
+            "hitTime": 15675.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 14216.0,
+            "hitTime": 16216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 14756.0,
+            "hitTime": 16756.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 15027.0,
+            "hitTime": 17027.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 15297.0,
+            "hitTime": 17297.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 15432.0,
+            "hitTime": 17432.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 15567.0,
+            "hitTime": 17567.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 15837.0,
+            "hitTime": 17837.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 15972.0,
+            "hitTime": 17972.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 16108.0,
+            "hitTime": 18108.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 16378.0,
+            "hitTime": 18378.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 16513.0,
+            "hitTime": 18513.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 16648.0,
+            "hitTime": 18648.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 16918.0,
+            "hitTime": 18918.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 17054.0,
+            "hitTime": 19054.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 17189.0,
+            "hitTime": 19189.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 17459.0,
+            "hitTime": 19459.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 17594.0,
+            "hitTime": 19594.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 17729.0,
+            "hitTime": 19729.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 17999.0,
+            "hitTime": 19999.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 18135.0,
+            "hitTime": 20135.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 18270.0,
+            "hitTime": 20270.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 18540.0,
+            "hitTime": 20540.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 18675.0,
+            "hitTime": 20675.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 18810.0,
+            "hitTime": 20810.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 19081.0,
+            "hitTime": 21081.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 19216.0,
+            "hitTime": 21216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 19351.0,
+            "hitTime": 21351.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 19621.0,
+            "hitTime": 21621.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 19756.0,
+            "hitTime": 21756.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 19891.0,
+            "hitTime": 21891.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 20162.0,
+            "hitTime": 22162.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 20297.0,
+            "hitTime": 22297.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 20432.0,
+            "hitTime": 22432.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 20702.0,
+            "hitTime": 22702.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 21243.0,
+            "hitTime": 23243.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 21378.0,
+            "hitTime": 23378.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 21513.0,
+            "hitTime": 23513.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 21783.0,
+            "hitTime": 23783.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 21918.0,
+            "hitTime": 23918.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22054.0,
+            "hitTime": 24054.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22324.0,
+            "hitTime": 24324.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22459.0,
+            "hitTime": 24459.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22594.0,
+            "hitTime": 24594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22864.0,
+            "hitTime": 24864.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 22999.0,
+            "hitTime": 24999.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 23135.0,
+            "hitTime": 25135.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 23405.0,
+            "hitTime": 25405.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 23540.0,
+            "hitTime": 25540.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 23675.0,
+            "hitTime": 25675.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 23945.0,
+            "hitTime": 25945.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 24486.0,
+            "hitTime": 26486.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 25027.0,
+            "hitTime": 27027.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 25567.0,
+            "hitTime": 27567.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 26108.0,
+            "hitTime": 28108.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 26243.0,
+            "hitTime": 28243.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 26378.0,
+            "hitTime": 28378.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 26648.0,
+            "hitTime": 28648.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 26783.0,
+            "hitTime": 28783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 26918.0,
+            "hitTime": 28918.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 27189.0,
+            "hitTime": 29189.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 27324.0,
+            "hitTime": 29324.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 27459.0,
+            "hitTime": 29459.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 27729.0,
+            "hitTime": 29729.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 28270.0,
+            "hitTime": 30270.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 28810.0,
+            "hitTime": 30810.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 29216.0,
+            "hitTime": 31216.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 29351.0,
+            "hitTime": 31351.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 29891.0,
+            "hitTime": 31891.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 30432.0,
+            "hitTime": 32432.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 30567.0,
+            "hitTime": 32567.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 30972.0,
+            "hitTime": 32972.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 31378.0,
+            "hitTime": 33378.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 31513.0,
+            "hitTime": 33513.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 32054.0,
+            "hitTime": 34054.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 32594.0,
+            "hitTime": 34594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 33675.0,
+            "hitTime": 35675.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 34216.0,
+            "hitTime": 36216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 34756.0,
+            "hitTime": 36756.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 35837.0,
+            "hitTime": 37837.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 36378.0,
+            "hitTime": 38378.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 36918.0,
+            "hitTime": 38918.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 37999.0,
+            "hitTime": 39999.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 38540.0,
+            "hitTime": 40540.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 39081.0,
+            "hitTime": 41081.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 40162.0,
+            "hitTime": 42162.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 40702.0,
+            "hitTime": 42702.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 40837.0,
+            "hitTime": 42837.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 41243.0,
+            "hitTime": 43243.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 41783.0,
+            "hitTime": 43783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 42189.0,
+            "hitTime": 44189.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 42324.0,
+            "hitTime": 44324.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 42864.0,
+            "hitTime": 44864.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 43270.0,
+            "hitTime": 45270.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 43405.0,
+            "hitTime": 45405.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 43945.0,
+            "hitTime": 45945.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 44351.0,
+            "hitTime": 46351.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 44486.0,
+            "hitTime": 46486.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 45027.0,
+            "hitTime": 47027.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 45162.0,
+            "hitTime": 47162.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 45297.0,
+            "hitTime": 47297.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 45432.0,
+            "hitTime": 47432.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 45567.0,
+            "hitTime": 47567.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 46108.0,
+            "hitTime": 48108.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 46513.0,
+            "hitTime": 48513.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 46648.0,
+            "hitTime": 48648.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 47189.0,
+            "hitTime": 49189.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 47594.0,
+            "hitTime": 49594.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 47729.0,
+            "hitTime": 49729.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 48270.0,
+            "hitTime": 50270.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 48810.0,
+            "hitTime": 50810.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 48945.0,
+            "hitTime": 50945.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 49081.0,
+            "hitTime": 51081.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 49216.0,
+            "hitTime": 51216.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 49756.0,
+            "hitTime": 51756.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 49891.0,
+            "hitTime": 51891.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 50432.0,
+            "hitTime": 52432.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 50972.0,
+            "hitTime": 52972.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 51513.0,
+            "hitTime": 53513.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 52054.0,
+            "hitTime": 54054.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 52594.0,
+            "hitTime": 54594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 53135.0,
+            "hitTime": 55135.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 53675.0,
+            "hitTime": 55675.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 54216.0,
+            "hitTime": 56216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 54756.0,
+            "hitTime": 56756.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 55162.0,
+            "hitTime": 57162.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 55297.0,
+            "hitTime": 57297.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 55837.0,
+            "hitTime": 57837.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 56378.0,
+            "hitTime": 58378.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 56918.0,
+            "hitTime": 58918.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 57459.0,
+            "hitTime": 59459.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 57999.0,
+            "hitTime": 59999.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 58135.0,
+            "hitTime": 60135.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 58540.0,
+            "hitTime": 60540.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 59081.0,
+            "hitTime": 61081.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 59486.0,
+            "hitTime": 61486.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 59621.0,
+            "hitTime": 61621.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 60162.0,
+            "hitTime": 62162.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 60702.0,
+            "hitTime": 62702.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 61243.0,
+            "hitTime": 63243.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 61648.0,
+            "hitTime": 63648.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 61783.0,
+            "hitTime": 63783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 62324.0,
+            "hitTime": 64324.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 62459.0,
+            "hitTime": 64459.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 62594.0,
+            "hitTime": 64594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 62729.0,
+            "hitTime": 64729.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 62864.0,
+            "hitTime": 64864.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 63405.0,
+            "hitTime": 65405.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 63810.0,
+            "hitTime": 65810.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 63945.0,
+            "hitTime": 65945.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 64486.0,
+            "hitTime": 66486.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 65027.0,
+            "hitTime": 67027.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 65567.0,
+            "hitTime": 67567.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 65972.0,
+            "hitTime": 67972.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 66108.0,
+            "hitTime": 68108.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 66648.0,
+            "hitTime": 68648.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 67189.0,
+            "hitTime": 69189.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 67729.0,
+            "hitTime": 69729.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 68270.0,
+            "hitTime": 70270.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 68540.0,
+            "hitTime": 70540.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 68810.0,
+            "hitTime": 70810.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 68945.0,
+            "hitTime": 70945.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 69081.0,
+            "hitTime": 71081.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 69351.0,
+            "hitTime": 71351.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 69486.0,
+            "hitTime": 71486.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 69621.0,
+            "hitTime": 71621.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 69891.0,
+            "hitTime": 71891.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 70027.0,
+            "hitTime": 72027.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 70162.0,
+            "hitTime": 72162.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 70432.0,
+            "hitTime": 72432.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 70567.0,
+            "hitTime": 72567.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 70702.0,
+            "hitTime": 72702.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 70972.0,
+            "hitTime": 72972.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 71108.0,
+            "hitTime": 73108.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 71243.0,
+            "hitTime": 73243.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 71513.0,
+            "hitTime": 73513.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 71648.0,
+            "hitTime": 73648.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 71783.0,
+            "hitTime": 73783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 72054.0,
+            "hitTime": 74054.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 72594.0,
+            "hitTime": 74594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 73135.0,
+            "hitTime": 75135.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 73675.0,
+            "hitTime": 75675.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 73810.0,
+            "hitTime": 75810.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 74216.0,
+            "hitTime": 76216.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 74756.0,
+            "hitTime": 76756.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 74891.0,
+            "hitTime": 76891.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 75297.0,
+            "hitTime": 77297.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 75837.0,
+            "hitTime": 77837.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 75972.0,
+            "hitTime": 77972.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 76378.0,
+            "hitTime": 78378.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 76918.0,
+            "hitTime": 78918.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 77054.0,
+            "hitTime": 79054.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 77459.0,
+            "hitTime": 79459.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 77999.0,
+            "hitTime": 79999.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 78135.0,
+            "hitTime": 80135.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 78540.0,
+            "hitTime": 80540.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 79081.0,
+            "hitTime": 81081.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 79216.0,
+            "hitTime": 81216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 79621.0,
+            "hitTime": 81621.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorA",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 80162.0,
+            "hitTime": 82162.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 80297.0,
+            "hitTime": 82297.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorA",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 80702.0,
+            "hitTime": 82702.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 81243.0,
+            "hitTime": 83243.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 81378.0,
+            "hitTime": 83378.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 81783.0,
+            "hitTime": 83783.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 82324.0,
+            "hitTime": 84324.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 82459.0,
+            "hitTime": 84459.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 82864.0,
+            "hitTime": 84864.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 83405.0,
+            "hitTime": 85405.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 83540.0,
+            "hitTime": 85540.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 83945.0,
+            "hitTime": 85945.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 84486.0,
+            "hitTime": 86486.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 85027.0,
+            "hitTime": 87027.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 85567.0,
+            "hitTime": 87567.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 86108.0,
+            "hitTime": 88108.0,
+            "duration": 0.0,
+            "lane": 0,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 86648.0,
+            "hitTime": 88648.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 87189.0,
+            "hitTime": 89189.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 87729.0,
+            "hitTime": 89729.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 88270.0,
+            "hitTime": 90270.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorB",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 88810.0,
+            "hitTime": 90810.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 89351.0,
+            "hitTime": 91351.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 89891.0,
+            "hitTime": 91891.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 90432.0,
+            "hitTime": 92432.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalRight"
+        },
+        {
+            "spawnTime": 90972.0,
+            "hitTime": 92972.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 91513.0,
+            "hitTime": 93513.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 92054.0,
+            "hitTime": 94054.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 92594.0,
+            "hitTime": 94594.0,
+            "duration": 0.0,
+            "lane": 3,
+            "color": "ColorB",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 93135.0,
+            "hitTime": 95135.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 94216.0,
+            "hitTime": 96216.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 95297.0,
+            "hitTime": 97297.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 96378.0,
+            "hitTime": 98378.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 97459.0,
+            "hitTime": 99459.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 98540.0,
+            "hitTime": 100540.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorB",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 99621.0,
+            "hitTime": 101621.0,
+            "duration": 0.0,
+            "lane": 2,
+            "color": "ColorC",
+            "noteType": "DirectionalLeft"
+        },
+        {
+            "spawnTime": 100702.0,
+            "hitTime": 102702.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 101243.0,
+            "hitTime": 103243.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 101783.0,
+            "hitTime": 103783.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorC",
+            "noteType": "Color"
+        },
+        {
+            "spawnTime": 107729.0,
+            "hitTime": 109729.0,
+            "duration": 0.0,
+            "lane": 1,
+            "color": "ColorA",
+            "noteType": "DirectionalLeft"
+        }
+    ],
+    "audioFileName": "audio.mp3",
+    "chapterIndex": 0,
+    "isBossStage": false
+}

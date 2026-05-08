@@ -20,19 +20,19 @@ MonoBehaviour:
   - spawnTime: -850
     hitTime: 1150
     duration: 0
-    lane: 2
+    lane: 1
     color: 2
     noteType: 0
   - spawnTime: -346
     hitTime: 1654
     duration: 0
-    lane: 2
+    lane: 1
     color: 2
     noteType: 0
   - spawnTime: 158
     hitTime: 2158
     duration: 0
-    lane: 2
+    lane: 1
     color: 2
     noteType: 0
   - spawnTime: 662
@@ -2700,3 +2700,5 @@ MonoBehaviour:
     color: 0
     noteType: 0
   audioClip: {fileID: 8300000, guid: 73744bb0856e167499b726328497dd15, type: 3}
+  chapterIndex: 0
+  isBossStage: 0

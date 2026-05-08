@@ -182,19 +182,24 @@ public class ScoreCalculator
     }
 
     /// <summary>
-    /// 格式化大数字显示（万、亿）
+    /// 格式化大数字显示（K, M）
     /// </summary>
     public static string FormatLargeNumber(long number)
     {
-        if (number >= 100000000) // 1亿
+        if (number >= 100000000) // 100M
         {
-            float yi = number / 100000000f;
-            return $"{yi:F2}亿";
+            float millions = number / 1000000f;
+            return $"{millions:F2}M";
         }
-        else if (number >= 10000) // 1万
+        else if (number >= 1000000) // 1M
         {
-            float wan = number / 10000f;
-            return $"{wan:F2}万";
+            float millions = number / 1000000f;
+            return $"{millions:F2}M";
+        }
+        else if (number >= 10000) // 10K
+        {
+            float thousands = number / 1000f;
+            return $"{thousands:F2}K";
         }
         else
         {

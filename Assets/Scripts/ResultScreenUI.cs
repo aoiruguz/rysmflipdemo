@@ -56,15 +56,28 @@ public class ResultScreenUI : MonoBehaviour
 
     void Start()
     {
-        // Get play data from PlayDataCollector
-        if (PlayDataCollector.Instance != null)
+        // 如果在 GameOver 场景中，从 PlayDataCollector 获取数据
+        // 如果在 PlayScene 中，等待 SongCompletionDetector 调用 DisplayResultsFromPlayData
+        if (PlayDataCollector.Instance != null && PlayDataCollector.Instance.CurrentPlayData != null)
         {
             playData = PlayDataCollector.Instance.CurrentPlayData;
             DisplayResults();
         }
+    }
+
+    /// <summary>
+    /// 从外部传入 PlayData 并显示结果（用于同场景内调用）
+    /// </summary>
+    public void DisplayResultsFromPlayData(PlayData data)
+    {
+        if (data != null)
+        {
+            playData = data;
+            DisplayResults();
+        }
         else
         {
-            Debug.LogWarning("[ResultScreenUI] PlayDataCollector not found! Using dummy data.");
+            Debug.LogWarning("[ResultScreenUI] PlayData is null! Using dummy data.");
             playData = CreateDummyData();
             DisplayResults();
         }

@@ -49,7 +49,7 @@ public class FansDisplayUI : MonoBehaviour
         // 显示总粉丝数
         if (totalFansText != null)
         {
-            totalFansText.text = $"粉丝: {ScoreCalculator.FormatLargeNumber(totalFans)}";
+            totalFansText.text = $"Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}";
         }
         else
         {
@@ -66,16 +66,16 @@ public class FansDisplayUI : MonoBehaviour
                 long remainingFans = requiredFans - totalFans;
                 if (remainingFans > 0)
                 {
-                    chapterProgressText.text = $"第{nextChapter + 1}章解锁: 还需 {ScoreCalculator.FormatLargeNumber(remainingFans)} 粉丝";
+                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlock: {ScoreCalculator.FormatLargeNumber(remainingFans)} more fans needed";
                 }
                 else
                 {
-                    chapterProgressText.text = $"第{nextChapter + 1}章已解锁！";
+                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlocked!";
                 }
             }
             else
             {
-                chapterProgressText.text = "已解锁全部章节！";
+                chapterProgressText.text = "All Chapters Unlocked!";
             }
         }
         else
