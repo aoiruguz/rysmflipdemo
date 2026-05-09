@@ -50,7 +50,7 @@ public class SimpleChartLoadButton : MonoBehaviour
                 Debug.Log($"[SimpleChartLoadButton] Chart loaded successfully: {chart.songName}");
 
                 // 通知ChartEditorManager
-                ChartEditorManager manager = FindObjectOfType<ChartEditorManager>();
+                ChartEditorManager manager = FindFirstObjectByType<ChartEditorManager>();
                 if (manager != null)
                 {
                     Debug.Log("[SimpleChartLoadButton] Found ChartEditorManager, initializing...");

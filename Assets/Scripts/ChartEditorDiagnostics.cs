@@ -19,7 +19,7 @@ public class ChartEditorDiagnostics : MonoBehaviour
         Debug.Log("========== Chart Editor Diagnostics ==========");
 
         // 检查ChartEditorManager
-        ChartEditorManager manager = FindObjectOfType<ChartEditorManager>();
+        ChartEditorManager manager = FindFirstObjectByType<ChartEditorManager>();
         if (manager == null)
         {
             Debug.LogError("[Diagnostics] ChartEditorManager NOT FOUND!");

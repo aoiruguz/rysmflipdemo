@@ -47,7 +47,7 @@ public class ChartEditorSettingsUIGenerator : EditorWindow
     private void GenerateSettingsUI()
     {
         // 查找或创建Canvas
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null)
         {
             GameObject canvasObj = new GameObject("Canvas");
@@ -82,7 +82,7 @@ public class ChartEditorSettingsUIGenerator : EditorWindow
 
     private void DeleteSettingsUI()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas != null)
         {
             Transform existing = canvas.transform.Find("ChartEditorSettingsPanel");

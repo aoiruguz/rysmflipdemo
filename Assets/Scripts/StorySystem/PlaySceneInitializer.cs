@@ -19,7 +19,6 @@ public class PlaySceneInitializer : MonoBehaviour
 
     private ChartData currentChart;
     private LevelData currentLevelData;
-    private bool isInitialized = false;
 
     private void Start()
     {
@@ -130,8 +129,6 @@ public class PlaySceneInitializer : MonoBehaviour
         // 启动 NoteManager
         if (noteManager != null)
             noteManager.enabled = true;
-
-        isInitialized = true;
     }
 
     /// <summary>

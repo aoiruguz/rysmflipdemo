@@ -17,7 +17,7 @@ public class CreateResultScreenUI : EditorWindow
         EditorSceneManager.OpenScene(scenePath);
 
         // Create Canvas if not exists
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null)
         {
             GameObject canvasObj = new GameObject("Canvas");

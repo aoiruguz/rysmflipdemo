@@ -21,7 +21,7 @@ public class ChartDataExporter : MonoBehaviour
         List<ChartData> chartsList = new List<ChartData>();
 
         // 方法1: 从 SongSelectionManager 获取
-        SongSelectionManager songManager = FindObjectOfType<SongSelectionManager>();
+        SongSelectionManager songManager = FindFirstObjectByType<SongSelectionManager>();
         if (songManager != null && songManager.songs != null)
         {
             foreach (SongData song in songManager.songs)

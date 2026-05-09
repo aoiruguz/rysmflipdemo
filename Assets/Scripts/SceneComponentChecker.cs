@@ -19,7 +19,7 @@ public class SceneComponentChecker : MonoBehaviour
         Debug.Log("========== Scene Component Check ==========");
 
         // 检查ChartEditorManager
-        ChartEditorManager[] managers = FindObjectsOfType<ChartEditorManager>();
+        ChartEditorManager[] managers = FindObjectsByType<ChartEditorManager>(FindObjectsSortMode.None);
         Debug.Log($"[SceneCheck] ChartEditorManager count: {managers.Length}");
         foreach (var manager in managers)
         {
@@ -27,7 +27,7 @@ public class SceneComponentChecker : MonoBehaviour
         }
 
         // 检查ChartEditorController
-        ChartEditorController[] controllers = FindObjectsOfType<ChartEditorController>();
+        ChartEditorController[] controllers = FindObjectsByType<ChartEditorController>(FindObjectsSortMode.None);
         Debug.Log($"[SceneCheck] ChartEditorController count: {controllers.Length}");
         foreach (var controller in controllers)
         {
@@ -35,7 +35,7 @@ public class SceneComponentChecker : MonoBehaviour
         }
 
         // 检查ChartEditorUI
-        ChartEditorUI[] uis = FindObjectsOfType<ChartEditorUI>();
+        ChartEditorUI[] uis = FindObjectsByType<ChartEditorUI>(FindObjectsSortMode.None);
         Debug.Log($"[SceneCheck] ChartEditorUI count: {uis.Length}");
         foreach (var ui in uis)
         {
@@ -43,7 +43,7 @@ public class SceneComponentChecker : MonoBehaviour
         }
 
         // 检查AudioSource
-        AudioSource[] audioSources = FindObjectsOfType<AudioSource>();
+        AudioSource[] audioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
         Debug.Log($"[SceneCheck] AudioSource count: {audioSources.Length}");
         foreach (var source in audioSources)
         {

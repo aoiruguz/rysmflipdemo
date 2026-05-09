@@ -15,7 +15,6 @@ public class ScrollingTextSkill : MonoBehaviour
     public Canvas interferenceCanvas;
     public RectTransform canvasRect;
 
-    private bool isActive = false;
     private Coroutine spawnCoroutine; // 保存生成协程的引用
 
     /// <summary>
@@ -35,7 +34,6 @@ public class ScrollingTextSkill : MonoBehaviour
             return;
         }
 
-        isActive = true;
         spawnCoroutine = StartCoroutine(SpawnBullets());
     }
 
@@ -44,7 +42,6 @@ public class ScrollingTextSkill : MonoBehaviour
     /// </summary>
     public void Deactivate()
     {
-        isActive = false;
         // 只停止生成协程，不停止已经在飞行的弹幕协程
         if (spawnCoroutine != null)
         {
@@ -90,7 +87,7 @@ public class ScrollingTextSkill : MonoBehaviour
         textComponent.fontSize = config.fontSize;
         textComponent.color = new Color(config.textColor.r, config.textColor.g, config.textColor.b, config.alpha);
         textComponent.alignment = TextAlignmentOptions.Center;
-        textComponent.enableWordWrapping = false;
+        textComponent.textWrappingMode = TextWrappingModes.NoWrap;
 
         // 使用配置中的中文字体
         if (config.chineseFont != null)

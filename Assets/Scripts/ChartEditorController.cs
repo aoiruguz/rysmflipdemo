@@ -31,7 +31,7 @@ public class ChartEditorController : MonoBehaviour
 
         if (noteManager == null)
         {
-            noteManager = FindObjectOfType<NoteManager>();
+            noteManager = FindFirstObjectByType<NoteManager>();
         }
 
         if (audioSource == null && noteManager != null)
@@ -264,7 +264,7 @@ public class ChartEditorController : MonoBehaviour
         }
 
         // Fallback: check all notes
-        Note[] allNotes = FindObjectsOfType<Note>();
+        Note[] allNotes = FindObjectsByType<Note>(FindObjectsSortMode.None);
         float minDist = 0.5f; // Click tolerance
         Note closest = null;
 
@@ -330,7 +330,7 @@ public class ChartEditorController : MonoBehaviour
         float newTime = Mathf.Clamp(audioSource.time + deltaSeconds, 0f, audioSource.clip.length);
 
         // Clear all existing notes
-        Note[] allNotes = FindObjectsOfType<Note>();
+        Note[] allNotes = FindObjectsByType<Note>(FindObjectsSortMode.None);
         foreach (Note note in allNotes)
         {
             Destroy(note.gameObject);

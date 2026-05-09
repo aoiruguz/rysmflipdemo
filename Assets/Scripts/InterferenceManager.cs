@@ -52,7 +52,7 @@ public class InterferenceManager : MonoBehaviour
         // 获取SongCompletionDetector
         if (songCompletionDetector == null)
         {
-            songCompletionDetector = FindObjectOfType<SongCompletionDetector>();
+            songCompletionDetector = FindFirstObjectByType<SongCompletionDetector>();
             if (songCompletionDetector == null)
             {
                 Debug.LogError("[InterferenceManager] SongCompletionDetector not found!");

@@ -82,7 +82,7 @@ public class ReplaceAllTMPFonts : EditorWindow
         int count = 0;
 
         // 替换 TextMeshProUGUI (UI)
-        TextMeshProUGUI[] uiTexts = FindObjectsOfType<TextMeshProUGUI>(includeInactiveObjects);
+        TextMeshProUGUI[] uiTexts = FindObjectsByType<TextMeshProUGUI>(includeInactiveObjects ? FindObjectsInactive.Include : FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         foreach (var tmp in uiTexts)
         {
             Undo.RecordObject(tmp, "Replace TMP Font");
@@ -92,7 +92,7 @@ public class ReplaceAllTMPFonts : EditorWindow
         }
 
         // 替换 TextMeshPro (3D)
-        TextMeshPro[] worldTexts = FindObjectsOfType<TextMeshPro>(includeInactiveObjects);
+        TextMeshPro[] worldTexts = FindObjectsByType<TextMeshPro>(includeInactiveObjects ? FindObjectsInactive.Include : FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         foreach (var tmp in worldTexts)
         {
             Undo.RecordObject(tmp, "Replace TMP Font");
@@ -212,7 +212,7 @@ public class ReplaceAllTMPFonts : EditorWindow
             int count = 0;
 
             // 替换 UI 文本
-            TextMeshProUGUI[] uiTexts = FindObjectsOfType<TextMeshProUGUI>(true);
+            TextMeshProUGUI[] uiTexts = FindObjectsByType<TextMeshProUGUI>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var tmp in uiTexts)
             {
                 tmp.font = newFont;
@@ -221,7 +221,7 @@ public class ReplaceAllTMPFonts : EditorWindow
             }
 
             // 替换 3D 文本
-            TextMeshPro[] worldTexts = FindObjectsOfType<TextMeshPro>(true);
+            TextMeshPro[] worldTexts = FindObjectsByType<TextMeshPro>(FindObjectsInactive.Include, FindObjectsSortMode.None);
             foreach (var tmp in worldTexts)
             {
                 tmp.font = newFont;
@@ -256,8 +256,8 @@ public class ReplaceAllTMPFonts : EditorWindow
 
     private void FindAllTMPComponents()
     {
-        TextMeshProUGUI[] uiTexts = FindObjectsOfType<TextMeshProUGUI>(includeInactiveObjects);
-        TextMeshPro[] worldTexts = FindObjectsOfType<TextMeshPro>(includeInactiveObjects);
+        TextMeshProUGUI[] uiTexts = FindObjectsByType<TextMeshProUGUI>(includeInactiveObjects ? FindObjectsInactive.Include : FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        TextMeshPro[] worldTexts = FindObjectsByType<TextMeshPro>(includeInactiveObjects ? FindObjectsInactive.Include : FindObjectsInactive.Exclude, FindObjectsSortMode.None);
 
         Debug.Log($"=== 当前场景中的 TMP 组件 ===");
         Debug.Log($"TextMeshProUGUI (UI): {uiTexts.Length} 个");

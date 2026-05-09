@@ -22,7 +22,7 @@ public class EditorJudgmentLine : MonoBehaviour
         editorCamera = Camera.main;
         if (editorCamera == null)
         {
-            editorCamera = FindObjectOfType<Camera>();
+            editorCamera = FindFirstObjectByType<Camera>();
         }
 
         // 设置视觉效果

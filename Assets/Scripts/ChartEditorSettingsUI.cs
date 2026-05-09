@@ -29,7 +29,7 @@ public class ChartEditorSettingsUI : MonoBehaviour
     void Start()
     {
         // 查找管理器
-        manager = FindObjectOfType<ChartEditorManager>();
+        manager = FindFirstObjectByType<ChartEditorManager>();
 
         // 初始化UI显示当前值
         RefreshUI();

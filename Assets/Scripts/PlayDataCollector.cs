@@ -58,7 +58,7 @@ public class PlayDataCollector : MonoBehaviour
     {
         // 只在PlayScene中初始化数据
         // 检查是否在PlayScene中（通过查找NoteManager来判断）
-        NoteManager noteManager = FindObjectOfType<NoteManager>();
+        NoteManager noteManager = FindFirstObjectByType<NoteManager>();
         if (noteManager == null)
         {
             // 不在PlayScene中（可能在延迟校准或其他场景），不初始化
@@ -257,7 +257,7 @@ public class PlayDataCollector : MonoBehaviour
         }
 
         // 获取关卡名称（从 PlaySceneInitializer 获取）
-        PlaySceneInitializer initializer = FindObjectOfType<PlaySceneInitializer>();
+        PlaySceneInitializer initializer = FindFirstObjectByType<PlaySceneInitializer>();
         string levelName = initializer != null ? initializer.GetCurrentLevelName() : "Unknown";
 
         // 计算评级

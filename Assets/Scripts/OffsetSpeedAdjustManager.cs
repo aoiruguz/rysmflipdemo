@@ -105,14 +105,14 @@ public class OffsetSpeedAdjustManager : MonoBehaviour
     private void SyncNoteManager()
     {
         // 1. 同步 NoteManager (原本的逻辑)
-        var noteManager = FindObjectOfType<NoteManager>();
+        var noteManager = FindFirstObjectByType<NoteManager>();
         if (noteManager != null)
         {
             noteManager.noteTravelTime = GameSettings.NoteTravelTime;
         }
 
         // 2. 新增：同步 PlayerController
-        var player = FindObjectOfType<PlayerController>();
+        var player = FindFirstObjectByType<PlayerController>();
         if (player != null)
         {
             player.RefreshControlMode();

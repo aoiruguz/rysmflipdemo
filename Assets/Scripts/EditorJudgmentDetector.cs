@@ -62,7 +62,7 @@ public class EditorJudgmentDetector : MonoBehaviour
         float currentTime = manager.GetCurrentTime();
 
         // 检测所有note
-        foreach (var editorNote in FindObjectsOfType<EditorNote>())
+        foreach (var editorNote in FindObjectsByType<EditorNote>(FindObjectsSortMode.None))
         {
             // 跳过已判定的note
             if (judgedNotes.Contains(editorNote)) continue;

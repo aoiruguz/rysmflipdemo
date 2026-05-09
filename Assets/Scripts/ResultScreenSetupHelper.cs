@@ -13,7 +13,7 @@ public class ResultScreenSetupHelper : MonoBehaviour
     public void SetupUI()
     {
         // Find or create Canvas
-        Canvas canvas = FindObjectOfType<Canvas>();
+        Canvas canvas = FindFirstObjectByType<Canvas>();
         if (canvas == null)
         {
             GameObject canvasObj = new GameObject("Canvas");
