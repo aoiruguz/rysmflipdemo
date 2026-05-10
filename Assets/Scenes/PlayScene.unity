@@ -4275,7 +4275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NoteManager
   notePrefab: {fileID: 7312989398368265476, guid: 121b9d315d0b2044d8f3e05f7fe5893a, type: 3}
-  currentChart: {fileID: 11400000, guid: a4ff1cb30431b744ab8e0eb31ca6b69b, type: 2}
+  currentChart: {fileID: 11400000, guid: eb4a29d80ecc40542875008a8fd2de34, type: 2}
   audioSource: {fileID: 610100206}
   noteTravelTime: 1
   prePlayDelay: 2
@@ -7459,6 +7459,10 @@ MonoBehaviour:
   minEffectAngle: 20
   maxEffectAngle: 80
   hitAudioSource: {fileID: 1112928045}
+  effectSpriteColorA: {fileID: 21300000, guid: 7dc24be17b4af8f40b813f7caf8f4a48, type: 3}
+  effectSpriteColorB: {fileID: 21300000, guid: 7c6a373f220c7504cb42e8a09f7a82dd, type: 3}
+  effectSpriteColorC: {fileID: 21300000, guid: 0b20a0f3c4c10f64c93d30ee337541fb, type: 3}
+  effectTextData: {fileID: 4900000, guid: e8bdc410097fc4b4881f8933f9a52dd3, type: 3}
   defaultSprite: {fileID: 21300000, guid: 180e971a19ed4e04fb0bb27a7329b3f9, type: 3}
   redSprite: {fileID: 21300000, guid: 0b7817065d6bd194680eff6d8a779c00, type: 3}
   yellowSprite: {fileID: 21300000, guid: 8eb34f091705c3d4cb081f471a4e8a04, type: 3}

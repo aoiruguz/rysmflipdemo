@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CatchEffect : MonoBehaviour
 {
@@ -9,15 +10,19 @@ public class CatchEffect : MonoBehaviour
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Image image;
+    private TextMeshProUGUI label;
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
+        label = GetComponentInChildren<TextMeshProUGUI>();
     }
 
-    public void Initialize(Vector3 startPos, float angle, float speed)
+    /// <param name="hitSprite">根据击中Note颜色对应的替换图片，传入null则保留Prefab原图</param>
+    /// <param name="labelText">显示在TMP子物体上的文字，传入null或空字符串则不修改</param>
+    public void Initialize(Vector3 startPos, float angle, float speed, Sprite hitSprite = null, string labelText = null)
     {
         transform.position = startPos;
         
@@ -31,6 +36,18 @@ public class CatchEffect : MonoBehaviour
         if (canvasGroup != null)
         {
             canvasGroup.alpha = 1f;
+        }
+
+        // 按Note颜色替换Image贴图
+        if (hitSprite != null && image != null)
+        {
+            image.sprite = hitSprite;
+        }
+
+        // 设置TMP文字（如果存在子TMP）
+        if (label != null && !string.IsNullOrEmpty(labelText))
+        {
+            label.text = labelText;
         }
     }
 

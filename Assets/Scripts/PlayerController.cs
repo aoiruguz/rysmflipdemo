@@ -32,6 +32,19 @@ public class PlayerController : MonoBehaviour
     public float maxEffectAngle = 60f;
     public AudioSource hitAudioSource;
 
+    [Header("Effect Sprites (对应JKL三种Note颜色)")]
+    [Tooltip("击中 ColorA(J) Note 时特效显示的图片")]
+    public Sprite effectSpriteColorA;
+    [Tooltip("击中 ColorB(K) Note 时特效显示的图片")]
+    public Sprite effectSpriteColorB;
+    [Tooltip("击中 ColorC(L) Note 时特效显示的图片")]
+    public Sprite effectSpriteColorC;
+
+    [Header("Effect Text Preset")]
+    [Tooltip("特效TMP随机文字预设文件（每行一条）")]
+    public TextAsset effectTextData;
+    private string[] effectMessages;
+
     [Header("State Sprites")]
     [Tooltip("默认状态/准确模式下的精灵图")]
     public Sprite defaultSprite;
@@ -422,7 +435,7 @@ public class PlayerController : MonoBehaviour
             ScoreManager.Instance?.OnCatch(offset);
         }
 
-        SpawnCatchEffect(note.transform.position);
+        SpawnCatchEffect(note.transform.position, note);
 
         if (hitAudioSource != null)
         {
@@ -442,9 +455,15 @@ public class PlayerController : MonoBehaviour
         Destroy(note.gameObject);
     }
 
-    private void SpawnCatchEffect(Vector3 pos)
+    private void SpawnCatchEffect(Vector3 pos, Note note = null)
     {
         if (effectPrefab == null) return;
+
+        // 懒加载文字预设
+        if (effectMessages == null && effectTextData != null)
+        {
+            effectMessages = effectTextData.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        }
         
         GameObject effectObj;
         if (effectContainer != null)
@@ -464,13 +483,32 @@ public class PlayerController : MonoBehaviour
         {
             // Generate angle: 50% left (60-120°), 50% right (60-120° mirrored)
             float angle = Random.Range(minEffectAngle, maxEffectAngle);
-            // Mirror to right side (180° - angle gives symmetric bounce)
             if (Random.value > 0.5f)
             {
                 angle = 180f - angle;
             }
+
+            // 根据击中Note颜色选择对应贴图
+            Sprite hitSprite = null;
+            if (note != null && note.NoteType == NoteType.Color)
+            {
+                switch (note.Color)
+                {
+                    case GameColor.ColorA: hitSprite = effectSpriteColorA; break;
+                    case GameColor.ColorB: hitSprite = effectSpriteColorB; break;
+                    case GameColor.ColorC: hitSprite = effectSpriteColorC; break;
+                }
+            }
+
+            // 随机选取文字
+            string labelText = null;
+            if (effectMessages != null && effectMessages.Length > 0)
+            {
+                labelText = effectMessages[Random.Range(0, effectMessages.Length)];
+            }
+
             Debug.Log($"[Effect] Spawning at angle: {angle}°");
-            effect.Initialize(pos, angle, effectSpeed);
+            effect.Initialize(pos, angle, effectSpeed, hitSprite, labelText);
         }
     }
 
