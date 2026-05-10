@@ -8,12 +8,19 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public Text comboText;
-    public Text judgmentText;
     public Text offsetText;
     public Text globalOffsetText;
     public Text songTitleText;
     public Text timeDisplayText;
     public TextMeshProUGUI songClearText; // 歌曲完成文本
+
+    [Header("Judgment Image Display")]
+    [Tooltip("用于显示判定结果图片的 Image 组件")]
+    public Image judgmentImage;
+    public Sprite perfectSprite;
+    public Sprite greatSprite;
+    public Sprite goodSprite;
+    public Sprite missSprite;
 
     private Coroutine hideRoutine;
 private Coroutine titleRoutine;
@@ -22,7 +29,7 @@ private Coroutine titleRoutine;
     {
         Instance = this;
         if (comboText) comboText.text = "";
-        if (judgmentText) judgmentText.text = "";
+        if (judgmentImage) judgmentImage.gameObject.SetActive(false);
         if (offsetText) offsetText.text = "";
         if (songTitleText) songTitleText.color = new Color(1, 1, 1, 0);
         if (songClearText) songClearText.gameObject.SetActive(false);
@@ -80,11 +87,34 @@ private Coroutine titleRoutine;
     }
 
     public void ShowJudgment(string judgment, float offsetMs, int combo, bool showOffset = true)
-{
-        if (judgmentText)
+    {
+        // 处理图片显示逻辑
+        if (judgmentImage != null)
         {
-            judgmentText.text = judgment;
-            judgmentText.color = GetJudgmentColor(judgment);
+            Sprite targetSprite = null;
+            switch (judgment.ToUpper())
+            {
+                case "PERFECT": targetSprite = perfectSprite; break;
+                case "GREAT":   targetSprite = greatSprite; break;
+                case "GOOD":    targetSprite = goodSprite; break;
+                case "MISS":    targetSprite = missSprite; break;
+            }
+
+            if (targetSprite != null)
+            {
+                judgmentImage.sprite = targetSprite;
+                judgmentImage.gameObject.SetActive(true);
+                
+                // 初始化动画状态：透明度 0，缩放 1.1
+                Color col = judgmentImage.color;
+                col.a = 0;
+                judgmentImage.color = col;
+                judgmentImage.transform.localScale = Vector3.one * 1.1f;
+            }
+            else
+            {
+                judgmentImage.gameObject.SetActive(false);
+            }
         }
 
         if (offsetText)
@@ -107,7 +137,7 @@ private Coroutine titleRoutine;
         }
 
         if (hideRoutine != null) StopCoroutine(hideRoutine);
-        hideRoutine = StartCoroutine(HideJudgmentAfterDelay(1.0f));
+        hideRoutine = StartCoroutine(HideJudgmentAfterDelay(0.5f)); // 缩短显示时间，提升反馈节奏
     }
 
     private Color GetJudgmentColor(string judgment)
@@ -122,8 +152,43 @@ private Coroutine titleRoutine;
 
     private IEnumerator HideJudgmentAfterDelay(float delay)
     {
-        yield return new WaitForSeconds(delay);
-        if (judgmentText) judgmentText.text = "";
+        if (judgmentImage == null) yield break;
+
+        Color col = judgmentImage.color;
+        float elapsed = 0;
+        
+        // 阶段 1：快速淡入 + 缩放回弹 (约 0.05s)
+        float fadeInDuration = 0.05f;
+        while (elapsed < fadeInDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fadeInDuration;
+            col.a = t;
+            judgmentImage.color = col;
+            judgmentImage.transform.localScale = Vector3.Lerp(Vector3.one * 1.1f, Vector3.one, t);
+            yield return null;
+        }
+        col.a = 1f;
+        judgmentImage.color = col;
+        judgmentImage.transform.localScale = Vector3.one;
+
+        // 阶段 2：展示停留
+        float fadeOutDuration = 0.15f;
+        float stayDuration = delay - fadeInDuration - fadeOutDuration;
+        yield return new WaitForSeconds(Mathf.Max(0, stayDuration));
+
+        // 阶段 3：平滑淡出
+        elapsed = 0;
+        while (elapsed < fadeOutDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / fadeOutDuration;
+            col.a = 1f - t;
+            judgmentImage.color = col;
+            yield return null;
+        }
+
+        judgmentImage.gameObject.SetActive(false);
         if (offsetText) offsetText.text = "";
     }
 

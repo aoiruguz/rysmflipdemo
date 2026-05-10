@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 /// <summary>
 /// NoteManager 负责管理节奏游戏中 Note 的生成、生命周期和游戏流程控制
@@ -16,6 +17,11 @@ public class NoteManager : MonoBehaviour
     [Header("Settings")]
     /// <summary>Note预制体，用于实例化每个Note对象</summary>
     public GameObject notePrefab;
+
+    [Header("Note 文字预设")]
+    [Tooltip("Note TMP 随机文字预设文件（每行一条）。留空则不修改 Note 上的文字。")]
+    public TextAsset noteTextData;
+    private string[] noteMessages;
     
     /// <summary>当前加载的谱面数据，包含所有Note信息、音乐等</summary>
     public ChartData currentChart;
@@ -334,6 +340,26 @@ private int totalNotes = 0;
                 ScoreManager.Instance?.OnMiss();  // 失误时扣分
          });
       }
+
+        // --- Note 文字随机替换 ---
+        // 仿照 PlayerController.SpawnCatchEffect 的懒加载写法
+        // Note 是独立 Sprite 元素，不在 Canvas 内，直接用 GetComponentInChildren 查找 TMP 即可
+        if (noteMessages == null && noteTextData != null)
+        {
+            noteMessages = noteTextData.text.Split(
+                new[] { '\r', '\n' },
+                System.StringSplitOptions.RemoveEmptyEntries
+            );
+        }
+
+        if (noteMessages != null && noteMessages.Length > 0)
+        {
+            TextMeshPro tmp = noteObj.GetComponentInChildren<TextMeshPro>();
+            if (tmp != null)
+            {
+                tmp.text = noteMessages[Random.Range(0, noteMessages.Length)];
+            }
+        }
     }
 
     /// <summary>
