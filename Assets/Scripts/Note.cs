@@ -2,10 +2,26 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
-    [Header("Child Objects")]
-    public GameObject colorNoteVisual;      // 普通三色note的子物体
-    public GameObject leftDirectionalVisual;  // 左方向note的子物体
-    public GameObject rightDirectionalVisual; // 右方向note的子物体
+    private SpriteRenderer mainRenderer;
+
+    void Awake()
+    {
+        mainRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    [Header("State Sprites")]
+    [Tooltip("默认/正常状态的精灵图")]
+    public Sprite normalSprite;
+    [Tooltip("红色状态的精灵图 (对应快捷键J / ColorA)")]
+    public Sprite redSprite;
+    [Tooltip("黄色状态的精灵图 (对应快捷键K / ColorB)")]
+    public Sprite yellowSprite;
+    [Tooltip("蓝色状态的精灵图 (对应快捷键L / ColorC)")]
+    public Sprite blueSprite;
+    [Tooltip("左划状态的精灵图 (对应A / DirectionalLeft)")]
+    public Sprite leftSwipeSprite;
+    [Tooltip("右划状态的精灵图 (对应D / DirectionalRight)")]
+    public Sprite rightSwipeSprite;
 
     public int Lane { get; private set; }
     public GameColor Color { get; private set; }
@@ -45,31 +61,36 @@ public class Note : MonoBehaviour
 
     private void UpdateVisual()
     {
-        // Activate/deactivate child objects based on note type
-        if (colorNoteVisual != null)
-            colorNoteVisual.SetActive(NoteType == NoteType.Color);
+        if (mainRenderer == null) return;
 
-        if (leftDirectionalVisual != null)
-            leftDirectionalVisual.SetActive(NoteType == NoteType.DirectionalLeft);
+        // 恢复默认颜色，防止被之前的代码逻辑污染成纯色
+        mainRenderer.color = UnityEngine.Color.white;
 
-        if (rightDirectionalVisual != null)
-            rightDirectionalVisual.SetActive(NoteType == NoteType.DirectionalRight);
-
-        // Update color for color-type notes
-        if (NoteType == NoteType.Color && colorNoteVisual != null)
+        if (NoteType == NoteType.Color)
         {
-            var spriteRenderer = colorNoteVisual.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
+            switch (Color)
             {
-                Color c = UnityEngine.Color.white;
-                switch (Color)
-                {
-                    case GameColor.ColorA: c = UnityEngine.Color.red; break;
-                    case GameColor.ColorB: c = UnityEngine.Color.green; break;
-                    case GameColor.ColorC: c = UnityEngine.Color.blue; break;
-                }
-                spriteRenderer.color = c;
+                case GameColor.ColorA:
+                    mainRenderer.sprite = redSprite;
+                    break;
+                case GameColor.ColorB:
+                    mainRenderer.sprite = yellowSprite;
+                    break;
+                case GameColor.ColorC:
+                    mainRenderer.sprite = blueSprite;
+                    break;
+                default:
+                    mainRenderer.sprite = normalSprite;
+                    break;
             }
+        }
+        else if (NoteType == NoteType.DirectionalLeft)
+        {
+            mainRenderer.sprite = leftSwipeSprite;
+        }
+        else if (NoteType == NoteType.DirectionalRight)
+        {
+            mainRenderer.sprite = rightSwipeSprite;
         }
     }
 

@@ -34,16 +34,27 @@ public class NoteManager : MonoBehaviour
     /// <summary>游戏开始前的延迟时间（秒），用于显示歌曲标题等</summary>
     public float prePlayDelay = 2.0f;
     
- /// <summary>Note生成的Y坐标（屏幕顶部）</summary>
+    [Header("UI Alignment (Canvas Sync)")]
+    [Tooltip("Note 生成点的 UI 参照对象（屏幕顶部）")]
+    public RectTransform spawnPointUI;
+    [Tooltip("Note 判定区域的 UI 参照对象（玩家接住区域）")]
+    public RectTransform catchPointUI;
+    [Tooltip("Note 失误区域的 UI 参照对象（Miss线）")]
+    public RectTransform missPointUI;
+    [Tooltip("四条Lane的 UI 参照对象，对应4条竖直的游戏路线")]
+    public RectTransform[] laneUIAnchors;
+
+    [Header("Fallback Coordinates")]
+    /// <summary>如果没有设置UI参照，使用的默认Note生成的Y坐标</summary>
     public float spawnY = 6f;
     
-    /// <summary>Note判定区域的Y坐标（玩家接住区域）</summary>
+    /// <summary>如果没有设置UI参照，使用的默认Note判定区域的Y坐标</summary>
     public float catchY = -4f;
     
-    /// <summary>Note失误区域的Y坐标（超过此线则为Miss）</summary>
+    /// <summary>如果没有设置UI参照，使用的默认Note失误区域的Y坐标</summary>
     public float missY = -6f;
     
-    /// <summary>四条Lane的X坐标数组，对应4条竖直的游戏路线</summary>
+    /// <summary>如果没有设置UI参照，使用的默认四条Lane的X坐标</summary>
     public float[] laneXPositions = new float[] { -3.75f, -1.25f, 1.25f, 3.75f };
 
     [Header("Difficulty Hints")]
@@ -129,9 +140,25 @@ private int totalNotes = 0;
         if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.volume = GameSettings.MusicVolume;
 
- // --- 核心：基于同步后的 noteTravelTime 计算速度 ---
+        // --- 适配 UI Canvas 坐标系统 ---
+        // 如果配置了 UI 参照点，则使用 UI 元素的世界坐标，保证动态 Note 和静态 UI 一一对应
+        if (spawnPointUI != null) spawnY = spawnPointUI.position.y;
+        if (catchPointUI != null) catchY = catchPointUI.position.y;
+        if (missPointUI != null) missY = missPointUI.position.y;
+        if (laneUIAnchors != null && laneUIAnchors.Length > 0)
+        {
+            for (int i = 0; i < laneUIAnchors.Length && i < laneXPositions.Length; i++)
+            {
+                if (laneUIAnchors[i] != null)
+                {
+                    laneXPositions[i] = laneUIAnchors[i].position.x;
+                }
+            }
+        }
+
+        // --- 核心：基于同步后的 noteTravelTime 计算速度 ---
         // 公式：速度 = 距离 / 时间
-   // 这样Note恰好在noteTravelTime秒后到达catchY位置
+        // 这样Note恰好在noteTravelTime秒后到达catchY位置
         float distance = Mathf.Abs(spawnY - catchY);
         CurrentSpeed = distance / noteTravelTime;
 
@@ -273,8 +300,10 @@ private int totalNotes = 0;
     {
         if (notePrefab == null) return;
 
-        // 根据Lane计算生成位置
- Vector3 spawnPos = new Vector3(laneXPositions[data.lane], spawnY, 0);
+        // 根据Lane计算生成位置（laneXPositions已在Start中与UI同步）
+        float spawnX = laneXPositions.Length > data.lane ? laneXPositions[data.lane] : 0;
+
+        Vector3 spawnPos = new Vector3(spawnX, spawnY, 0);
         
         // 实例化Note预制体
         GameObject noteObj = Instantiate(notePrefab, spawnPos, Quaternion.identity);

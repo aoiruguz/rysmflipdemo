@@ -10,7 +10,13 @@ public class PlayerController : MonoBehaviour
     [Header("Mode Settings")]
     public ControlMode currentMode = ControlMode.Preset;
 
-    [Header("Lane Settings")]
+    [Header("UI Alignment (Canvas Sync)")]
+    [Tooltip("Note 判定区域的 UI 参照对象（玩家接住区域）")]
+    public RectTransform catchPointUI;
+    [Tooltip("四条Lane的 UI 参照对象，对应4条竖直的游戏路线")]
+    public RectTransform[] laneUIAnchors;
+
+    [Header("Lane Settings (Fallback Coordinates)")]
     public float[] laneXPositions = new float[] { -3.75f, -1.25f, 1.25f, 3.75f };
     public float catchHeight = -4f;
 
@@ -19,11 +25,26 @@ public class PlayerController : MonoBehaviour
     public float accuratePositionTolerance = 1.5f; // 位置容错范围
 
     [Header("Effects")]
+    public RectTransform effectContainer; // 托管反弹特效的UI容器
     public GameObject effectPrefab;
     public float effectSpeed = 10f;
     public float minEffectAngle = 30f;
     public float maxEffectAngle = 60f;
     public AudioSource hitAudioSource;
+
+    [Header("State Sprites")]
+    [Tooltip("默认状态/准确模式下的精灵图")]
+    public Sprite defaultSprite;
+    [Tooltip("红色状态的精灵图 (对应J / ColorA)")]
+    public Sprite redSprite;
+    [Tooltip("黄色状态的精灵图 (对应K / ColorB)")]
+    public Sprite yellowSprite;
+    [Tooltip("蓝色状态的精灵图 (对应L / ColorC)")]
+    public Sprite blueSprite;
+    [Tooltip("左划状态的精灵图 (对应A)")]
+    public Sprite leftSwipeSprite;
+    [Tooltip("右划状态的精灵图 (对应D)")]
+    public Sprite rightSwipeSprite;
 
     [Header("Feedback Settings")]
     public float feedbackScaleMultiplier = 1.2f;
@@ -53,8 +74,36 @@ public class PlayerController : MonoBehaviour
         // Delay difficulty check to ensure NoteManager has initialized
         StartCoroutine(InitializeDifficulty());
 
+        // --- 同步 UI 坐标到 catchHeight，确保判定逻辑使用真实位置 ---
+        SyncCatchHeight();
+
         UpdatePosition();
         UpdateVisual();
+    }
+
+    /// <summary>
+    /// 将 catchHeight 同步为 UI 参照点的真实世界坐标。
+    /// 这保证了 TryAccurateCatch / TryDirectionalCatch / CheckPresetCatch
+    /// 中所有基于 catchHeight 的位置判定都使用正确的坐标。
+    /// </summary>
+    private void SyncCatchHeight()
+    {
+        if (catchPointUI != null)
+        {
+            catchHeight = catchPointUI.position.y;
+            Debug.Log($"[PlayerController] catchHeight synced from UI: {catchHeight:F3}");
+        }
+        if (laneUIAnchors != null && laneUIAnchors.Length > 0)
+        {
+            for (int i = 0; i < laneUIAnchors.Length && i < laneXPositions.Length; i++)
+            {
+                if (laneUIAnchors[i] != null)
+                {
+                    laneXPositions[i] = laneUIAnchors[i].position.x;
+                }
+            }
+            Debug.Log($"[PlayerController] laneXPositions synced from UI");
+        }
     }
 
     private System.Collections.IEnumerator InitializeDifficulty()
@@ -158,6 +207,7 @@ public class PlayerController : MonoBehaviour
         // Check for directional note judgment first
         if (keyboard.aKey.wasPressedThisFrame)
         {
+            TriggerDirectionalFeedback(leftSwipeSprite);
             if (!TryDirectionalCatch(NoteType.DirectionalLeft))
             {
                 // If no directional note was caught, move lane left
@@ -166,6 +216,7 @@ public class PlayerController : MonoBehaviour
         }
         if (keyboard.dKey.wasPressedThisFrame)
         {
+            TriggerDirectionalFeedback(rightSwipeSprite);
             if (!TryDirectionalCatch(NoteType.DirectionalRight))
             {
                 // If no directional note was caught, move lane right
@@ -187,14 +238,12 @@ public class PlayerController : MonoBehaviour
             if (currentDifficulty == ChartDifficulty.Easy)
             {
                 if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; }
-                // K 和 L 键在 Easy 难度下不使用
             }
             // Normal 难度：只使用两种颜色
             else if (currentDifficulty == ChartDifficulty.Normal)
             {
-                if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; } // 红色
-                if (keyboard.kKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorC; colorChanged = true; } // 蓝色
-                // L 键在 Normal 难度下不使用
+                if (keyboard.jKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorA; colorChanged = true; }
+                if (keyboard.kKey.wasPressedThisFrame) { CurrentPresetColor = GameColor.ColorC; colorChanged = true; }
             }
             else // Hard 难度：使用三种颜色
             {
@@ -207,32 +256,27 @@ public class PlayerController : MonoBehaviour
         }
         else // Accurate Mode
         {
-            // Easy 难度：只使用 J 键
+            // 精确模式下 JKL 也触发临时视觉反馈
             if (currentDifficulty == ChartDifficulty.Easy)
             {
-                if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA);
-                // K 和 L 键在 Easy 难度下不使用
+                if (keyboard.jKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorA); TryAccurateCatch(GameColor.ColorA); }
             }
-            // Normal 难度：只使用两种颜色
             else if (currentDifficulty == ChartDifficulty.Normal)
             {
-                if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA); // 红色
-                if (keyboard.kKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorC); // 蓝色
-                // L 键在 Normal 难度下不使用
+                if (keyboard.jKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorA); TryAccurateCatch(GameColor.ColorA); }
+                if (keyboard.kKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorC); TryAccurateCatch(GameColor.ColorC); }
             }
-            else // Hard 难度：使用三种颜色
+            else // Hard
             {
-                if (keyboard.jKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorA);
-                if (keyboard.kKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorB);
-                if (keyboard.lKey.wasPressedThisFrame) TryAccurateCatch(GameColor.ColorC);
+                if (keyboard.jKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorA); TryAccurateCatch(GameColor.ColorA); }
+                if (keyboard.kKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorB); TryAccurateCatch(GameColor.ColorB); }
+                if (keyboard.lKey.wasPressedThisFrame) { TriggerAccurateFeedback(GameColor.ColorC); TryAccurateCatch(GameColor.ColorC); }
             }
         }
     }
 
     private void TryAccurateCatch(GameColor color)
     {
-        TriggerFeedback(color);
-
         NoteManager nm = Object.FindFirstObjectByType<NoteManager>();
         float currentTimeMs = nm != null ? nm.GetCurrentSongTimeMs() : Time.time * 1000f;
 
@@ -401,8 +445,21 @@ public class PlayerController : MonoBehaviour
     private void SpawnCatchEffect(Vector3 pos)
     {
         if (effectPrefab == null) return;
-        GameObject effectObj = Instantiate(effectPrefab, pos, Quaternion.identity);
-        NoteEffect effect = effectObj.GetComponent<NoteEffect>();
+        
+        GameObject effectObj;
+        if (effectContainer != null)
+        {
+            // 作为子物体实例化到指定的 UI Canvas 容器下
+            effectObj = Instantiate(effectPrefab, effectContainer);
+            effectObj.transform.position = pos; // 保持世界坐标一致
+            effectObj.transform.localScale = Vector3.one; // 重置缩放
+        }
+        else
+        {
+            effectObj = Instantiate(effectPrefab, pos, Quaternion.identity);
+        }
+
+        CatchEffect effect = effectObj.GetComponent<CatchEffect>();
         if (effect != null)
         {
             // Generate angle: 50% left (60-120°), 50% right (60-120° mirrored)
@@ -452,49 +509,68 @@ public class PlayerController : MonoBehaviour
     private void UpdateVisual()
     {
         if (spriteRenderer == null) return;
+        
+        // 恢复默认颜色，防止被之前的代码逻辑污染
+        spriteRenderer.color = Color.white;
 
         if (currentMode == ControlMode.Preset)
         {
-            spriteRenderer.color = GetUnityColor(CurrentPresetColor);
+            // Preset 模式：持续显示当前 JKL 状态的贴图
+            spriteRenderer.sprite = GetSpriteForColor(CurrentPresetColor);
         }
         else
         {
-            spriteRenderer.color = Color.white;
+            // Accurate 模式：默认永远是 normal 状态
+            spriteRenderer.sprite = defaultSprite;
         }
     }
 
-    private void TriggerFeedback(GameColor color)
+    /// <summary>
+    /// AD键的方向反馈：临时切换贴图后恢复到当前持久状态
+    /// </summary>
+    private void TriggerDirectionalFeedback(Sprite sprite)
     {
         if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
-        feedbackRoutine = StartCoroutine(FeedbackSequence(color));
+        feedbackRoutine = StartCoroutine(FeedbackSequence(sprite));
     }
 
-    private System.Collections.IEnumerator FeedbackSequence(GameColor color)
+    /// <summary>
+    /// 精确模式下 JKL/AD 的临时视觉反馈，结束后回到 defaultSprite
+    /// </summary>
+    private void TriggerAccurateFeedback(GameColor color)
     {
-        spriteRenderer.color = GetUnityColor(color);
+        if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
+        feedbackRoutine = StartCoroutine(FeedbackSequence(GetSpriteForColor(color)));
+    }
+
+    private System.Collections.IEnumerator FeedbackSequence(Sprite sprite)
+    {
+        spriteRenderer.color = Color.white;
+        spriteRenderer.sprite = sprite;
         transform.localScale = originalScale * feedbackScaleMultiplier;
 
         yield return new WaitForSeconds(feedbackDuration);
 
         transform.localScale = originalScale;
-        UpdateVisual();
+        UpdateVisual(); // 回到持久状态（Preset=JKL贴图, Accurate=normal贴图）
     }
     public void RefreshControlMode()
     {
         // 重新从全局设置读取模式
         currentMode = (ControlMode)GameSettings.InputMode;
-        // 立即刷新颜色显示
+        // 立即刷新显示
         UpdateVisual();
         Debug.Log($"[PlayerController] Mode refreshed to: {currentMode}");
     }
-    private Color GetUnityColor(GameColor color)
+    
+    private Sprite GetSpriteForColor(GameColor color)
     {
         switch (color)
         {
-            case GameColor.ColorA: return Color.red;
-            case GameColor.ColorB: return Color.green;
-            case GameColor.ColorC: return Color.blue;
-            default: return Color.white;
+            case GameColor.ColorA: return redSprite;
+            case GameColor.ColorB: return yellowSprite;
+            case GameColor.ColorC: return blueSprite;
+            default: return defaultSprite;
         }
     }
 }

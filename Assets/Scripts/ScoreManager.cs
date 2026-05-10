@@ -92,6 +92,7 @@ public class ScoreManager : MonoBehaviour
         Combo = 0;
         HealthSystem.Instance?.TakeDamage();
         HealthSystem.Instance?.ResetComboTracking();
+        MissEffectManager.Instance?.PlayMissEffects();
         UIManager.Instance?.ShowJudgment("MISS", 0, Combo, false);
     }
 

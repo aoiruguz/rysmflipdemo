@@ -9,25 +9,6 @@ using System.Collections.Generic;
 /// </summary>
 public class EnemyHealthSystem : MonoBehaviour
 {
-    [Header("Heart Sprites")]
-    [Tooltip("满血的心的图片（5/5）")]
-    public Sprite heart5Sprite;
-
-    [Tooltip("4/5血量的心的图片")]
-    public Sprite heart4Sprite;
-
-    [Tooltip("3/5血量的心的图片")]
-    public Sprite heart3Sprite;
-
-    [Tooltip("2/5血量的心的图片")]
-    public Sprite heart2Sprite;
-
-    [Tooltip("1/5血量的心的图片")]
-    public Sprite heart1Sprite;
-
-    [Tooltip("空血的心的图片（0/5）")]
-    public Sprite heart0Sprite;
-
     [Header("Heart UI References")]
     [Tooltip("所有心的Image组件（从左到右）")]
     public List<Image> hearts = new List<Image>();
@@ -147,30 +128,21 @@ public class EnemyHealthSystem : MonoBehaviour
             int heartSegments = Mathf.Clamp(remainingHealth, 0, segmentsPerHeart);
             remainingHealth -= segmentsPerHeart;
 
-            // 更新心的图片
-            UpdateHeartSprite(hearts[i], heartSegments, i);
+            // 更新心的填充比例
+            UpdateHeartFill(hearts[i], heartSegments, i);
         }
     }
 
     /// <summary>
-    /// 更新单个心的图片
+    /// 更新单个心的填充比例
     /// </summary>
-    private void UpdateHeartSprite(Image heart, int segments, int heartIndex)
+    private void UpdateHeartFill(Image heart, int segments, int heartIndex)
     {
-        Sprite newSprite = segments switch
-        {
-            5 => heart5Sprite,
-            4 => heart4Sprite,
-            3 => heart3Sprite,
-            2 => heart2Sprite,
-            1 => heart1Sprite,
-            0 => heart0Sprite,
-            _ => heart0Sprite
-        };
+        float targetFill = (float)segments / segmentsPerHeart;
 
-        if (newSprite != null && heart.sprite != newSprite)
+        if (heart.fillAmount != targetFill)
         {
-            heart.sprite = newSprite;
+            heart.fillAmount = targetFill;
 
             // 播放动画
             if (playScaleAnimation)

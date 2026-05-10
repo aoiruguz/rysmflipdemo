@@ -103,9 +103,10 @@ public class SetupSongProgressBar : EditorWindow
 
         // 添加SongProgressBar组件
         SongProgressBar progressBarScript = progressBarContainer.AddComponent<SongProgressBar>();
-        progressBarScript.progressBarFill = fillImage;
-        progressBarScript.percentageText = percentTMP;
-        progressBarScript.progressText = progressTMP;
+        progressBarScript.fillRectTransform = fillRect;
+        // progressBarScript.progressBarFill = fillImage; // 已移除
+        // progressBarScript.percentageText = percentTMP; // 已移除
+        // progressBarScript.progressText = progressTMP; // 已移除
 
         // 标记场景为已修改
         UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(
