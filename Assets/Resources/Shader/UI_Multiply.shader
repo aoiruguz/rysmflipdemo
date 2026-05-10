@@ -5,6 +5,9 @@ Shader "Custom/UI_Multiply"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
 
+        // Alpha 裁切阈值：低于此值的像素将被完全丢弃，消除正片叠底模式下的半透明白边
+        _Cutoff ("Alpha Cutoff", Range(0.0, 1.0)) = 0.1
+
         // 保留原生 UI 遮罩(Mask)所需的模板缓冲属性
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
@@ -69,8 +72,9 @@ Shader "Custom/UI_Multiply"
             };
 
             sampler2D _MainTex;
-            fixed4 _Color;
-            float4 _ClipRect;
+            fixed4    _Color;
+            float4    _ClipRect;
+            float     _Cutoff;
 
             v2f vert(appdata_t v)
             {
@@ -90,6 +94,9 @@ Shader "Custom/UI_Multiply"
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(i.worldPosition.xy, _ClipRect);
                 #endif
+
+                // Alpha 硬裁切：消除正片叠底模式下残留的半透明白边
+                clip(color.a - _Cutoff);
 
                 return color;
             }
