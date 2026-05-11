@@ -12,7 +12,7 @@ public class TitleManager : MonoBehaviour
 {
     [Header("场景配置")]
     [Tooltip("新游戏要跳转的场景名称")]
-    public string newGameSceneName = "PlayScene";
+    public string newGameSceneName = "Big Map";
 
     [Tooltip("继续游戏要跳转的场景名称")]
     public string continueGameSceneName = "PlayScene";

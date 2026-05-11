@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7c6a373f220c7504cb42e8a09f7a82dd
+guid: a94c6a6aa3e4f8d4fba52a722cc6d959
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2673633907231301005
-    second: Attack_K_0
+      213: 6633519907209318176
+    second: Tip_K_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +49,7 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 1
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Attack_K_0
+      name: Tip_K_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 13
-        height: 13
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8d16f38fd7aa1520800000000000000
-      internalID: 2673633907231301005
+      spriteID: 02f81bfa53ffe0c50800000000000000
+      internalID: 6633519907209318176
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Attack_K_0: 2673633907231301005
+      Tip_K_0: 6633519907209318176
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
