@@ -147,13 +147,13 @@ public class EditorNote : MonoBehaviour
         {
             switch (noteData.color)
             {
-                case GameColor.ColorA: // 红色 -> 绿色
-                    noteData.color = GameColor.ColorB;
+                case GameColor.J_Color0_Red: // 红色 -> 黄色
+                    noteData.color = GameColor.L_Color1_Yellow;
                     break;
-                case GameColor.ColorB: // 绿色 -> 蓝色
-                    noteData.color = GameColor.ColorC;
+                case GameColor.L_Color1_Yellow: // 黄色 -> 蓝色
+                    noteData.color = GameColor.K_Color2_Blue;
                     break;
-                case GameColor.ColorC: // 蓝色 -> 左箭头
+                case GameColor.K_Color2_Blue: // 蓝色 -> 左箭头
                     noteData.noteType = NoteType.DirectionalLeft;
                     break;
             }
@@ -167,7 +167,7 @@ public class EditorNote : MonoBehaviour
         {
             // 右箭头 -> 红色
             noteData.noteType = NoteType.Color;
-            noteData.color = GameColor.ColorA;
+            noteData.color = GameColor.J_Color0_Red;
         }
 
         UpdateChartData();
@@ -214,9 +214,9 @@ public class EditorNote : MonoBehaviour
                 Color c = Color.white;
                 switch (noteData.color)
                 {
-                    case GameColor.ColorA: c = Color.red; break;
-                    case GameColor.ColorB: c = Color.green; break;
-                    case GameColor.ColorC: c = Color.blue; break;
+                    case GameColor.J_Color0_Red: c = Color.red; break;
+                    case GameColor.L_Color1_Yellow: c = Color.yellow; break;
+                    case GameColor.K_Color2_Blue: c = Color.blue; break;
                 }
                 spriteRenderer.color = c;
             }

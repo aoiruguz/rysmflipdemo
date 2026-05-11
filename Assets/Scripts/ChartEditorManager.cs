@@ -510,7 +510,7 @@ public class ChartEditorManager : MonoBehaviour
     /// <summary>
     /// 添加新note
     /// </summary>
-    public void AddNote(float timeInSeconds, int lane, NoteType noteType, GameColor color = GameColor.ColorA)
+    public void AddNote(float timeInSeconds, int lane, NoteType noteType, GameColor color = GameColor.J_Color0_Red)
     {
         // 应用吸附
         timeInSeconds = ApplySnap(timeInSeconds);
