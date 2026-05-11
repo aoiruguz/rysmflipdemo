@@ -28,6 +28,8 @@ public class PlaySceneInitializer : MonoBehaviour
         if (currentChart == null)
         {
             Debug.LogError("[PlaySceneInitializer] No chart selected!");
+            // 即使没有选中谱面，也要初始化游戏UI
+            OnStoryComplete();
             return;
         }
 

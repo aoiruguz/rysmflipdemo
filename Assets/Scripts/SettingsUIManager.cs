@@ -34,6 +34,12 @@ public class SettingsUIManager : MonoBehaviour
     [Header("关闭按钮")]
     public Button closeButton;
 
+    [Header("返回标题页")]
+    [Tooltip("返回标题页按钮（可选）")]
+    public Button returnToTitleButton;
+    [Tooltip("标题页场景名称")]
+    public string titleSceneName = "Title";
+
     private void Awake()
     {
         // 设置按钮监听
@@ -43,6 +49,8 @@ public class SettingsUIManager : MonoBehaviour
             inputModeButton.onClick.AddListener(ToggleInputMode);
         if (offsetSpeedButton != null)
             offsetSpeedButton.onClick.AddListener(OpenOffsetSpeedScene);
+        if (returnToTitleButton != null)
+            returnToTitleButton.onClick.AddListener(ReturnToTitle);
 
         // 设置滑块监听
         if (musicVolumeSlider != null)
@@ -229,6 +237,30 @@ public class SettingsUIManager : MonoBehaviour
         OffsetSpeedAdjustManager.SetReturnScene(currentScene);
 
         SceneManager.LoadScene(offsetSpeedSceneName);
+    }
+
+    /// <summary>
+    /// 返回标题页
+    /// 可以在 Inspector 中将按钮的 OnClick 事件绑定到此方法
+    /// </summary>
+    public void ReturnToTitle()
+    {
+        if (string.IsNullOrEmpty(titleSceneName))
+        {
+            Debug.LogWarning("[Settings] 标题页场景名称未设置！");
+            return;
+        }
+
+        Debug.Log($"[Settings] 返回标题页: {titleSceneName}");
+
+        // 保存当前设置
+        if (SaveManager.Instance != null)
+        {
+            SaveManager.Instance.SaveGame();
+        }
+
+        // 加载标题页场景
+        SceneManager.LoadScene(titleSceneName);
     }
 
     // 更新音乐音量文本

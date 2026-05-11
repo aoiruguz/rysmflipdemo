@@ -169,6 +169,12 @@ public class ChartEditorManager : MonoBehaviour
             }
         }
 
+        // 快捷键：空格键切换播放/暂停
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TogglePlayPause();
+        }
+
         // 快捷键：调整偏移（只在暂停时）
         if (!isPlaying)
         {
@@ -193,6 +199,12 @@ public class ChartEditorManager : MonoBehaviour
     public void RegenerateAllNotes()
     {
         GenerateAllNotes();
+
+        // 更新相机控制器的maxY以适应新的offset
+        if (cameraController != null)
+        {
+            cameraController.UpdateMaxY();
+        }
     }
 
     /// <summary>

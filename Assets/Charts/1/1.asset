@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: qi
+  composer: 
+  displayBPM: 112
+  previewMusic: {fileID: 8300000, guid: 833d8e384e410274b9ff4e0866291197, type: 3}
+  enemyAvatar: {fileID: 0}
+  enemyInfo: 
+  isLockedByDefault: 1
+  requiredFans: -1
+  difficulties:
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: b24781da79d76054bb84343d12c7bd43, type: 2}
+  - difficulty: 1
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 5c19ca1d184503f48a9b043a9698a786, type: 2}
+  - difficulty: 2
+    ratingLevel: 8
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: f87ac34ba07d39040b79aa53b25170a7, type: 2}
+  openingDialogues: []
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  interferenceCount: 0
+  interferenceTextConfig: {fileID: 0}

@@ -19,6 +19,9 @@ public class SaveData
     public long totalFans = 0;
     public int unlockedChapter = 0;
 
+    // 剧情进度
+    public List<StoryProgressData> storyProgress = new List<StoryProgressData>();
+
     // 存档版本（用于未来兼容性）
     public int saveVersion = 1;
 }

@@ -1,0 +1,98 @@
+{
+  "stories": [
+    {
+      "storyId": "BigMap_Enter",
+      "storyName": "初入大地图",
+      "triggerType": 0,
+      "triggerCondition": "Big Map",
+      "dialogues": [
+        {
+          "characterName": "经纪人",
+          "dialogueText": "欢迎来到这里！这是你第一次踏上这片舞台。",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "经纪人",
+          "dialogueText": "前方的路还很长，但我相信你一定能成为最耀眼的明星！",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "主角",
+          "dialogueText": "谢谢！我会努力的！",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+    {
+      "storyId": "Level_01_Complete",
+      "storyName": "完成第一关",
+      "triggerType": 1,
+      "triggerCondition": "Level_01",
+      "dialogues": [
+        {
+          "characterName": "粉丝",
+          "dialogueText": "太棒了！你的表演让我热血沸腾！",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "经纪人",
+          "dialogueText": "不错的开始，但这只是第一步。接下来的挑战会更难哦。",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+    {
+      "storyId": "Level_04_Opening",
+      "storyName": "第四关开场-存在的质问",
+      "triggerType": 0,
+      "triggerCondition": "Big Map",
+      "dialogues": [
+        {
+          "characterName": "",
+          "dialogueText": "战斗结束瞬间，屏幕变静。无数张张开的嘴悬浮在空中，没有五官只有黑洞般的瞳孔，它们随着你的呼吸频率开合。",
+          "characterSpritePath": "小猫",
+          "backgroundSpritePath": "第四关1",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "背景音不是音乐，而是成千上万个点赞、转发声组成的白噪音，最后汇聚成一个低沉的嗡鸣。",
+          "characterSpritePath": "小猫",
+          "backgroundSpritePath": "第四关2",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "嘴巴里吐出的字是像素块拼凑而成的，会不断重组。",
+          "characterSpritePath": "小猫",
+          "backgroundSpritePath": "第四关3",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "你是在发声，还是在被听见？",
+          "characterSpritePath": "小猫",
+          "backgroundSpritePath": "第四关4",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "你是主宰者，还是回声的一部分？",
+          "characterSpritePath": "小猫",
+          "backgroundSpritePath": "第四关5",
+          "audioClipPath": ""
+        }
+      ]
+    }
+  ]
+}

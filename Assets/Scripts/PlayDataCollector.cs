@@ -163,7 +163,7 @@ public class PlayDataCollector : MonoBehaviour
 
         long newFans = ScoreCalculator.CalculateFansGain(playCount, CurrentPlayData.isReplay);
 
-        // 保存粉丝数
+        // 保存粉丝数（通过 SaveManager，会自动检查并解锁章节）
         FansDataManager.AddFans(newFans);
 
         // 标记关卡为已通关（如果不是重复挑战）
@@ -179,16 +179,8 @@ public class PlayDataCollector : MonoBehaviour
         // 保存到新的存档系统
         SaveLevelResultToSaveManager(playCount, newFans);
 
-        // 检查是否解锁新章节
+        // 获取总粉丝数用于日志
         long totalFans = FansDataManager.GetTotalFans();
-        int currentUnlocked = FansDataManager.GetUnlockedChapter();
-        for (int i = currentUnlocked + 1; i < 3; i++)
-        {
-            if (FansDataManager.IsChapterUnlocked(i))
-            {
-                FansDataManager.SetUnlockedChapter(i);
-            }
-        }
 
         // Log the collected data
         Debug.Log($"[PlayDataCollector] === Play Data Summary ===");
