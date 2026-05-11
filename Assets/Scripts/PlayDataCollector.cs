@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 /// <summary>
 /// 收集PlayScene中的游玩数据
@@ -15,8 +16,12 @@ public class PlayDataCollector : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI playCountText; // 改为显示播放量而不是达成率
+    public float scoreTweenDuration = 0.3f; // 跑分动画持续时间
 
     private float gameStartTime; // 记录游戏开始时间
+    private long lastTargetPlayCount = -1; // 上一次的目标分数
+    private long displayedPlayCount = 0; // 当前正在显示的动态分数
+    private Tween scoreTween; // 缓存Tween实例
 
     void Awake()
     {
@@ -114,6 +119,7 @@ public class PlayDataCollector : MonoBehaviour
         // 注意：不要在这里收集，因为SongCompletionDetector已经在跳转前收集了
         if (Instance == this)
         {
+            if (scoreTween != null) scoreTween.Kill();
             Instance = null; // 清理静态引用
             Debug.Log("[PlayDataCollector] Instance destroyed");
         }
@@ -231,8 +237,8 @@ public class PlayDataCollector : MonoBehaviour
         // Get current data
         GetCurrentData();
 
-        // Calculate and display play count
-        long playCount = ScoreCalculator.CalculatePlayCount(
+        // Calculate target play count
+        long targetPlayCount = ScoreCalculator.CalculatePlayCount(
             CurrentPlayData.chapterIndex,
             CurrentPlayData.isBossStage,
             CurrentPlayData.perfectCount,
@@ -242,7 +248,23 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData.maxCombo,
             CurrentPlayData.isReplay);
 
-        playCountText.text = ScoreCalculator.FormatLargeNumber(playCount);
+        // 只有当目标分数发生变化时才启动/更新动画
+        if (targetPlayCount != lastTargetPlayCount)
+        {
+            lastTargetPlayCount = targetPlayCount;
+
+            // 杀掉旧动画
+            if (scoreTween != null) scoreTween.Kill();
+
+            // 创建新的补间动画
+            // 使用 DOTween.To 改变 displayedPlayCount
+            scoreTween = DOTween.To(() => displayedPlayCount, x => displayedPlayCount = (long)x, targetPlayCount, scoreTweenDuration)
+                .SetEase(Ease.OutQuad) // 使用淡出效果，让结束更平滑
+                .OnUpdate(() =>
+                {
+                    playCountText.text = ScoreCalculator.FormatLargeNumber(displayedPlayCount);
+                });
+        }
     }
 
     /// <summary>

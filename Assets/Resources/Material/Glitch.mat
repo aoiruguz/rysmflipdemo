@@ -44,7 +44,7 @@ Material:
     - _BlockSizeRandomness: 0.5
     - _EnableExternalAlpha: 0
     - _GlitchBlockSize: 0.05
-    - _GlitchIntensity: 1
+    - _GlitchIntensity: 0
     - _StencilComp: 3
     - _StencilFail: 0
     - _StencilPass: 0
