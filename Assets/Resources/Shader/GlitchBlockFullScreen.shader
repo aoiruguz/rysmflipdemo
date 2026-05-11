@@ -93,7 +93,7 @@ Shader "Custom/GlitchBlockFullScreen"
                 float2 uv = input.texcoord;
 
                 // Use Unity built-ins: _Time.y = unscaled time, _ScreenParams.xy = (width, height)
-                float time = floor(_Time.y * 120.0) / 120.0;
+                float time = _Time.y;
                 float2 screenSize = _ScreenParams.xy;
 
                 // --- First-pass block offset ---
