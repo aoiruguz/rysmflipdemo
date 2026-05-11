@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         var keyboard = Keyboard.current;
         if (keyboard == null) return;
 
-        if (keyboard.oKey.wasPressedThisFrame)
+        if (keyboard.escapeKey.wasPressedThisFrame)
         {
             ToggleSettings();
         }
@@ -211,7 +211,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void ToggleSettings()
+    public void ToggleSettings()
     {
         SettingsUI settings = Object.FindFirstObjectByType<SettingsUI>(FindObjectsInactive.Include);
         if (settings != null)
