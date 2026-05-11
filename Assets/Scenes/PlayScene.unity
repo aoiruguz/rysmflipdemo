@@ -2740,7 +2740,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 8.895432, y: 0.5082965, z: -51.08523, w: 32.15065}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4425,7 +4425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoteManager
   notePrefab: {fileID: 7312989398368265476, guid: 121b9d315d0b2044d8f3e05f7fe5893a, type: 3}
   noteTextData: {fileID: 4900000, guid: 41c3acf5d2e38954dacd9f8593a2b4d2, type: 3}
-  currentChart: {fileID: 11400000, guid: eb4a29d80ecc40542875008a8fd2de34, type: 2}
+  currentChart: {fileID: 0}
   audioSource: {fileID: 610100206}
   noteTravelTime: 1
   prePlayDelay: 2
@@ -9487,7 +9487,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 10.306001, y: 1.5745243, z: -55.53794, w: 32.49256}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -13867,8 +13867,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889617446}
-  - component: {fileID: 1889617445}
   - component: {fileID: 1889617447}
+  - component: {fileID: 1889617448}
   m_Layer: 0
   m_Name: StoryManager
   m_TagString: Untagged
@@ -13876,28 +13876,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1889617445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889617444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e6271b7cffc9ae45b0d82dc231a115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoryManager
-  dialogPanel1: {fileID: 409832743}
-  dialogText1: {fileID: 1327703885}
-  speakerName1: {fileID: 1651164594}
-  dialogPanel2: {fileID: 581183008}
-  dialogText2: {fileID: 402665712}
-  speakerName2: {fileID: 1659915706}
-  skipButton: {fileID: 87362099}
-  skipButtonObject: {fileID: 87362098}
-  defaultDialogDisplayDuration: 3
-  defaultDialogTransitionDelay: 0.5
 --- !u!4 &1889617446
 Transform:
   m_ObjectHideFlags: 0
@@ -13925,10 +13903,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6252618d721bd4fb6296c9ebc9365d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlaySceneInitializer
-  storyManager: {fileID: 1889617445}
+  storyManager: {fileID: 1889617448}
   noteManager: {fileID: 610100204}
   gameplayUI: {fileID: 812086436}
   pauseGameDuringStory: 1
+--- !u!114 &1889617448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889617444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abaecc3ba11a6e41be6ed43e65b0225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoryManager
+  dialogPanel1: {fileID: 409832743}
+  dialogText1: {fileID: 1327703885}
+  speakerName1: {fileID: 1651164594}
+  dialogPanel2: {fileID: 581183008}
+  dialogText2: {fileID: 402665712}
+  speakerName2: {fileID: 1659915706}
+  skipButton: {fileID: 87362099}
+  skipButtonObject: {fileID: 87362098}
+  defaultDialogDisplayDuration: 3
+  defaultDialogTransitionDelay: 0.5
 --- !u!1 &1893796383
 GameObject:
   m_ObjectHideFlags: 0

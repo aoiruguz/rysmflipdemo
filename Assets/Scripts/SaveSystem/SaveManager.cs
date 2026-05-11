@@ -5,15 +5,20 @@ using UnityEngine;
 /// <summary>
 /// 统一的存档管理器
 /// 负责保存和加载所有游戏数据
+/// 使用两个独立的JSON文件：settings.json（设置）和 progress.json（进度）
 /// </summary>
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
-    private SaveData currentSaveData;
-    private string saveFilePath;
+    private GameSettingsData currentSettings;
+    private GameProgressData currentProgress;
 
-    private const string SAVE_FILE_NAME = "gamesave.json";
+    private string settingsFilePath;
+    private string progressFilePath;
+
+    private const string SETTINGS_FILE_NAME = "settings.json";
+    private const string PROGRESS_FILE_NAME = "progress.json";
 
     private void Awake()
     {
@@ -26,7 +31,9 @@ public class SaveManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        saveFilePath = Path.Combine(Application.persistentDataPath, SAVE_FILE_NAME);
+        settingsFilePath = Path.Combine(Application.persistentDataPath, SETTINGS_FILE_NAME);
+        progressFilePath = Path.Combine(Application.persistentDataPath, PROGRESS_FILE_NAME);
+
         LoadGame();
     }
 
@@ -35,62 +42,125 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
-        if (File.Exists(saveFilePath))
+        LoadSettings();
+        LoadProgress();
+        ApplySettings();
+    }
+
+    /// <summary>
+    /// 加载设置文件
+    /// </summary>
+    private void LoadSettings()
+    {
+        if (File.Exists(settingsFilePath))
         {
             try
             {
-                string json = File.ReadAllText(saveFilePath);
-                currentSaveData = JsonUtility.FromJson<SaveData>(json);
-                Debug.Log($"[SaveManager] Game loaded from: {saveFilePath}");
-
-                // 应用设置到游戏
-                ApplySettings();
+                string json = File.ReadAllText(settingsFilePath);
+                currentSettings = JsonUtility.FromJson<GameSettingsData>(json);
+                Debug.Log($"[SaveManager] Settings loaded from: {settingsFilePath}");
             }
             catch (Exception e)
             {
-                Debug.LogError($"[SaveManager] Failed to load save file: {e.Message}");
-                CreateNewSave();
+                Debug.LogError($"[SaveManager] Failed to load settings file: {e.Message}");
+                CreateNewSettings();
             }
         }
         else
         {
-            Debug.Log("[SaveManager] No save file found, creating new save");
-            CreateNewSave();
+            Debug.Log("[SaveManager] No settings file found, creating new settings");
+            CreateNewSettings();
         }
     }
 
     /// <summary>
-    /// 保存游戏
+    /// 加载进度文件
     /// </summary>
-    public void SaveGame()
+    private void LoadProgress()
+    {
+        if (File.Exists(progressFilePath))
+        {
+            try
+            {
+                string json = File.ReadAllText(progressFilePath);
+                currentProgress = JsonUtility.FromJson<GameProgressData>(json);
+                Debug.Log($"[SaveManager] Progress loaded from: {progressFilePath}");
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[SaveManager] Failed to load progress file: {e.Message}");
+                CreateNewProgress();
+            }
+        }
+        else
+        {
+            Debug.Log("[SaveManager] No progress file found, creating new progress");
+            CreateNewProgress();
+        }
+    }
+
+    /// <summary>
+    /// 保存设置
+    /// </summary>
+    public void SaveSettings()
     {
         try
         {
-            // 保存前先同步当前设置
             SyncCurrentSettings();
-
-            string json = JsonUtility.ToJson(currentSaveData, true);
-            File.WriteAllText(saveFilePath, json);
-            Debug.Log($"[SaveManager] Game saved to: {saveFilePath}");
+            string json = JsonUtility.ToJson(currentSettings, true);
+            File.WriteAllText(settingsFilePath, json);
+            Debug.Log($"[SaveManager] Settings saved to: {settingsFilePath}");
         }
         catch (Exception e)
         {
-            Debug.LogError($"[SaveManager] Failed to save game: {e.Message}");
+            Debug.LogError($"[SaveManager] Failed to save settings: {e.Message}");
         }
     }
 
     /// <summary>
-    /// 创建新存档
+    /// 保存进度
     /// </summary>
-    private void CreateNewSave()
+    public void SaveProgress()
     {
-        currentSaveData = new SaveData();
+        try
+        {
+            string json = JsonUtility.ToJson(currentProgress, true);
+            File.WriteAllText(progressFilePath, json);
+            Debug.Log($"[SaveManager] Progress saved to: {progressFilePath}");
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[SaveManager] Failed to save progress: {e.Message}");
+        }
+    }
 
-        // 初始化默认设置
-        currentSaveData.settings.resolutionWidth = Screen.currentResolution.width;
-        currentSaveData.settings.resolutionHeight = Screen.currentResolution.height;
+    /// <summary>
+    /// 保存游戏（同时保存设置和进度）
+    /// </summary>
+    public void SaveGame()
+    {
+        SaveSettings();
+        SaveProgress();
+    }
 
-        SaveGame();
+    /// <summary>
+    /// 创建新设置
+    /// </summary>
+    private void CreateNewSettings()
+    {
+        currentSettings = new GameSettingsData();
+        currentSettings.resolutionWidth = Screen.currentResolution.width;
+        currentSettings.resolutionHeight = Screen.currentResolution.height;
+        SaveSettings();
+    }
+
+    /// <summary>
+    /// 创建新进度
+    /// </summary>
+    private void CreateNewProgress()
+    {
+        currentProgress = new GameProgressData();
+        SaveProgress();
     }
 
     /// <summary>
@@ -98,14 +168,12 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void ApplySettings()
     {
-        var settings = currentSaveData.settings;
-
-        GameSettings.MusicVolume = settings.musicVolume;
-        GameSettings.NoteVolume = settings.noteVolume;
-        GameSettings.GlobalOffset = settings.globalOffset;
-        GameSettings.NoteTravelTime = settings.noteTravelTime;
-        GameSettings.InputMode = settings.inputMode;
-        GameSettings.ApplyResolution(settings.resolutionWidth, settings.resolutionHeight, settings.fullScreenMode);
+        GameSettings.MusicVolume = currentSettings.musicVolume;
+        GameSettings.NoteVolume = currentSettings.noteVolume;
+        GameSettings.GlobalOffset = currentSettings.globalOffset;
+        GameSettings.NoteTravelTime = currentSettings.noteTravelTime;
+        GameSettings.InputMode = currentSettings.inputMode;
+        GameSettings.ApplyResolution(currentSettings.resolutionWidth, currentSettings.resolutionHeight, currentSettings.fullScreenMode);
     }
 
     /// <summary>
@@ -113,16 +181,14 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     private void SyncCurrentSettings()
     {
-        currentSaveData.settings.musicVolume = GameSettings.MusicVolume;
-        currentSaveData.settings.noteVolume = GameSettings.NoteVolume;
-        currentSaveData.settings.globalOffset = GameSettings.GlobalOffset;
-        currentSaveData.settings.noteTravelTime = GameSettings.NoteTravelTime;
-        currentSaveData.settings.inputMode = GameSettings.InputMode;
-        currentSaveData.settings.resolutionWidth = GameSettings.ResolutionWidth;
-        currentSaveData.settings.resolutionHeight = GameSettings.ResolutionHeight;
-        currentSaveData.settings.fullScreenMode = GameSettings.FullScreenMode;
-
-        // 粉丝数和章节数据已经在 currentSaveData 中，无需同步
+        currentSettings.musicVolume = GameSettings.MusicVolume;
+        currentSettings.noteVolume = GameSettings.NoteVolume;
+        currentSettings.globalOffset = GameSettings.GlobalOffset;
+        currentSettings.noteTravelTime = GameSettings.NoteTravelTime;
+        currentSettings.inputMode = GameSettings.InputMode;
+        currentSettings.resolutionWidth = GameSettings.ResolutionWidth;
+        currentSettings.resolutionHeight = GameSettings.ResolutionHeight;
+        currentSettings.fullScreenMode = GameSettings.FullScreenMode;
     }
 
     /// <summary>
@@ -132,7 +198,7 @@ public class SaveManager : MonoBehaviour
     {
         string key = $"{levelName}_{songName}_{difficulty}";
 
-        foreach (var progress in currentSaveData.levelProgress)
+        foreach (var progress in currentProgress.levelProgress)
         {
             if (progress.GetLevelKey() == key)
             {
@@ -151,19 +217,19 @@ public class SaveManager : MonoBehaviour
         string key = newProgress.GetLevelKey();
 
         // 查找是否已存在
-        for (int i = 0; i < currentSaveData.levelProgress.Count; i++)
+        for (int i = 0; i < currentProgress.levelProgress.Count; i++)
         {
-            if (currentSaveData.levelProgress[i].GetLevelKey() == key)
+            if (currentProgress.levelProgress[i].GetLevelKey() == key)
             {
-                currentSaveData.levelProgress[i] = newProgress;
-                SaveGame();
+                currentProgress.levelProgress[i] = newProgress;
+                SaveProgress();
                 return;
             }
         }
 
         // 不存在则添加
-        currentSaveData.levelProgress.Add(newProgress);
-        SaveGame();
+        currentProgress.levelProgress.Add(newProgress);
+        SaveProgress();
     }
 
     /// <summary>
@@ -183,6 +249,9 @@ public class SaveManager : MonoBehaviour
                 difficulty = difficulty
             };
         }
+
+        // 检查是否是首次通关
+        bool wasNotCleared = !progress.isCleared;
 
         // 更新数据
         progress.isCleared = true;
@@ -206,10 +275,34 @@ public class SaveManager : MonoBehaviour
 
         UpdateLevelProgress(progress);
 
-        // 直接更新粉丝数到 SaveData
+        // 直接更新粉丝数
         AddFans(fansEarned);
 
         Debug.Log($"[SaveManager] Level result saved: {levelName} - {difficulty}, Score: {score}, Rank: {rank}");
+
+        // 检查是否是主线关卡首次通关
+        if (wasNotCleared && levelName.StartsWith("MainStory_"))
+        {
+            Debug.Log($"[SaveManager] Main story level cleared for the first time: {levelName}");
+            SetJustClearedMainLevel(levelName);
+        }
+    }
+
+    /// <summary>
+    /// 保存关卡结果（带 LevelData 参数，用于检测主线关卡）
+    /// </summary>
+    public void SaveLevelResult(LevelData levelData, string songName, ChartDifficulty difficulty,
+        int score, string rank, int perfect, int great, int good, int miss, int maxCombo, long fansEarned)
+    {
+        // 调用原有的保存方法
+        SaveLevelResult(levelData.levelName, songName, difficulty, score, rank, perfect, great, good, miss, maxCombo, fansEarned);
+
+        // 检查是否是主线关卡
+        if (levelData.isMainStoryLevel)
+        {
+            Debug.Log($"[SaveManager] Main story level cleared: {levelData.levelName} (Chapter {levelData.chapterGroup})");
+            MarkChapterMainStoryCleared(levelData.chapterGroup, levelData.levelName);
+        }
     }
 
     /// <summary>
@@ -244,7 +337,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public long GetTotalFans()
     {
-        return currentSaveData.totalFans;
+        return currentProgress.totalFans;
     }
 
     /// <summary>
@@ -252,8 +345,8 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void SetTotalFans(long fans)
     {
-        currentSaveData.totalFans = fans;
-        SaveGame();
+        currentProgress.totalFans = fans;
+        SaveProgress();
     }
 
     /// <summary>
@@ -261,8 +354,8 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void AddFans(long fansToAdd)
     {
-        currentSaveData.totalFans += fansToAdd;
-        SaveGame();
+        currentProgress.totalFans += fansToAdd;
+        SaveProgress();
     }
 
     /// <summary>
@@ -270,7 +363,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public int GetUnlockedChapter()
     {
-        return currentSaveData.unlockedChapter;
+        return currentProgress.unlockedChapter;
     }
 
     /// <summary>
@@ -278,12 +371,65 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void SetUnlockedChapter(int chapterIndex)
     {
-        if (chapterIndex > currentSaveData.unlockedChapter)
+        if (chapterIndex > currentProgress.unlockedChapter)
         {
-            currentSaveData.unlockedChapter = chapterIndex;
-            SaveGame();
+            currentProgress.unlockedChapter = chapterIndex;
+            SaveProgress();
             Debug.Log($"[SaveManager] Unlocked chapter {chapterIndex + 1}");
         }
+    }
+
+    /// <summary>
+    /// 标记关卡组的主线关卡已通关
+    /// </summary>
+    public void MarkChapterMainStoryCleared(int chapterGroup, string levelName)
+    {
+        if (!currentProgress.clearedChapterGroups.Contains(chapterGroup))
+        {
+            currentProgress.clearedChapterGroups.Add(chapterGroup);
+            Debug.Log($"[SaveManager] Chapter group {chapterGroup} main story cleared!");
+        }
+
+        // 设置临时标记（用于返回 Big Map 时播放剧情）
+        currentProgress.justClearedMainLevel = levelName;
+        currentProgress.justClearedChapterGroup = chapterGroup;
+
+        SaveProgress();
+    }
+
+    /// <summary>
+    /// 检查关卡组的主线关卡是否已通关
+    /// </summary>
+    public bool IsChapterMainStoryCleared(int chapterGroup)
+    {
+        return currentProgress.clearedChapterGroups.Contains(chapterGroup);
+    }
+
+    /// <summary>
+    /// 获取刚通关的主线关卡信息
+    /// </summary>
+    public (string levelName, int chapterGroup) GetJustClearedMainLevel()
+    {
+        return (currentProgress.justClearedMainLevel, currentProgress.justClearedChapterGroup);
+    }
+
+    /// <summary>
+    /// 清除"刚通关"标记
+    /// </summary>
+    public void ClearJustClearedFlag()
+    {
+        currentProgress.justClearedMainLevel = "";
+        currentProgress.justClearedChapterGroup = 0;
+        SaveProgress();
+    }
+
+    /// <summary>
+    /// 设置刚通关的主线关卡（内部使用）
+    /// </summary>
+    private void SetJustClearedMainLevel(string levelName)
+    {
+        currentProgress.justClearedMainLevel = levelName;
+        SaveProgress();
     }
 
     /// <summary>
@@ -291,12 +437,17 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void ResetAllData()
     {
-        if (File.Exists(saveFilePath))
+        if (File.Exists(settingsFilePath))
         {
-            File.Delete(saveFilePath);
+            File.Delete(settingsFilePath);
+        }
+        if (File.Exists(progressFilePath))
+        {
+            File.Delete(progressFilePath);
         }
 
-        CreateNewSave();
+        CreateNewSettings();
+        CreateNewProgress();
         Debug.Log("[SaveManager] All data reset");
     }
 
@@ -306,21 +457,12 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void ClearGameProgressKeepSettings()
     {
-        // 保存当前设置
-        var savedSettings = currentSaveData.settings;
+        // 创建新的进度数据
+        currentProgress = new GameProgressData();
+        // 确保首次进入标记为 true
+        currentProgress.isFirstTimeEnterBigMap = true;
+        SaveProgress();
 
-        // 清除游戏进度数据
-        currentSaveData.levelProgress.Clear();
-        currentSaveData.totalFans = 0;
-        currentSaveData.unlockedChapter = 0;
-
-        // 清除剧情进度
-        currentSaveData.storyProgress.Clear();
-
-        // 恢复设置
-        currentSaveData.settings = savedSettings;
-
-        SaveGame();
         Debug.Log("[SaveManager] Game progress cleared (including story progress), settings preserved");
     }
 
@@ -329,13 +471,13 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public bool HasGameProgress()
     {
-        if (currentSaveData == null)
+        if (currentProgress == null)
             return false;
 
         // 检查是否有任何游戏进度：关卡进度、粉丝数、解锁章节
-        bool hasLevelProgress = currentSaveData.levelProgress != null && currentSaveData.levelProgress.Count > 0;
-        bool hasFans = currentSaveData.totalFans > 0;
-        bool hasUnlockedChapter = currentSaveData.unlockedChapter > 0;
+        bool hasLevelProgress = currentProgress.levelProgress != null && currentProgress.levelProgress.Count > 0;
+        bool hasFans = currentProgress.totalFans > 0;
+        bool hasUnlockedChapter = currentProgress.unlockedChapter > 0;
 
         return hasLevelProgress || hasFans || hasUnlockedChapter;
     }
@@ -347,7 +489,7 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public bool IsStoryWatched(string storyId)
     {
-        var progress = currentSaveData.storyProgress.Find(p => p.storyId == storyId);
+        var progress = currentProgress.storyProgress.Find(p => p.storyId == storyId);
         return progress != null && progress.isWatched;
     }
 
@@ -356,15 +498,15 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void MarkStoryWatched(string storyId)
     {
-        var progress = currentSaveData.storyProgress.Find(p => p.storyId == storyId);
+        var progress = currentProgress.storyProgress.Find(p => p.storyId == storyId);
         if (progress == null)
         {
             progress = new StoryProgressData { storyId = storyId };
-            currentSaveData.storyProgress.Add(progress);
+            currentProgress.storyProgress.Add(progress);
         }
         progress.isWatched = true;
         progress.watchedTime = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        SaveGame();
+        SaveProgress();
     }
 
     /// <summary>
@@ -372,7 +514,27 @@ public class SaveManager : MonoBehaviour
     /// </summary>
     public void ResetAllStoryProgress()
     {
-        currentSaveData.storyProgress.Clear();
-        SaveGame();
+        currentProgress.storyProgress.Clear();
+        SaveProgress();
+    }
+
+    // ===================== Big Map 首次进入接口 =====================
+
+    /// <summary>
+    /// 检查是否首次进入 Big Map
+    /// </summary>
+    public bool IsFirstTimeEnterBigMap()
+    {
+        return currentProgress.isFirstTimeEnterBigMap;
+    }
+
+    /// <summary>
+    /// 标记 Big Map 已进入
+    /// </summary>
+    public void MarkBigMapEntered()
+    {
+        currentProgress.isFirstTimeEnterBigMap = false;
+        SaveProgress();
+        Debug.Log("[SaveManager] Big Map entered, first time flag cleared");
     }
 }

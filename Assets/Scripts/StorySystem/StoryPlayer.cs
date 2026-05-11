@@ -59,6 +59,8 @@ public class StoryPlayer : MonoBehaviour
 
     private void HideAllElements()
     {
+        if (storyPanel != null)
+            storyPanel.SetActive(false);
         if (backgroundImage != null)
             backgroundImage.gameObject.SetActive(false);
         if (characterImage != null)
@@ -73,6 +75,8 @@ public class StoryPlayer : MonoBehaviour
 
     private void ShowAllElements()
     {
+        if (storyPanel != null)
+            storyPanel.SetActive(true);
         if (backgroundImage != null)
             backgroundImage.gameObject.SetActive(true);
         if (characterImage != null)

@@ -25,13 +25,8 @@ public class AVGStoryManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+        // 不使用单例模式，允许每个场景有自己的 AVGStoryManager
         Instance = this;
-        DontDestroyOnLoad(gameObject);
         LoadStoryData();
     }
 
@@ -160,10 +155,8 @@ public class AVGStoryManager : MonoBehaviour
             return;
         }
 
-        if (storyPlayer == null)
-        {
-            storyPlayer = FindObjectOfType<StoryPlayer>();
-        }
+        // 每次播放前都重新查找 StoryPlayer（因为场景切换后引用会丢失）
+        storyPlayer = FindObjectOfType<StoryPlayer>();
 
         if (storyPlayer == null)
         {
@@ -172,11 +165,14 @@ public class AVGStoryManager : MonoBehaviour
             return;
         }
 
+        Debug.Log($"[AVGStoryManager] Found StoryPlayer: {storyPlayer.name}, starting story: {storyData.storyId}");
+
         _isPlaying = true;
         storyPlayer.Play(storyData, () =>
         {
             _isPlaying = false;
             SaveManager.Instance.MarkStoryWatched(storyData.storyId);
+            Debug.Log($"[AVGStoryManager] Story completed: {storyData.storyId}");
             onComplete?.Invoke();
         });
     }

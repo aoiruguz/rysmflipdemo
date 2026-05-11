@@ -128,7 +128,7 @@ public class StoryManager : MonoBehaviour
             var dialogue = dialogues[i];
 
             // 显示对话
-            if (dialogue.panelIndex == 1)
+            if (dialogue.panelIndex == 0 || dialogue.panelIndex == 1)
             {
                 ShowDialogOnPanel1(dialogue);
             }
