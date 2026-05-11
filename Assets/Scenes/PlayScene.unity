@@ -1438,7 +1438,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eae6d72ddd3eab4fb81677ded764874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InterferenceManager
+<<<<<<< Updated upstream
   songCompletionDetector: {fileID: 0}
+=======
+  songCompletionDetector: {fileID: 1387532108}
+>>>>>>> Stashed changes
   interferenceCanvas: {fileID: 0}
   scrollingTextSkill: {fileID: 0}
   showDebugInfo: 1
@@ -13867,8 +13871,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1889617446}
-  - component: {fileID: 1889617445}
   - component: {fileID: 1889617447}
+  - component: {fileID: 1889617448}
   m_Layer: 0
   m_Name: StoryManager
   m_TagString: Untagged
@@ -13876,28 +13880,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1889617445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889617444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e6271b7cffc9ae45b0d82dc231a115d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoryManager
-  dialogPanel1: {fileID: 409832743}
-  dialogText1: {fileID: 1327703885}
-  speakerName1: {fileID: 1651164594}
-  dialogPanel2: {fileID: 581183008}
-  dialogText2: {fileID: 402665712}
-  speakerName2: {fileID: 1659915706}
-  skipButton: {fileID: 87362099}
-  skipButtonObject: {fileID: 87362098}
-  defaultDialogDisplayDuration: 3
-  defaultDialogTransitionDelay: 0.5
 --- !u!4 &1889617446
 Transform:
   m_ObjectHideFlags: 0
@@ -13925,10 +13907,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb6252618d721bd4fb6296c9ebc9365d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlaySceneInitializer
-  storyManager: {fileID: 1889617445}
+  storyManager: {fileID: 1889617448}
   noteManager: {fileID: 610100204}
   gameplayUI: {fileID: 812086436}
   pauseGameDuringStory: 1
+<<<<<<< Updated upstream
 --- !u!1 &1893796383
 GameObject:
   m_ObjectHideFlags: 0
@@ -13967,11 +13950,15 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1893796385
+=======
+--- !u!114 &1889617448
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 1893796383}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -14066,6 +14053,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893796383}
   m_CullTransparentMesh: 1
+=======
+  m_GameObject: {fileID: 1889617444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9abaecc3ba11a6e41be6ed43e65b0225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoryManager
+  dialogPanel1: {fileID: 409832743}
+  dialogText1: {fileID: 1327703885}
+  speakerName1: {fileID: 1651164594}
+  dialogPanel2: {fileID: 581183008}
+  dialogText2: {fileID: 402665712}
+  speakerName2: {fileID: 1659915706}
+  skipButton: {fileID: 87362099}
+  skipButtonObject: {fileID: 87362098}
+  defaultDialogDisplayDuration: 3
+  defaultDialogTransitionDelay: 0.5
+>>>>>>> Stashed changes
 --- !u!1 &1906284867
 GameObject:
   m_ObjectHideFlags: 0

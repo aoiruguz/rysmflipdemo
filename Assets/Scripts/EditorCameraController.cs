@@ -107,6 +107,18 @@ public class EditorCameraController : MonoBehaviour
     }
 
     /// <summary>
+    /// 更新最大Y值（当offset改变时需要调用）
+    /// </summary>
+    public void UpdateMaxY()
+    {
+        if (manager != null && manager.currentChart != null && manager.currentChart.audioClip != null)
+        {
+            float songLength = manager.currentChart.audioClip.length;
+            maxY = manager.TimeToYPosition(songLength) + 10f;
+        }
+    }
+
+    /// <summary>
     /// 获取镜头当前对应的时间
     /// </summary>
     public float GetTimeFromCameraPosition()

@@ -1,26 +1,23 @@
 using UnityEngine;
 
 /// <summary>
-/// 粉丝数据管理器
-/// 负责保存和加载粉丝总数（跨局累计）
+/// 粉丝数据管理器（重构版）
+/// 纯业务逻辑类，不负责数据持久化
+/// 所有数据从 SaveManager 读取和写入
 /// </summary>
-public class FansDataManager
+public static class FansDataManager
 {
-    private const string FANS_KEY = "TotalFans";
-    private const string CHAPTER_PROGRESS_KEY = "ChapterProgress"; // 当前解锁到第几章
-
     /// <summary>
     /// 获取当前粉丝总数
     /// </summary>
     public static long GetTotalFans()
     {
-        // PlayerPrefs不支持long，需要分两部分存储
-        string fansString = PlayerPrefs.GetString(FANS_KEY, "0");
-        if (long.TryParse(fansString, out long fans))
+        if (SaveManager.Instance == null)
         {
-            return fans;
+            Debug.LogWarning("[FansDataManager] SaveManager not found!");
+            return 0;
         }
-        return 0;
+        return SaveManager.Instance.GetTotalFans();
     }
 
     /// <summary>
@@ -28,20 +25,20 @@ public class FansDataManager
     /// </summary>
     public static void AddFans(long fansToAdd)
     {
+        if (SaveManager.Instance == null)
+        {
+            Debug.LogError("[FansDataManager] SaveManager not found!");
+            return;
+        }
+
         long currentFans = GetTotalFans();
         long newFans = currentFans + fansToAdd;
-        SetTotalFans(newFans);
+        SaveManager.Instance.SetTotalFans(newFans);
 
         Debug.Log($"[FansData] Added {fansToAdd} fans. Total: {currentFans} -> {newFans}");
-    }
 
-    /// <summary>
-    /// 设置粉丝总数（慎用，一般使用AddFans）
-    /// </summary>
-    public static void SetTotalFans(long fans)
-    {
-        PlayerPrefs.SetString(FANS_KEY, fans.ToString());
-        PlayerPrefs.Save();
+        // 检查是否解锁新章节
+        CheckAndUnlockChapters();
     }
 
     /// <summary>
@@ -49,21 +46,12 @@ public class FansDataManager
     /// </summary>
     public static int GetUnlockedChapter()
     {
-        return PlayerPrefs.GetInt(CHAPTER_PROGRESS_KEY, 0);
-    }
-
-    /// <summary>
-    /// 设置解锁的章节
-    /// </summary>
-    public static void SetUnlockedChapter(int chapterIndex)
-    {
-        int current = GetUnlockedChapter();
-        if (chapterIndex > current)
+        if (SaveManager.Instance == null)
         {
-            PlayerPrefs.SetInt(CHAPTER_PROGRESS_KEY, chapterIndex);
-            PlayerPrefs.Save();
-            Debug.Log($"[FansData] Unlocked chapter {chapterIndex + 1}");
+            Debug.LogWarning("[FansDataManager] SaveManager not found!");
+            return 0;
         }
+        return SaveManager.Instance.GetUnlockedChapter();
     }
 
     /// <summary>
@@ -108,14 +96,27 @@ public class FansDataManager
     }
 
     /// <summary>
-    /// 重置所有数据（调试用）
+    /// 检查并解锁新章节（内部方法）
     /// </summary>
-    public static void ResetAllData()
+    private static void CheckAndUnlockChapters()
     {
-        PlayerPrefs.DeleteKey(FANS_KEY);
-        PlayerPrefs.DeleteKey(CHAPTER_PROGRESS_KEY);
-        PlayerPrefs.Save();
-        Debug.Log("[FansData] All data reset");
+        if (SaveManager.Instance == null) return;
+
+        long totalFans = GetTotalFans();
+        int currentUnlocked = GetUnlockedChapter();
+
+        for (int i = currentUnlocked + 1; i <= 2; i++)
+        {
+            if (IsChapterUnlocked(i))
+            {
+                SaveManager.Instance.SetUnlockedChapter(i);
+                Debug.Log($"[FansData] Unlocked chapter {i + 1}");
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     /// <summary>

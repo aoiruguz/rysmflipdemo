@@ -97,8 +97,16 @@ public class ScoreSystemTester : EditorWindow
         {
             if (EditorUtility.DisplayDialog("确认重置", "确定要重置所有粉丝数据吗？", "确定", "取消"))
             {
-                FansDataManager.ResetAllData();
-                Debug.Log("[ScoreSystemTester] 粉丝数据已重置");
+                if (SaveManager.Instance != null)
+                {
+                    SaveManager.Instance.SetTotalFans(0);
+                    SaveManager.Instance.SetUnlockedChapter(0);
+                    Debug.Log("[ScoreSystemTester] 粉丝数据已重置");
+                }
+                else
+                {
+                    Debug.LogError("[ScoreSystemTester] SaveManager not found!");
+                }
             }
         }
 
