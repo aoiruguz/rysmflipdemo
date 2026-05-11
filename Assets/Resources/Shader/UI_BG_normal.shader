@@ -31,6 +31,7 @@ Shader "Custom/UI_BG_Normal"
         _Color3             ("Color 3",             Color)      = (0.20, 0.08, 0.55, 1)
         _Color4             ("Color 4",             Color)      = (0.50, 0.15, 0.80, 1)
         _Color5             ("Color 5",             Color)      = (0.85, 0.40, 1.00, 1)
+        _Color6             ("Color 6",             Color)      = (1.00, 1.00, 1.00, 1)
     }
 
     SubShader
@@ -86,6 +87,7 @@ Shader "Custom/UI_BG_Normal"
             float4    _Color3;
             float4    _Color4;
             float4    _Color5;
+            float4    _Color6;
 
             // ── Vertex ────────────────────────────────────────────────────────
             struct appdata_t
@@ -141,13 +143,14 @@ Shader "Custom/UI_BG_Normal"
             fixed4 PaletteColor(int ringIdx)
             {
                 // Use hash of ring index so the colour is pseudo-random but stable
-                int i = (int)floor(Hash(ringIdx * 2749 + 1237) * 5.0);
-                i = clamp(i, 0, 4);
+                int i = (int)floor(Hash(ringIdx * 2749 + 1237) * 6.0);
+                i = clamp(i, 0, 5);
                 if (i == 0) return _Color1;
                 if (i == 1) return _Color2;
                 if (i == 2) return _Color3;
                 if (i == 3) return _Color4;
-                               return _Color5;
+                if (i == 4) return _Color5;
+                               return _Color6;
             }
 
             // ── Fragment ──────────────────────────────────────────────────────

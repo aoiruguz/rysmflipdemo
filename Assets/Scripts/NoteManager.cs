@@ -232,7 +232,7 @@ private int totalNotes = 0;
     private IEnumerator PlayRoutine()
     {
       // 显示歌曲标题，持续时间为 prePlayDelay + 1 秒
-        UIManager.Instance?.ShowSongTitle(currentChart.songName, prePlayDelay + 1f);
+        UIManager.Instance?.ShowSongTitle(currentChart.songName);
 
         // 计算音乐开始播放的实时时间
         musicStartTime = Time.time + prePlayDelay;

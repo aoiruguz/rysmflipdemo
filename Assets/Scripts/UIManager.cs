@@ -10,7 +10,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI comboText;
     public Text offsetText;
     public Text globalOffsetText;
-    public Text songTitleText;
+    public TextMeshProUGUI songTitleText;
     public Text timeDisplayText;
     public TextMeshProUGUI songClearText; // 歌曲完成文本
 
@@ -40,18 +40,17 @@ private Coroutine titleRoutine;
         UpdateGlobalOffsetDisplay();
     }
 
-    public void ShowSongTitle(string title, float duration)
+    public void ShowSongTitle(string title)
     {
         if (songTitleText == null) return;
         if (titleRoutine != null) StopCoroutine(titleRoutine);
-        titleRoutine = StartCoroutine(FadeTitleRoutine(title, duration));
+        titleRoutine = StartCoroutine(FadeTitleRoutine(title));
     }
 
-    private IEnumerator FadeTitleRoutine(string title, float totalDuration)
+    private IEnumerator FadeTitleRoutine(string title)
     {
         songTitleText.text = title;
-        float fadeTime = 0.5f;
-        float stayTime = totalDuration - (fadeTime * 2f);
+        float fadeTime = 1.0f; // 稍微调慢一点，让它“缓慢”出现
 
         // Fade In
         for (float t = 0; t < fadeTime; t += Time.deltaTime)
@@ -60,16 +59,6 @@ private Coroutine titleRoutine;
             yield return null;
         }
         songTitleText.color = Color.white;
-
-        yield return new WaitForSeconds(Mathf.Max(0, stayTime));
-
-        // Fade Out
-        for (float t = 0; t < fadeTime; t += Time.deltaTime)
-        {
-            songTitleText.color = new Color(1, 1, 1, 1f - (t / fadeTime));
-            yield return null;
-        }
-        songTitleText.color = new Color(1, 1, 1, 0);
     }
 
     public void UpdateGlobalOffsetDisplay()
