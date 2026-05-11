@@ -7747,8 +7747,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   currentMode: 0
-  rectCatchPoint: {fileID: 0}
-  rectLaneAnchors: []
+  rectCatchPoint: {fileID: 788563081}
+  rectLaneAnchors:
+  - {fileID: 1217824949}
+  - {fileID: 1353544727}
+  - {fileID: 538605275}
+  - {fileID: 1841119414}
   laneXPositions:
   - -3.375
   - -1.125
@@ -7763,21 +7767,21 @@ MonoBehaviour:
   minEffectAngle: 20
   maxEffectAngle: 80
   hitAudioSource: {fileID: 1112928045}
-  effectSprite0_J_Red: {fileID: 0}
-  effectSprite1_L_Yellow: {fileID: 0}
-  effectSprite2_K_Blue: {fileID: 0}
+  effectSprite0_J_Red: {fileID: 21300000, guid: 7dc24be17b4af8f40b813f7caf8f4a48, type: 3}
+  effectSprite1_L_Yellow: {fileID: 21300000, guid: 7c6a373f220c7504cb42e8a09f7a82dd, type: 3}
+  effectSprite2_K_Blue: {fileID: 21300000, guid: 0b20a0f3c4c10f64c93d30ee337541fb, type: 3}
   effectTextData: {fileID: 4900000, guid: e8bdc410097fc4b4881f8933f9a52dd3, type: 3}
   defaultSprite: {fileID: 21300000, guid: 180e971a19ed4e04fb0bb27a7329b3f9, type: 3}
-  sprite0_J_Red: {fileID: 0}
-  sprite1_L_Yellow: {fileID: 0}
-  sprite2_K_Blue: {fileID: 0}
+  sprite0_J_Red: {fileID: 21300000, guid: 0b7817065d6bd194680eff6d8a779c00, type: 3}
+  sprite1_L_Yellow: {fileID: 21300000, guid: 47ff649283f506f479dceab7a3fea1d0, type: 3}
+  sprite2_K_Blue: {fileID: 21300000, guid: 8eb34f091705c3d4cb081f471a4e8a04, type: 3}
   leftSwipeSprite: {fileID: 21300000, guid: 0e417825fb1d3cc499dc1a8bd0bc5ee6, type: 3}
   rightSwipeSprite: {fileID: 21300000, guid: 0e417825fb1d3cc499dc1a8bd0bc5ee6, type: 3}
   feedbackScaleMultiplier: 1.2
   feedbackDuration: 0.1
-  uiImage0_J: {fileID: 0}
-  uiImage1_L: {fileID: 0}
-  uiImage2_K: {fileID: 0}
+  uiImage0_J: {fileID: 1136030330}
+  uiImage1_L: {fileID: 1405356179}
+  uiImage2_K: {fileID: 470708995}
   inactiveAlpha: 0.5
 --- !u!224 &1112928041
 RectTransform:
