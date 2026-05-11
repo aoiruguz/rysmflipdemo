@@ -32,6 +32,16 @@ Shader "Custom/UI_BG_Normal"
         _Color4             ("Color 4",             Color)      = (0.50, 0.15, 0.80, 1)
         _Color5             ("Color 5",             Color)      = (0.85, 0.40, 1.00, 1)
         _Color6             ("Color 6",             Color)      = (1.00, 1.00, 1.00, 1)
+
+        // --- Floating Effects ---
+        _EffectTex          ("Effect Texture (132x66)", 2D) = "white" {}
+        _EffectCount        ("Effect Count",        Float)      = 10
+        _EffectLifetime     ("Effect Lifetime",     Float)      = 5.0
+        _EffectSpeedY       ("Effect Speed Y",      Float)      = 15.0
+        _EffectSwayFreq     ("Effect Sway Freq",    Float)      = 1.0
+        _EffectSwayAmp      ("Effect Sway Amp",     Float)      = 10.0
+        _EffectExpandTime   ("Effect Expand Time",  Float)      = 0.3
+        _EffectFadeOutTime  ("Effect Fade Out Time",Float)      = 1.0
     }
 
     SubShader
@@ -88,6 +98,15 @@ Shader "Custom/UI_BG_Normal"
             float4    _Color4;
             float4    _Color5;
             float4    _Color6;
+
+            sampler2D _EffectTex;
+            float     _EffectCount;
+            float     _EffectLifetime;
+            float     _EffectSpeedY;
+            float     _EffectSwayFreq;
+            float     _EffectSwayAmp;
+            float     _EffectExpandTime;
+            float     _EffectFadeOutTime;
 
             // ── Vertex ────────────────────────────────────────────────────────
             struct appdata_t
@@ -197,6 +216,79 @@ Shader "Custom/UI_BG_Normal"
 
                 // ⑦ Palette lookup — randomised per ring
                 fixed4 col = PaletteColor(ringIndex);
+
+                // --- NEW: Floating Effects ---
+                float2 pixelPos = floor(uv * res + 0.5); 
+                int effectCount = clamp((int)_EffectCount, 0, 30);
+                
+                for (int layer = 7; layer >= 0; layer--) {
+                    for (int i = 0; i < 30; i++) {
+                        if (i >= effectCount) break;
+
+                        float lifetime = max(_EffectLifetime, 0.1);
+                        float offset = Hash(i * 101) * lifetime;
+                        float localT = _Time.y + offset;
+                        float cycle = floor(localT / lifetime);
+                        
+                        int baseSeed = i * 1337 + (int)cycle * 3141;
+                        int texIdx = (int)floor(Hash(baseSeed * 11) * 8.0);
+                        texIdx = clamp(texIdx, 0, 7);
+                        
+                        if (texIdx == layer) {
+                            float nTime = frac(localT / lifetime);
+                            float startX = Hash(baseSeed * 17) * res.x;
+                            float startY = Hash(baseSeed * 23) * res.y;
+                            
+                            float speedY = _EffectSpeedY * (0.8 + 0.4 * Hash(baseSeed * 29));
+                            float currentY = startY + nTime * lifetime * speedY;
+                            
+                            float swayFreq = _EffectSwayFreq * (0.8 + 0.4 * Hash(baseSeed * 31));
+                            float swayAmp = _EffectSwayAmp * (0.5 + 0.5 * Hash(baseSeed * 37));
+                            float currentX = startX + sin(nTime * swayFreq * 6.28 + Hash(baseSeed * 41) * 6.28) * swayAmp;
+                            
+                            float pScale = min(nTime * lifetime / max(_EffectExpandTime, 0.001), 1.0);
+                            float size = floor(33.0 * pScale);
+                            if (size < 1.0) continue;
+                            
+                            float2 pPos = floor(float2(currentX, currentY));
+                            float2 minPos = pPos - floor(size / 2.0);
+                            float2 maxPos = minPos + size;
+                            
+                            if (pixelPos.x >= minPos.x && pixelPos.x < maxPos.x &&
+                                pixelPos.y >= minPos.y && pixelPos.y < maxPos.y) 
+                            {
+                                float fadeOutStart = 1.0 - clamp(_EffectFadeOutTime / lifetime, 0.0, 1.0);
+                                float pAlpha = 1.0;
+                                if (nTime > fadeOutStart) {
+                                    pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
+                                }
+                                
+                                float2 localPos = pixelPos - minPos;
+                                float2 texUV = localPos * (33.0 / size);
+                                
+                                int colIdx = texIdx % 4;
+                                int rowIdx = 1 - (texIdx / 4);
+                                
+                                float fx = clamp(floor(texUV.x), 0.0, 32.0);
+                                float fy = clamp(floor(texUV.y), 0.0, 32.0);
+                                
+                                float u = (colIdx * 33.0 + fx + 0.5) / 132.0;
+                                float v = (rowIdx * 33.0 + fy + 0.5) / 66.0;
+                                
+                                fixed4 texColor = tex2D(_EffectTex, float2(u, v));
+                                if (texColor.a > 0.01) {
+                                    texColor.a *= pAlpha;
+                                    float3 hl;
+                                    hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
+                                    hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
+                                    hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
+                                    col.rgb = lerp(col.rgb, hl, texColor.a);
+                                }
+                            }
+                        }
+                    }
+                }
+                // --- END NEW ---
 
                 // ⑧ Multiply by vertex colour (UGUI tint / alpha) and clip mask
                 col   *= IN.color;
