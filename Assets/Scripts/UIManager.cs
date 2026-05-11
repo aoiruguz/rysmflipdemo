@@ -7,7 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public Text comboText;
+    public TextMeshProUGUI comboText;
     public Text offsetText;
     public Text globalOffsetText;
     public Text songTitleText;
@@ -28,7 +28,11 @@ private Coroutine titleRoutine;
     void Awake()
     {
         Instance = this;
-        if (comboText) comboText.text = "";
+        if (comboText) 
+        {
+            comboText.text = "";
+            comboText.gameObject.SetActive(false);
+        }
         if (judgmentImage) judgmentImage.gameObject.SetActive(false);
         if (offsetText) offsetText.text = "";
         if (songTitleText) songTitleText.color = new Color(1, 1, 1, 0);
@@ -133,7 +137,9 @@ private Coroutine titleRoutine;
 
         if (comboText)
         {
-            comboText.text = combo > 0 ? $"{combo} COMBO" : "";
+            bool hasCombo = combo > 0;
+            comboText.gameObject.SetActive(hasCombo);
+            if (hasCombo) comboText.text = combo.ToString();
         }
 
         if (hideRoutine != null) StopCoroutine(hideRoutine);
