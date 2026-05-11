@@ -32,16 +32,6 @@ Shader "Custom/UI_BG_Normal"
         _Color4             ("Color 4",             Color)      = (0.50, 0.15, 0.80, 1)
         _Color5             ("Color 5",             Color)      = (0.85, 0.40, 1.00, 1)
         _Color6             ("Color 6",             Color)      = (1.00, 1.00, 1.00, 1)
-
-        // --- Floating Effects ---
-        _EffectTex          ("Effect Texture (132x66)", 2D) = "white" {}
-        _EffectCount        ("Effect Count",        Float)      = 10
-        _EffectLifetime     ("Effect Lifetime",     Float)      = 5.0
-        _EffectSpeedY       ("Effect Speed Y",      Float)      = 15.0
-        _EffectSwayFreq     ("Effect Sway Freq",    Float)      = 1.0
-        _EffectSwayAmp      ("Effect Sway Amp",     Float)      = 10.0
-        _EffectExpandTime   ("Effect Expand Time",  Float)      = 0.3
-        _EffectFadeOutTime  ("Effect Fade Out Time",Float)      = 1.0
     }
 
     SubShader
@@ -98,15 +88,6 @@ Shader "Custom/UI_BG_Normal"
             float4    _Color4;
             float4    _Color5;
             float4    _Color6;
-
-            sampler2D _EffectTex;
-            float     _EffectCount;
-            float     _EffectLifetime;
-            float     _EffectSpeedY;
-            float     _EffectSwayFreq;
-            float     _EffectSwayAmp;
-            float     _EffectExpandTime;
-            float     _EffectFadeOutTime;
 
             // ── Vertex ────────────────────────────────────────────────────────
             struct appdata_t
@@ -181,119 +162,41 @@ Shader "Custom/UI_BG_Normal"
 
                 float2 uv = IN.texcoord;
 
-                // ② Pixelation — quantise to _Resolution grid
-                half2 res = (half2)max(_Resolution.xy, float2(1.0, 1.0));
-                half2 invRes = 1.0 / res;
-                uv = floor(uv * (float2)res) * (float2)invRes;
+                // ② Pixelation  — quantise to _Resolution grid
+                float2 res = max(_Resolution.xy, float2(1.0, 1.0));
+                uv = floor(uv * res) / res;
 
                 // ③ Aspect-correct UV so circles stay round
-                half aspect = res.x / res.y;
-                half2 centered = (half2)(uv - 0.5);
+                //    Map uv to centred range [-0.5, 0.5], then scale X by aspect
+                float  aspect = res.x / res.y;          // e.g. 480/270 ≈ 1.777…
+                float2 centered = uv - 0.5;
                 centered.x *= aspect;
 
-                half t = (half)floor(_Time.y * 120.0) / 120.0;
+                float t = _Time.y;
 
                 // ④ Pass 1 — estimate ring index using the raw global center
-                half dist0  = length(centered);
-                half phase0 = dist0 * (half)_RingDensity - t * (half)_Speed;
+                float dist0  = length(centered);
+                float phase0 = dist0 * _RingDensity - t * _Speed;
                 int   ringEst = abs((int)floor(phase0));
 
                 // ④ Per-ring independent wobble
-                half2 randDir = (half2)(Hash2(ringEst) * 2.0 - 1.0);
-                half  ringPhase = (half)(Hash(ringEst * 3301 + 7919) * 6.2832);
-                half2 wobble = randDir * (half)_WobbleAmount
-                                 * half2(sin(t * (half)_WobbleSpeed + ringPhase),
-                                         cos(t * (half)_WobbleSpeed * 0.7 + ringPhase));
+                //    Hash2 gives a stable 2-D random direction in [-1, 1]²
+                //    then animate it with sine so each ring drifts at its own rate
+                float2 randDir   = Hash2(ringEst) * 2.0 - 1.0;        // [-1, 1]
+                float  ringPhase = Hash(ringEst * 3301 + 7919) * 6.2832; // unique phase offset
+                float2 wobble    = randDir * _WobbleAmount
+                                 * float2(sin(t * _WobbleSpeed + ringPhase),
+                                          cos(t * _WobbleSpeed * 0.7 + ringPhase));
                 wobble.x *= aspect;
-                
-                // Snap wobble to absolute pixels to avoid sub-pixel jitter
-                wobble = floor(wobble * res + 0.5) * invRes;
 
                 // ⑤ Pass 2 — recompute distance from this ring's own center
-                half2 delta    = centered - wobble;
-                half  dist     = length(delta);
-                half  phase    = dist * (half)_RingDensity - t * (half)_Speed;
+                float2 delta    = centered - wobble;
+                float  dist     = length(delta);
+                float  phase    = dist * _RingDensity - t * _Speed;
                 int    ringIndex = abs((int)floor(phase));
 
-                // ⑦ Palette lookup
+                // ⑦ Palette lookup — randomised per ring
                 fixed4 col = PaletteColor(ringIndex);
-
-                // --- NEW: Floating Effects ---
-                half2 pixelPos = floor((half2)uv * res + 0.5); 
-                int effectCount = clamp((int)_EffectCount, 0, 30);
-                
-                half effectLifetime = (half)_EffectLifetime;
-                half expandTime = max((half)_EffectExpandTime, 0.001);
-                half fadeOutTime = (half)_EffectFadeOutTime;
-
-                for (int layer = 7; layer >= 0; layer--) {
-                    for (int i = 0; i < 30; i++) {
-                        if (i >= effectCount) break;
-
-                        half offset = (half)Hash(i * 101) * effectLifetime;
-                        half localT = t + offset;
-                        half cycle = floor(localT / effectLifetime);
-                        
-                        int baseSeed = i * 1337 + (int)cycle * 3141;
-                        int texIdx = (int)floor(Hash(baseSeed * 11) * 8.0);
-                        texIdx = clamp(texIdx, 0, 7);
-                        
-                        if (texIdx == layer) {
-                            half nTime = frac(localT / effectLifetime);
-                            half startX = (half)Hash(baseSeed * 17) * res.x;
-                            half startY = (half)Hash(baseSeed * 23) * res.y;
-                            
-                            half speedY = (half)_EffectSpeedY * (0.8 + 0.4 * (half)Hash(baseSeed * 29));
-                            // Snap vertical movement to absolute pixels
-                            half currentY = floor(startY + nTime * effectLifetime * speedY);
-                            
-                            half swayFreq = (half)_EffectSwayFreq * (0.8 + 0.4 * (half)Hash(baseSeed * 31));
-                            half swayAmp = (half)_EffectSwayAmp * (0.5 + 0.5 * (half)Hash(baseSeed * 37));
-                            // Snap sway to absolute pixels
-                            half currentX = floor(startX + sin(nTime * swayFreq * 6.2831 + (half)Hash(baseSeed * 41) * 6.2831) * swayAmp);
-                            
-                            half pScale = min(nTime * effectLifetime / expandTime, 1.0);
-                            half size = floor(33.0 * pScale);
-                            if (size < 1.0) continue;
-                            
-                            half2 minPos = (half2)float2(currentX, currentY) - floor(size * 0.5);
-                            half2 maxPos = minPos + size;
-                            
-                            if (pixelPos.x >= minPos.x && pixelPos.x < maxPos.x &&
-                                pixelPos.y >= minPos.y && pixelPos.y < maxPos.y) 
-                            {
-                                half fadeOutStart = 1.0 - clamp(fadeOutTime / effectLifetime, 0.0, 1.0);
-                                half pAlpha = 1.0;
-                                if (nTime > fadeOutStart) {
-                                    pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
-                                }
-                                
-                                half2 localPos = pixelPos - minPos;
-                                half2 texUV = localPos * (33.0 / size);
-                                
-                                int colIdx = texIdx % 4;
-                                int rowIdx = 1 - (texIdx / 4);
-                                
-                                half fx = clamp(floor(texUV.x), 0.0, 32.0);
-                                half fy = clamp(floor(texUV.y), 0.0, 32.0);
-                                
-                                float u = (colIdx * 33.0 + (float)fx + 0.5) / 132.0;
-                                float v = (rowIdx * 33.0 + (float)fy + 0.5) / 66.0;
-                                
-                                fixed4 texColor = tex2D(_EffectTex, float2(u, v));
-                                if (texColor.a > 0.01) {
-                                    texColor.a *= (fixed)pAlpha;
-                                    float3 hl;
-                                    hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
-                                    hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
-                                    hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
-                                    col.rgb = lerp(col.rgb, (fixed3)hl, texColor.a);
-                                }
-                            }
-                        }
-                    }
-                }
-                // --- END NEW ---
 
                 // ⑧ Multiply by vertex colour (UGUI tint / alpha) and clip mask
                 col   *= IN.color;

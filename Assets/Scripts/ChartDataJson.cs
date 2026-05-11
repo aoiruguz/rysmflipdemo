@@ -80,7 +80,7 @@ public class NoteDataJson
     public float hitTime;
     public float duration;
     public int lane;
-    public string color; // "J_Color0_Red", "L_Color1_Yellow", "K_Color2_Blue" (Legacy: "ColorA", etc.)
+    public string color; // "ColorA", "ColorB", "ColorC"
     public string noteType; // "Color", "DirectionalLeft", "DirectionalRight"
 
     public static NoteDataJson FromNoteData(NoteData noteData)
@@ -111,9 +111,6 @@ public class NoteDataJson
         {
             noteData.color = gameColor;
         }
-        else if (color == "ColorA") noteData.color = GameColor.J_Color0_Red;
-        else if (color == "ColorB") noteData.color = GameColor.L_Color1_Yellow;
-        else if (color == "ColorC") noteData.color = GameColor.K_Color2_Blue;
 
         // 解析类型
         if (Enum.TryParse(noteType, out NoteType type))

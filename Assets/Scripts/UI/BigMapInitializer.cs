@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// Big Map 场景初始化器
-/// 负责检测首次进入和主线关卡通关，播放对应的 AVG 剧情
+/// 负责检测主线关卡通关并播放 AVG 剧情
 /// </summary>
 public class BigMapInitializer : MonoBehaviour
 {
@@ -12,10 +12,6 @@ public class BigMapInitializer : MonoBehaviour
     [Header("关卡数据列表")]
     [Tooltip("所有关卡数据，用于查找刚通关的关卡")]
     public LevelData[] allLevelData;
-
-    [Header("剧情配置")]
-    [Tooltip("开场剧情ID")]
-    public string openingStoryId = "NewGame_Opening";
 
     private void Start()
     {
@@ -59,77 +55,7 @@ public class BigMapInitializer : MonoBehaviour
             yield break;
         }
 
-        Debug.Log("[BigMapInitializer] SaveManager found, checking story triggers");
-
-        // 优先检查首次进入，然后检查通关剧情
-        CheckAndPlayStories();
-    }
-
-    /// <summary>
-    /// 检查并播放剧情（首次进入 > 通关剧情）
-    /// </summary>
-    private void CheckAndPlayStories()
-    {
-        if (SaveManager.Instance == null)
-        {
-            Debug.LogWarning("[BigMapInitializer] SaveManager not found!");
-            return;
-        }
-
-        // 1. 检查是否首次进入 Big Map
-        if (SaveManager.Instance.IsFirstTimeEnterBigMap())
-        {
-            Debug.Log("[BigMapInitializer] First time entering Big Map, playing opening story");
-            PlayOpeningStory();
-            return; // 播放开场剧情后，通关剧情在回调中检查
-        }
-
-        // 2. 如果不是首次进入，检查是否有通关剧情
-        CheckAndPlayClearStory();
-    }
-
-    /// <summary>
-    /// 播放开场剧情
-    /// </summary>
-    private void PlayOpeningStory()
-    {
-        if (avgStoryManager == null)
-        {
-            Debug.LogError("[BigMapInitializer] AVGStoryManager not assigned!");
-            SaveManager.Instance.MarkBigMapEntered();
-            return;
-        }
-
-        // 使用 CheckAndPlayStory，尊重已观看状态
-        bool started = avgStoryManager.CheckAndPlayStory(openingStoryId, OnOpeningStoryComplete);
-
-        if (!started)
-        {
-            Debug.Log($"[BigMapInitializer] Opening story '{openingStoryId}' not played (already watched or not found)");
-            // 标记已进入并检查通关剧情
-            SaveManager.Instance.MarkBigMapEntered();
-            CheckAndPlayClearStory();
-        }
-        else
-        {
-            Debug.Log($"[BigMapInitializer] Playing opening story: {openingStoryId}");
-        }
-    }
-
-    /// <summary>
-    /// 开场剧情播放完成回调
-    /// </summary>
-    private void OnOpeningStoryComplete()
-    {
-        Debug.Log("[BigMapInitializer] Opening story completed");
-
-        // 标记 Big Map 已进入
-        if (SaveManager.Instance != null)
-        {
-            SaveManager.Instance.MarkBigMapEntered();
-        }
-
-        // 检查是否有通关剧情需要播放
+        Debug.Log("[BigMapInitializer] SaveManager found, checking for cleared level");
         CheckAndPlayClearStory();
     }
 
@@ -197,14 +123,8 @@ public class BigMapInitializer : MonoBehaviour
         Debug.Log($"[BigMapInitializer] AVGStoryManager found: {avgStoryManager.name}");
         Debug.Log($"[BigMapInitializer] Playing clear story: {storyId}");
 
-        // 使用 CheckAndPlayStory 而不是 ForcePlayStory，尊重已观看状态
-        bool started = avgStoryManager.CheckAndPlayStory(storyId, OnClearStoryComplete);
-
-        if (!started)
-        {
-            Debug.Log($"[BigMapInitializer] Clear story '{storyId}' not played (already watched or not found)");
-            SaveManager.Instance.ClearJustClearedFlag();
-        }
+        // 使用 AVGStoryManager 强制播放剧情（无论是否已观看）
+        avgStoryManager.ForcePlayStory(storyId, OnClearStoryComplete);
     }
 
     /// <summary>
