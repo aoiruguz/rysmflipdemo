@@ -93,6 +93,42 @@
           "audioClipPath": ""
         }
       ]
+    },
+    {
+      "storyId": "MainStory_Chapter1_Stage1_Clear",
+      "storyName": "第一关通关剧情",
+      "triggerType": 1,
+      "triggerCondition": "MainStory_Chapter1_Stage1",
+      "dialogues": [
+        {
+          "characterName": "主角",
+          "dialogueText": "内个，你现在服了吗？",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "BOSS",
+          "dialogueText": "我 —— 算 —— 个 —— 屁！！！",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "主角",
+          "dialogueText": "线下唯唯诺诺，网上重拳出击，纯属网络巨婴\n别拿冲动当热血，别拿发疯做性格，\n红温破防只会暴露你格局小、心智不成熟。\n真正的强者都是淡定控场、逻辑碾压，\n从来不靠大吼大叫撑排面。",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "BOSS",
+          "dialogueText": "以后… 我跟导师混！又要到饭了，兄弟们！\n这波是流量饭，不丢人！一点不丢人！",
+          "characterSpritePath": "",
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
     }
   ]
 }

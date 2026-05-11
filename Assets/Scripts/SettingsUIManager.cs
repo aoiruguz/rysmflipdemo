@@ -134,37 +134,47 @@ public class SettingsUIManager : MonoBehaviour
     {
         if (resolutionDropdown == null) return;
 
-        resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
+
+        // 定义支持的16:9分辨率
+        List<Resolution> supportedResolutions = new List<Resolution>
+        {
+            CreateResolution(1280, 720),
+            CreateResolution(1920, 1080),
+            CreateResolution(2560, 1440),
+            CreateResolution(3840, 2160)
+        };
 
         List<string> options = new List<string>();
         int currentResolutionIndex = 0;
 
-        // 去重并添加分辨率选项
-        HashSet<string> addedResolutions = new HashSet<string>();
-        List<Resolution> uniqueResolutions = new List<Resolution>();
-
-        for (int i = 0; i < resolutions.Length; i++)
+        // 添加支持的分辨率选项
+        for (int i = 0; i < supportedResolutions.Count; i++)
         {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
+            Resolution res = supportedResolutions[i];
+            options.Add(res.width + " x " + res.height);
 
-            if (!addedResolutions.Contains(option))
+            // 查找最接近当前分辨率的选项
+            if (res.width == Screen.width && res.height == Screen.height)
             {
-                addedResolutions.Add(option);
-                uniqueResolutions.Add(resolutions[i]);
-                options.Add(option);
-
-                if (resolutions[i].width == Screen.width && resolutions[i].height == Screen.height)
-                {
-                    currentResolutionIndex = uniqueResolutions.Count - 1;
-                }
+                currentResolutionIndex = i;
             }
         }
 
-        resolutions = uniqueResolutions.ToArray();
+        resolutions = supportedResolutions.ToArray();
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+    }
+
+    // 创建分辨率对象
+    private Resolution CreateResolution(int width, int height)
+    {
+        Resolution res = new Resolution();
+        res.width = width;
+        res.height = height;
+        res.refreshRate = Screen.currentResolution.refreshRate;
+        return res;
     }
 
     // 初始化窗口模式选项

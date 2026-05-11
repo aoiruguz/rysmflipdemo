@@ -12,12 +12,12 @@ public class Note : MonoBehaviour
     [Header("State Sprites")]
     [Tooltip("默认/正常状态的精灵图")]
     public Sprite normalSprite;
-    [Tooltip("【J（color 0）】红色状态的精灵图")]
-    public Sprite sprite0_J_Red;
-    [Tooltip("【L（color 1）】黄色状态的精灵图")]
-    public Sprite sprite1_L_Yellow;
-    [Tooltip("【K（color 2）】蓝色状态的精灵图")]
-    public Sprite sprite2_K_Blue;
+    [Tooltip("红色状态的精灵图 (对应快捷键J / ColorA)")]
+    public Sprite redSprite;
+    [Tooltip("黄色状态的精灵图 (对应快捷键K / ColorB)")]
+    public Sprite yellowSprite;
+    [Tooltip("蓝色状态的精灵图 (对应快捷键L / ColorC)")]
+    public Sprite blueSprite;
     [Tooltip("左划状态的精灵图 (对应A / DirectionalLeft)")]
     public Sprite leftSwipeSprite;
     [Tooltip("右划状态的精灵图 (对应D / DirectionalRight)")]
@@ -70,14 +70,14 @@ public class Note : MonoBehaviour
         {
             switch (Color)
             {
-                case GameColor.J_Color0_Red:
-                    mainRenderer.sprite = sprite0_J_Red;
+                case GameColor.ColorA:
+                    mainRenderer.sprite = redSprite;
                     break;
-                case GameColor.L_Color1_Yellow:
-                    mainRenderer.sprite = sprite1_L_Yellow;
+                case GameColor.ColorB:
+                    mainRenderer.sprite = yellowSprite;
                     break;
-                case GameColor.K_Color2_Blue:
-                    mainRenderer.sprite = sprite2_K_Blue;
+                case GameColor.ColorC:
+                    mainRenderer.sprite = blueSprite;
                     break;
                 default:
                     mainRenderer.sprite = normalSprite;

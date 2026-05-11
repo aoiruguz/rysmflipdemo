@@ -7,8 +7,8 @@ using UnityEngine;
 [Serializable]
 public class DialogueData
 {
-    [Tooltip("1 或 2，表示在哪个 panel 显示")]
-    public int panelIndex = 1;
+    [Tooltip("0 或 1 表示 Panel1，2 表示 Panel2")]
+    public int panelIndex = 0;
 
     [Tooltip("说话者名字")]
     public string speakerName = "";

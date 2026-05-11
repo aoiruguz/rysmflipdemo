@@ -45,7 +45,7 @@ public class OsuToChartConverter : EditorWindow
         EditorGUILayout.HelpBox(
             "Easy: 单色 (仅红色)\n" +
             "Normal: 双色 (红色 + 蓝色)\n" +
-            "Hard: 三色 (红色 + 黄色 + 蓝色)",
+            "Hard: 三色 (红色 + 绿色 + 蓝色)",
             MessageType.Info);
 
         noteTravelTime = EditorGUILayout.FloatField("Note Travel Time (s)", noteTravelTime);
@@ -147,7 +147,7 @@ public class OsuToChartConverter : EditorWindow
 
         int currentLane = 1;
         int laneDirection = 1;
-        GameColor currentColor = GameColor.J_Color0_Red;
+        GameColor currentColor = GameColor.ColorA;
 
         // 根据难度确定可用颜色数量
         int maxColorIndex = GetMaxColorIndex(difficulty);
@@ -287,9 +287,9 @@ public class OsuToChartConverter : EditorWindow
 
     /// <summary>
     /// 根据难度获取最大颜色索引
-    /// Easy: 0 (只有 J_Color0_Red)
-    /// Normal: 2 (J_Color0_Red 和 K_Color2_Blue)
-    /// Hard: 2 (J_Color0_Red, L_Color1_Yellow, K_Color2_Blue)
+    /// Easy: 0 (只有 ColorA)
+    /// Normal: 2 (ColorA 和 ColorC)
+    /// Hard: 2 (ColorA, ColorB, ColorC)
     /// </summary>
     private static int GetMaxColorIndex(ChartDifficulty difficulty)
     {
@@ -308,27 +308,27 @@ public class OsuToChartConverter : EditorWindow
 
     /// <summary>
     /// 根据难度随机生成颜色
-    /// Easy: 只返回 J_Color0_Red (红色)
-    /// Normal: 返回 J_Color0_Red (红色) 或 K_Color2_Blue (蓝色)
-    /// Hard: 返回 J_Color0_Red, L_Color1_Yellow, K_Color2_Blue
+    /// Easy: 只返回 ColorA (红色)
+    /// Normal: 返回 ColorA (红色) 或 ColorC (蓝色)
+    /// Hard: 返回 ColorA, ColorB, ColorC
     /// </summary>
     private static GameColor GetRandomColor(ChartDifficulty difficulty, int maxColorIndex)
     {
         switch (difficulty)
         {
             case ChartDifficulty.Easy:
-                return GameColor.J_Color0_Red; // 只有红色
+                return GameColor.ColorA; // 只有红色
 
             case ChartDifficulty.Normal:
                 // 50% 红色, 50% 蓝色
-                return UnityEngine.Random.value < 0.5f ? GameColor.J_Color0_Red : GameColor.K_Color2_Blue;
+                return UnityEngine.Random.value < 0.5f ? GameColor.ColorA : GameColor.ColorC;
 
             case ChartDifficulty.Hard:
                 // 随机三种颜色
                 return (GameColor)UnityEngine.Random.Range(0, 3);
 
             default:
-                return GameColor.J_Color0_Red;
+                return GameColor.ColorA;
         }
     }
 

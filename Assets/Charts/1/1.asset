@@ -12,12 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: qi
-  composer: 
+  levelName: MainStory_Chapter1_Stage1
+  composer: "\u5728\u6708\u7403\u770B\u65E5\u51FA"
   displayBPM: 112
   previewMusic: {fileID: 8300000, guid: 833d8e384e410274b9ff4e0866291197, type: 3}
-  enemyAvatar: {fileID: 0}
-  enemyInfo: 
+  enemyAvatar: {fileID: 5849667567163350321, guid: a097273f881904245afe4683a470b109, type: 3}
+  enemyInfo: Speeeeeeeed
+  enemyFans: 10000
+  chapterGroup: 1
+  isMainStoryLevel: 1
+  requiredChapterGroup: 0
+  requiredFansForChapter: 0
   isLockedByDefault: 1
   requiredFans: -1
   difficulties:
@@ -33,8 +38,36 @@ MonoBehaviour:
     ratingLevel: 8
     mapper: 
     chartAsset: {fileID: 11400000, guid: f87ac34ba07d39040b79aa53b25170a7, type: 2}
-  openingDialogues: []
+  openingDialogues:
+  - panelIndex: 1
+    speakerName: 'me  '
+    text: "\u653E\u5F00\u5185\u4E2A\u7F51\u53CB\uFF01\uFF01\uFF01\u4F60\u4E3A\u4EC0\u4E48\u7F51\u66B4\u4ED6\uFF1F"
+  - panelIndex: 2
+    speakerName: frog
+    text: "\u9E21\u4F60\u592A\u7F8E\uFF01\u6211\u60F3\u55B7\u8C01\u5C31\u55B7\u8C01\uFF0C\u5173\u4F60\u5C41\u4E8B"
+  - panelIndex: 1
+    speakerName: me
+    text: "\u6211\u8981\u4FDD\u62A4\u5185\u4E2A\u3001\u5185\u4E2A\u8FD8\u6709\u5185\u4E2A\u88AB\u4F60\u55B7\u7684\u7F51\u53CB"
+  - panelIndex: 2
+    speakerName: frog
+    text: "SIUUUUUUUUUUUU\uFF01"
+  - panelIndex: 2
+    speakerName: frog
+    text: "Bro\uFF0C\u4F60\u4EC0\u4E48\u6863\u6B21\uFF1F\u5C31\u51E0\u4E2A\u7C89\u4E1D\uFF0C\u8FD8\u6562\u8DDF\u6211\u5BF9\u7EBF\uFF1F "
+  - panelIndex: 1
+    speakerName: me
+    text: "\u4F60\u4E0D\u8FC7\u662F\u4ED7\u7740\u7C89\u4E1D\u591A\uFF0C\u6325\u5200\u5411\u5F31\u8005\u7F62\u4E86"
+  - panelIndex: 2
+    speakerName: frog
+    text: "\u7C89\u4E1D\u6CA1\u6211\u591A\uFF0C\u4F60\u4E5F\u6562\u6559\u6211\u505A\u4E8B\uFF1F"
+  - panelIndex: 1
+    speakerName: me
+    text: "\u6211\u4F1A\u4EE5\u4F60\u7684\u65B9\u5F0F\u6253\u8D25\u4F60\uFF01\u8BA9\u4F60\u5FC3\u670D\u53E3\u670D\uFF01"
+  - panelIndex: 2
+    speakerName: frog
+    text: "\u4F60 \u2014\u2014 \u7B97 \u2014\u2014 \u4E2A \u2014\u2014 \u5C41\uFF01\uFF01\uFF01"
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
+  clearStoryId: MainStory_Chapter1_Stage1_Clear
   interferenceCount: 0
   interferenceTextConfig: {fileID: 0}

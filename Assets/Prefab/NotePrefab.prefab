@@ -335,9 +335,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Note
   normalSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
-  sprite0_J_Red: {fileID: 21300000, guid: daa2f919043d6ef479c4f7d320533cce, type: 3}
-  sprite1_L_Yellow: {fileID: 21300000, guid: 82270f35f328d77479a7692dfe26eefb, type: 3}
-  sprite2_K_Blue: {fileID: 21300000, guid: cc5b7932fc72d5b42a918ab02d2a62e6, type: 3}
+  redSprite: {fileID: 21300000, guid: daa2f919043d6ef479c4f7d320533cce, type: 3}
+  yellowSprite: {fileID: 21300000, guid: 82270f35f328d77479a7692dfe26eefb, type: 3}
+  blueSprite: {fileID: 21300000, guid: cc5b7932fc72d5b42a918ab02d2a62e6, type: 3}
   leftSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
   rightSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
 --- !u!50 &4465401115025079399
