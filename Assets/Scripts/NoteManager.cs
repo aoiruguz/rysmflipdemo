@@ -42,13 +42,13 @@ public class NoteManager : MonoBehaviour
     
     [Header("UI Alignment (Canvas Sync)")]
     [Tooltip("Note 生成点的 UI 参照对象（屏幕顶部）")]
-    public RectTransform spawnPointUI;
+    public RectTransform rectSpawnPoint;
     [Tooltip("Note 判定区域的 UI 参照对象（玩家接住区域）")]
-    public RectTransform catchPointUI;
+    public RectTransform rectCatchPoint;
     [Tooltip("Note 失误区域的 UI 参照对象（Miss线）")]
-    public RectTransform missPointUI;
+    public RectTransform rectMissPoint;
     [Tooltip("四条Lane的 UI 参照对象，对应4条竖直的游戏路线")]
-    public RectTransform[] laneUIAnchors;
+    public RectTransform[] rectLaneAnchors;
 
     [Header("Fallback Coordinates")]
     /// <summary>如果没有设置UI参照，使用的默认Note生成的Y坐标</summary>
@@ -148,16 +148,16 @@ private int totalNotes = 0;
 
         // --- 适配 UI Canvas 坐标系统 ---
         // 如果配置了 UI 参照点，则使用 UI 元素的世界坐标，保证动态 Note 和静态 UI 一一对应
-        if (spawnPointUI != null) spawnY = spawnPointUI.position.y;
-        if (catchPointUI != null) catchY = catchPointUI.position.y;
-        if (missPointUI != null) missY = missPointUI.position.y;
-        if (laneUIAnchors != null && laneUIAnchors.Length > 0)
+        if (rectSpawnPoint != null) spawnY = rectSpawnPoint.position.y;
+        if (rectCatchPoint != null) catchY = rectCatchPoint.position.y;
+        if (rectMissPoint != null) missY = rectMissPoint.position.y;
+        if (rectLaneAnchors != null && rectLaneAnchors.Length > 0)
         {
-            for (int i = 0; i < laneUIAnchors.Length && i < laneXPositions.Length; i++)
+            for (int i = 0; i < rectLaneAnchors.Length && i < laneXPositions.Length; i++)
             {
-                if (laneUIAnchors[i] != null)
+                if (rectLaneAnchors[i] != null)
                 {
-                    laneXPositions[i] = laneUIAnchors[i].position.x;
+                    laneXPositions[i] = rectLaneAnchors[i].position.x;
                 }
             }
         }

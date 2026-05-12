@@ -195,9 +195,9 @@ public class ChartEditorUI : MonoBehaviour
     /// </summary>
     private void OnAddNoteClicked()
     {
-        // 在当前时间和第0条lane添加一个ColorA的note
+        // 在当前时间和第0条lane添加一个 J_Color0_Red 的note
         float currentTime = manager.GetCurrentTime();
-        manager.AddNote(currentTime, 0, NoteType.Color, GameColor.ColorA);
+        manager.AddNote(currentTime, 0, NoteType.Color, GameColor.J_Color0_Red);
     }
 
     /// <summary>
