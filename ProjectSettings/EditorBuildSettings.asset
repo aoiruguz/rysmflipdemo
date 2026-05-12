@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Disclaimer.unity
+    guid: 72a854ef87088324290f3cfc3fa29fa2
+  - enabled: 1
     path: Assets/Scenes/new offest.unity
     guid: 2606d15dcaf022749ba20e69cd0a2d4e
   - enabled: 1
