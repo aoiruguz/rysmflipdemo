@@ -44,6 +44,19 @@ public class StoryData
 }
 
 /// <summary>
+/// 角色显示数据
+/// </summary>
+[Serializable]
+public class CharacterDisplayData
+{
+    [Tooltip("立绘资源路径（Resources文件夹下的相对路径）")]
+    public string spritePath;
+
+    [Tooltip("立绘缩放比例")]
+    public float scale = 1.0f;
+}
+
+/// <summary>
 /// 剧情系统单句对话数据
 /// </summary>
 [Serializable]
@@ -56,14 +69,24 @@ public class StoryDialogueData
     [TextArea(3, 10)]
     public string dialogueText;
 
-    [Tooltip("角色立绘资源路径（Resources文件夹下的相对路径）")]
-    public string characterSpritePath;
+    [Tooltip("说话者位置：left/right")]
+    public string speakerPosition = "left";
+
+    [Tooltip("左侧角色显示数据")]
+    public CharacterDisplayData leftCharacter;
+
+    [Tooltip("右侧角色显示数据")]
+    public CharacterDisplayData rightCharacter;
 
     [Tooltip("背景图资源路径（Resources文件夹下的相对路径）")]
     public string backgroundSpritePath;
 
     [Tooltip("音效资源路径（可选）")]
     public string audioClipPath;
+
+    // ===== 兼容旧数据格式 =====
+    [Tooltip("【已废弃】角色立绘资源路径，仅用于兼容旧数据")]
+    public string characterSpritePath;
 }
 
 /// <summary>

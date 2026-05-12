@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class BarrageManager : MonoBehaviour
@@ -25,6 +26,18 @@ public class BarrageManager : MonoBehaviour
     public TextAsset textData;           // 预设档案 (TXT)
     private string[] presetMessages;
 
+    [Header("自动触发设置")]
+    [Tooltip("普通弹幕触发按钮（把触发评论的按钮拖到这里）")]
+    public Button normalBarrageButton;
+
+    [Tooltip("是否启用普通弹幕自动触发")]
+    public bool enableAutoTrigger = true;
+
+    [Tooltip("普通弹幕触发间隔（秒）")]
+    public float autoTriggerInterval = 1f;
+
+    private float autoTriggerTimer = 0f;
+
     // 活跃队列与对象池
     private Queue<BarrageItem> activeItems = new Queue<BarrageItem>();
     private Queue<BarrageItem> itemPool = new Queue<BarrageItem>();
@@ -35,6 +48,19 @@ public class BarrageManager : MonoBehaviour
         if (textData != null)
         {
             presetMessages = textData.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        }
+    }
+
+    private void Update()
+    {
+        if (!enableAutoTrigger || normalBarrageButton == null) return;
+
+        autoTriggerTimer += Time.deltaTime;
+        if (autoTriggerTimer >= autoTriggerInterval)
+        {
+            autoTriggerTimer = 0f;
+            // 自动点击按钮
+            normalBarrageButton.onClick.Invoke();
         }
     }
 

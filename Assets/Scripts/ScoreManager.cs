@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -8,6 +9,18 @@ public class ScoreManager : MonoBehaviour
     public float perfectThreshold = 50f;
     public float greatThreshold = 100f;
     public float goodThreshold = 150f;
+
+    [Header("特殊弹幕触发设置")]
+    [Tooltip("特殊弹幕触发按钮（把触发SC的按钮拖到这里）")]
+    public Button specialBarrageButton;
+
+    [Tooltip("是否启用Combo特殊弹幕触发")]
+    public bool enableComboBarrageTrigger = true;
+
+    [Tooltip("每多少Combo触发一次特殊弹幕")]
+    public int comboTriggerInterval = 10;
+
+    private int lastTriggeredCombo = 0;
 
     public int Combo { get; private set; } = 0;
 
@@ -83,13 +96,37 @@ public class ScoreManager : MonoBehaviour
             HealthSystem.Instance?.CheckComboHeal(Combo);
         }
 
+        // 检测Combo触发特殊弹幕
+        CheckComboBarrageTrigger();
+
         UIManager.Instance?.ShowJudgment(judgment, offsetMs, Combo);
+    }
+
+    /// <summary>
+    /// 检测Combo是否达到触发条件
+    /// </summary>
+    private void CheckComboBarrageTrigger()
+    {
+        if (!enableComboBarrageTrigger || specialBarrageButton == null) return;
+
+        // 检查是否达到新的触发点
+        if (Combo > 0 && Combo % comboTriggerInterval == 0)
+        {
+            // 避免重复触发同一个Combo值
+            if (Combo != lastTriggeredCombo)
+            {
+                lastTriggeredCombo = Combo;
+                // 自动点击按钮
+                specialBarrageButton.onClick.Invoke();
+            }
+        }
     }
 
     public void OnMiss()
     {
         missCount++;
         Combo = 0;
+        lastTriggeredCombo = 0; // 重置触发记录
         HealthSystem.Instance?.TakeDamage();
         HealthSystem.Instance?.ResetComboTracking();
         MissEffectManager.Instance?.PlayMissEffects();

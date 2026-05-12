@@ -19,6 +19,13 @@ public class InterferenceManager : MonoBehaviour
     [Tooltip("滚动弹幕技能")]
     public ScrollingTextSkill scrollingTextSkill;
 
+    [Tooltip("故障快遮挡技能")]
+    public GlitchEffectSkill glitchEffectSkill;
+
+    [Header("技能配置")]
+    [Tooltip("Glitch Material（拖入用于故障效果的Material）")]
+    public Material glitchMaterial;
+
     [Header("调试")]
     [Tooltip("显示调试信息")]
     public bool showDebugInfo = true;
@@ -26,7 +33,7 @@ public class InterferenceManager : MonoBehaviour
     // 私有变量
     private LevelData currentLevelData;
     private InterferenceTextConfig textConfig;
-    private List<float> triggerPoints = new List<float>(); // 触发点列表（进度百分比）
+    private List<InterferenceTrigger> triggers = new List<InterferenceTrigger>(); // 触发配置列表
     private int currentTriggerIndex = 0; // 当前触发点索引
     private bool isInitialized = false;
     private bool isSkillActive = false;
@@ -73,13 +80,12 @@ public class InterferenceManager : MonoBehaviour
         if (textConfig == null)
         {
             Debug.LogWarning("[InterferenceManager] No InterferenceTextConfig assigned to LevelData.");
-            return;
         }
 
-        // 检查干扰次数
-        if (currentLevelData.interferenceCount <= 0)
+        // 检查干扰触发配置
+        if (currentLevelData.interferenceTriggers == null || currentLevelData.interferenceTriggers.Length == 0)
         {
-            Debug.Log("[InterferenceManager] Interference count is 0, system disabled.");
+            Debug.Log("[InterferenceManager] No interference triggers configured, system disabled.");
             return;
         }
 
@@ -100,11 +106,20 @@ public class InterferenceManager : MonoBehaviour
             scrollingTextSkill.canvasRect = interferenceCanvas.GetComponent<RectTransform>();
         }
 
-        // 计算触发点
-        CalculateTriggerPoints();
+        // 初始化故障快遮挡技能
+        if (glitchEffectSkill == null)
+        {
+            GameObject skillObj = new GameObject("GlitchEffectSkill");
+            skillObj.transform.SetParent(transform);
+            glitchEffectSkill = skillObj.AddComponent<GlitchEffectSkill>();
+            glitchEffectSkill.glitchMaterial = glitchMaterial;
+        }
+
+        // 加载触发配置
+        LoadTriggerConfigs();
 
         isInitialized = true;
-        Debug.Log($"[InterferenceManager] Initialized with {triggerPoints.Count} trigger points.");
+        Debug.Log($"[InterferenceManager] Initialized with {triggers.Count} trigger points.");
     }
 
     /// <summary>
@@ -124,32 +139,28 @@ public class InterferenceManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 计算触发点（基于歌曲进度百分比）
+    /// 加载触发配置（从LevelData读取）
     /// </summary>
-    private void CalculateTriggerPoints()
+    private void LoadTriggerConfigs()
     {
-        triggerPoints.Clear();
-        int count = currentLevelData.interferenceCount;
+        triggers.Clear();
 
-        // 均匀分布触发点
-        for (int i = 0; i < count; i++)
+        // 从LevelData复制触发配置
+        foreach (var trigger in currentLevelData.interferenceTriggers)
         {
-            // 计算基础触发点（例如：3次干扰 -> 25%, 50%, 75%）
-            float baseProgress = (i + 1) / (float)(count + 1);
-
-            // 添加随机偏移（±5%），增加不可预测性
-            float randomOffset = Random.Range(-0.05f, 0.05f);
-            float triggerProgress = Mathf.Clamp01(baseProgress + randomOffset);
-
-            triggerPoints.Add(triggerProgress);
+            triggers.Add(trigger);
         }
 
-        // 排序触发点
-        triggerPoints.Sort();
+        // 按进度排序
+        triggers.Sort((a, b) => a.triggerProgress.CompareTo(b.triggerProgress));
 
         if (showDebugInfo)
         {
-            Debug.Log($"[InterferenceManager] Trigger points: {string.Join(", ", triggerPoints.ConvertAll(p => $"{p * 100:F1}%"))}");
+            Debug.Log($"[InterferenceManager] Loaded {triggers.Count} triggers:");
+            for (int i = 0; i < triggers.Count; i++)
+            {
+                Debug.Log($"  [{i}] {triggers[i].triggerProgress * 100:F1}% - {triggers[i].skillType}");
+            }
         }
     }
 
@@ -158,15 +169,15 @@ public class InterferenceManager : MonoBehaviour
     /// </summary>
     private void CheckTriggerPoints()
     {
-        if (currentTriggerIndex >= triggerPoints.Count) return;
+        if (currentTriggerIndex >= triggers.Count) return;
 
         // 获取当前歌曲进度
         float currentProgress = GetSongProgress();
 
         // 检查是否到达下一个触发点
-        if (currentProgress >= triggerPoints[currentTriggerIndex])
+        if (currentProgress >= triggers[currentTriggerIndex].triggerProgress)
         {
-            TriggerInterference();
+            TriggerInterference(triggers[currentTriggerIndex].skillType);
             currentTriggerIndex++;
         }
     }
@@ -188,15 +199,32 @@ public class InterferenceManager : MonoBehaviour
     /// <summary>
     /// 触发干扰技能
     /// </summary>
-    private void TriggerInterference()
+    private void TriggerInterference(InterferenceSkillType skillType)
     {
         if (showDebugInfo)
         {
-            Debug.Log($"[InterferenceManager] Triggering interference at {GetSongProgress() * 100:F1}%");
+            Debug.Log($"[InterferenceManager] Triggering {skillType} at {GetSongProgress() * 100:F1}%");
         }
 
-        // 目前只有弹幕技能，直接激活
-        StartCoroutine(ActivateScrollingText());
+        // 根据技能类型激活对应技能
+        switch (skillType)
+        {
+            case InterferenceSkillType.ScrollingText:
+                StartCoroutine(ActivateScrollingText());
+                break;
+            case InterferenceSkillType.GlitchEffect:
+                StartCoroutine(ActivateGlitchEffect());
+                break;
+            case InterferenceSkillType.ScreenShake:
+                StartCoroutine(ActivateScreenShake());
+                break;
+            case InterferenceSkillType.MouthAttack:
+                StartCoroutine(ActivateMouthAttack());
+                break;
+            default:
+                Debug.LogWarning($"[InterferenceManager] Unknown skill type: {skillType}");
+                break;
+        }
     }
 
     /// <summary>
@@ -206,12 +234,80 @@ public class InterferenceManager : MonoBehaviour
     {
         isSkillActive = true;
 
+        // 显示技能对话
+        if (StoryManager.Instance != null)
+        {
+            StoryManager.Instance.ShowDialogue(2, "对手", "海量弹幕！", -1);
+        }
+
         scrollingTextSkill.Activate();
 
         // 等待技能持续时间
         yield return new WaitForSeconds(scrollingTextSkill.GetDuration());
 
         scrollingTextSkill.Deactivate();
+
+        isSkillActive = false;
+    }
+
+    /// <summary>
+    /// 激活故障快遮挡技能
+    /// </summary>
+    private IEnumerator ActivateGlitchEffect()
+    {
+        isSkillActive = true;
+
+        // 显示技能对话
+        if (StoryManager.Instance != null)
+        {
+            StoryManager.Instance.ShowDialogue(2, "对手", "故障风暴！", -1);
+        }
+
+        if (glitchEffectSkill != null)
+        {
+            glitchEffectSkill.Activate();
+
+            // 等待技能持续时间
+            yield return new WaitForSeconds(glitchEffectSkill.GetDuration());
+
+            glitchEffectSkill.Deactivate();
+        }
+        else
+        {
+            Debug.LogWarning("[InterferenceManager] GlitchEffectSkill is not initialized!");
+        }
+
+        isSkillActive = false;
+    }
+
+    /// <summary>
+    /// 激活屏幕震动技能（占位）
+    /// </summary>
+    private IEnumerator ActivateScreenShake()
+    {
+        isSkillActive = true;
+
+        // 显示技能对话
+        if (StoryManager.Instance != null)
+        {
+            StoryManager.Instance.ShowDialogue(2, "对手", "大地震！", -1);
+        }
+
+        Debug.Log("[InterferenceManager] ScreenShake skill not implemented yet!");
+        yield return new WaitForSeconds(2f);
+
+        isSkillActive = false;
+    }
+
+    /// <summary>
+    /// 激活嘴巴攻击技能（占位）
+    /// </summary>
+    private IEnumerator ActivateMouthAttack()
+    {
+        isSkillActive = true;
+
+        Debug.Log("[InterferenceManager] MouthAttack skill not implemented yet!");
+        yield return new WaitForSeconds(2f);
 
         isSkillActive = false;
     }
@@ -229,8 +325,18 @@ public class InterferenceManager : MonoBehaviour
 
         float progress = GetSongProgress();
         string info = $"Song Progress: {progress * 100:F1}%\n";
-        info += $"Next Trigger: {(currentTriggerIndex < triggerPoints.Count ? $"{triggerPoints[currentTriggerIndex] * 100:F1}%" : "None")}\n";
-        info += $"Triggers Fired: {currentTriggerIndex}/{triggerPoints.Count}";
+
+        if (currentTriggerIndex < triggers.Count)
+        {
+            var nextTrigger = triggers[currentTriggerIndex];
+            info += $"Next Trigger: {nextTrigger.triggerProgress * 100:F1}% ({nextTrigger.skillType})\n";
+        }
+        else
+        {
+            info += "Next Trigger: None\n";
+        }
+
+        info += $"Triggers Fired: {currentTriggerIndex}/{triggers.Count}";
 
         GUI.Label(new Rect(10, 10, 400, 100), info, style);
     }

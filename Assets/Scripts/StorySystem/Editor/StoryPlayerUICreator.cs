@@ -53,18 +53,31 @@ public class StoryPlayerUICreator
         Image bgImage = background.AddComponent<Image>();
         bgImage.color = new Color(0, 0, 0, 0.8f);
 
-        // 创建CharacterImage
-        GameObject characterImage = new GameObject("CharacterImage");
-        characterImage.transform.SetParent(storyPanel.transform, false);
-        RectTransform charRect = characterImage.AddComponent<RectTransform>();
-        charRect.anchorMin = new Vector2(0.5f, 0f);
-        charRect.anchorMax = new Vector2(0.5f, 1f);
-        charRect.sizeDelta = new Vector2(600, 0);
-        charRect.anchoredPosition = new Vector2(0, 0);
+        // 创建左侧立绘槽
+        GameObject leftCharacterImage = new GameObject("LeftCharacterImage");
+        leftCharacterImage.transform.SetParent(storyPanel.transform, false);
+        RectTransform leftCharRect = leftCharacterImage.AddComponent<RectTransform>();
+        leftCharRect.anchorMin = new Vector2(0f, 0f);
+        leftCharRect.anchorMax = new Vector2(0f, 1f);
+        leftCharRect.sizeDelta = new Vector2(600, 0);
+        leftCharRect.anchoredPosition = new Vector2(300, 0);
 
-        Image charImage = characterImage.AddComponent<Image>();
-        charImage.color = Color.white;
-        charImage.preserveAspect = true;
+        Image leftCharImage = leftCharacterImage.AddComponent<Image>();
+        leftCharImage.color = Color.white;
+        leftCharImage.preserveAspect = true;
+
+        // 创建右侧立绘槽
+        GameObject rightCharacterImage = new GameObject("RightCharacterImage");
+        rightCharacterImage.transform.SetParent(storyPanel.transform, false);
+        RectTransform rightCharRect = rightCharacterImage.AddComponent<RectTransform>();
+        rightCharRect.anchorMin = new Vector2(1f, 0f);
+        rightCharRect.anchorMax = new Vector2(1f, 1f);
+        rightCharRect.sizeDelta = new Vector2(600, 0);
+        rightCharRect.anchoredPosition = new Vector2(-300, 0);
+
+        Image rightCharImage = rightCharacterImage.AddComponent<Image>();
+        rightCharImage.color = Color.white;
+        rightCharImage.preserveAspect = true;
 
         // 创建DialogueBox
         GameObject dialogueBox = new GameObject("DialogueBox");
@@ -127,7 +140,8 @@ public class StoryPlayerUICreator
         // 绑定引用到StoryPlayer
         storyPlayer.storyPanel = storyPanel;
         storyPlayer.backgroundImage = bgImage;
-        storyPlayer.characterImage = charImage;
+        storyPlayer.leftCharacterImage = leftCharImage;
+        storyPlayer.rightCharacterImage = rightCharImage;
         storyPlayer.dialogueBox = dialogueBox;
         storyPlayer.characterNameText = nameTMP;
         storyPlayer.dialogueText = dialogTMP;

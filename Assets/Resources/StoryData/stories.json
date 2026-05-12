@@ -9,21 +9,39 @@
         {
           "characterName": "经纪人",
           "dialogueText": "欢迎来到这里！这是你第一次踏上这片舞台。",
-          "characterSpritePath": "",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "经纪人",
           "dialogueText": "前方的路还很长，但我相信你一定能成为最耀眼的明星！",
-          "characterSpritePath": "",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "主角",
           "dialogueText": "谢谢！我会努力的！",
-          "characterSpritePath": "",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
           "backgroundSpritePath": "",
           "audioClipPath": ""
         }
@@ -38,14 +56,27 @@
         {
           "characterName": "粉丝",
           "dialogueText": "太棒了！你的表演让我热血沸腾！",
-          "characterSpritePath": "",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "经纪人",
           "dialogueText": "不错的开始，但这只是第一步。接下来的挑战会更难哦。",
-          "characterSpritePath": "",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
           "backgroundSpritePath": "",
           "audioClipPath": ""
         }
@@ -60,35 +91,60 @@
         {
           "characterName": "",
           "dialogueText": "战斗结束瞬间，屏幕变静。无数张张开的嘴悬浮在空中，没有五官只有黑洞般的瞳孔，它们随着你的呼吸频率开合。",
-          "characterSpritePath": "小猫",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "小猫",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "第四关1",
           "audioClipPath": ""
         },
         {
           "characterName": "",
           "dialogueText": "背景音不是音乐，而是成千上万个点赞、转发声组成的白噪音，最后汇聚成一个低沉的嗡鸣。",
-          "characterSpritePath": "小猫",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "小猫",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "第四关2",
           "audioClipPath": ""
         },
         {
           "characterName": "",
           "dialogueText": "嘴巴里吐出的字是像素块拼凑而成的，会不断重组。",
-          "characterSpritePath": "小猫",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "小猫",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "第四关3",
           "audioClipPath": ""
         },
         {
           "characterName": "",
           "dialogueText": "你是在发声，还是在被听见？",
-          "characterSpritePath": "小猫",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "小猫",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "第四关4",
           "audioClipPath": ""
         },
         {
           "characterName": "",
           "dialogueText": "你是主宰者，还是回声的一部分？",
-          "characterSpritePath": "小猫",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "小猫",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "第四关5",
           "audioClipPath": ""
         }
@@ -103,28 +159,149 @@
         {
           "characterName": "主角",
           "dialogueText": "内个，你现在服了吗？",
-          "characterSpritePath": "",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "BOSS",
           "dialogueText": "我 —— 算 —— 个 —— 屁！！！",
-          "characterSpritePath": "",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "speed1",
+            "scale": 1.0
+          },
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "主角",
           "dialogueText": "线下唯唯诺诺，网上重拳出击，纯属网络巨婴\n别拿冲动当热血，别拿发疯做性格，\n红温破防只会暴露你格局小、心智不成熟。\n真正的强者都是淡定控场、逻辑碾压，\n从来不靠大吼大叫撑排面。",
-          "characterSpritePath": "",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "speed1",
+            "scale": 1.0
+          },
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
         {
           "characterName": "BOSS",
           "dialogueText": "以后… 我跟导师混！又要到饭了，兄弟们！\n这波是流量饭，不丢人！一点不丢人！",
-          "characterSpritePath": "",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "speed11",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+    {
+      "storyId": "END_Story",
+      "storyName": "游戏结局A",
+      "triggerType": 0,
+      "triggerCondition": "Big Map",
+      "dialogues": [
+        {
+          "characterName": "柚子",
+          "dialogueText": "这是结局A的占位符文本，后续会替换成正式的剧情内容。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了1！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了2！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了3！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了4！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "柚子",
+          "dialogueText": "别点了5！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
           "backgroundSpritePath": "",
           "audioClipPath": ""
         }

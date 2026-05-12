@@ -8833,7 +8833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7520147ac1ef147a8683bc96c11edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChartEditorManager
-  currentChart: {fileID: 11400000, guid: f87ac34ba07d39040b79aa53b25170a7, type: 2}
+  currentChart: {fileID: 11400000, guid: 26bb241234f4ef34a8fe19837d2759ab, type: 2}
   editorNotePrefab: {fileID: 7312989398368265476, guid: 6396906887769474e8a8ccb91b02722b, type: 3}
   audioSource: {fileID: 1710731946}
   editorCamera: {fileID: 995617723}

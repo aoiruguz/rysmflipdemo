@@ -1,69 +1,142 @@
 using UnityEngine;
-using TMPro; // ±ØĞëÒıÓÃ TMP ÃüÃû¿Õ¼ä
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class DisclaimerManager : MonoBehaviour
 {
-    [Header("UI ÒıÓÃ")]
-    public TextMeshProUGUI text1;
-    public TextMeshProUGUI text2;
+    [Header("UI ç»„ä»¶")]
+    public Image disclaimerImage;
 
-    [Header("ÉèÖÃ")]
-    public float fadeDuration = 2.0f; // ½¥ÏÔ³ÖĞøÊ±¼ä
-    public float waitTime = 3.0f;     // ÏÔÊ¾Í£ÁôÊ±¼ä
-    public string nextSceneName;      // ÏÂÒ»¸ö³¡¾°µÄÃû×Ö
+    [Header("æ·¡å…¥æ·¡å‡ºè®¾ç½®")]
+    public float fadeDuration = 2.0f;
+    public float waitTime = 3.0f;
+    public string nextSceneName;
+
+    [Header("å±å¹•éœ‡åŠ¨è®¾ç½®")]
+    public bool enableScreenShake = true;
+    public float shakeIntensity = 2.0f;
+    public float shakeSpeed = 15f;
+
+    [Header("é¢œè‰²éšæœºè®¾ç½®")]
+    public bool randomizeColor = true;
+
+    private Camera mainCamera;
+    private Vector3 originalCameraPosition;
+    private Color[] colorOptions = new Color[]
+    {
+        new Color(1f, 1f, 1f, 1f),      // 255, 255, 255
+        new Color(0f, 1f, 1f, 1f),      // 0, 255, 255
+        new Color(1f, 0f, 1f, 1f),      // 255, 0, 255
+        new Color(1f, 1f, 0f, 1f)       // 255, 255, 0
+    };
 
     void Start()
     {
-        // ³õÊ¼×´Ì¬£ºÈ«²¿Í¸Ã÷
-        SetAlpha(text1, 0);
-        SetAlpha(text2, 0);
+        // åˆå§‹åŒ–ç›¸æœº
+        mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            originalCameraPosition = mainCamera.transform.localPosition;
+            Debug.Log($"[DisclaimerManager] æ‰¾åˆ°ä¸»ç›¸æœºï¼Œåˆå§‹ä½ç½®: {originalCameraPosition}");
+        }
+        else
+        {
+            Debug.LogWarning("[DisclaimerManager] æœªæ‰¾åˆ°ä¸»ç›¸æœºï¼Œéœ‡åŠ¨æ•ˆæœå°†ä¸å¯ç”¨ï¼");
+        }
 
-        // ¿ªÊ¼Á÷³Ì
+        // éšæœºé¢œè‰²
+        if (disclaimerImage != null)
+        {
+            if (randomizeColor)
+            {
+                Color randomColor = colorOptions[Random.Range(0, colorOptions.Length)];
+                randomColor.a = 0; // åˆå§‹é€æ˜
+                disclaimerImage.color = randomColor;
+                Debug.Log($"[DisclaimerManager] éšæœºé¢œè‰²: RGB({randomColor.r * 255}, {randomColor.g * 255}, {randomColor.b * 255})");
+            }
+            else
+            {
+                SetAlpha(disclaimerImage, 0);
+            }
+        }
+
+        // å¼€å§‹æµç¨‹
         StartCoroutine(DisclaimerRoutine());
+    }
+
+    void Update()
+    {
+        // å±å¹•éœ‡åŠ¨æ•ˆæœ
+        if (enableScreenShake && mainCamera != null)
+        {
+            float offsetX = (Mathf.PerlinNoise(Time.time * shakeSpeed, 0) * 2 - 1);
+            float offsetY = (Mathf.PerlinNoise(0, Time.time * shakeSpeed) * 2 - 1);
+
+            Vector3 shakeOffset = new Vector3(offsetX, offsetY, 0) * shakeIntensity * 0.1f;
+            mainCamera.transform.localPosition = originalCameraPosition + shakeOffset;
+        }
+        else if (mainCamera != null && !enableScreenShake)
+        {
+            mainCamera.transform.localPosition = originalCameraPosition;
+        }
     }
 
     IEnumerator DisclaimerRoutine()
     {
-        // 1. Í¬Ê±½¥ÏÔÁ½¸öÎÄ±¾
+        // 1. æ·¡å…¥å›¾ç‰‡
         float elapsed = 0;
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
             float alpha = Mathf.Clamp01(elapsed / fadeDuration);
-
-            SetAlpha(text1, alpha);
-            SetAlpha(text2, alpha);
+            SetAlpha(disclaimerImage, alpha);
             yield return null;
         }
 
-        // È·±£×îÖÕÍêÈ«²»Í¸Ã÷
-        SetAlpha(text1, 1);
-        SetAlpha(text2, 1);
+        // ç¡®ä¿å®Œå…¨ä¸é€æ˜
+        SetAlpha(disclaimerImage, 1);
 
-        // 2. µÈ´ı 3 Ãë
+        // 2. ç­‰å¾…
         yield return new WaitForSeconds(waitTime);
 
-        // 3. Ìø×ª³¡¾°
+        // 3. è·³è½¬åœºæ™¯
         if (!string.IsNullOrEmpty(nextSceneName))
         {
             SceneManager.LoadScene(nextSceneName);
         }
         else
         {
-            Debug.LogError("Î´ÉèÖÃÌø×ª³¡¾°µÄÃû×Ö£¡");
+            Debug.LogError("æœªè®¾ç½®è·³è½¬åœºæ™¯åç§°ï¼");
         }
     }
 
-    // ÉèÖÃ TMP ÑÕÉ«µÄ¿ì½İ·½·¨
-    void SetAlpha(TextMeshProUGUI text, float alpha)
+    void SetAlpha(Image image, float alpha)
     {
-        if (text != null)
+        if (image != null)
         {
-            Color c = text.color;
+            Color c = image.color;
             c.a = alpha;
-            text.color = c;
+            image.color = c;
+        }
+    }
+
+    void OnDestroy()
+    {
+        // æ¢å¤ç›¸æœºä½ç½®
+        if (mainCamera != null)
+        {
+            mainCamera.transform.localPosition = originalCameraPosition;
+        }
+    }
+
+    // è¿è¡Œæ—¶åˆ‡æ¢éœ‡åŠ¨æ•ˆæœ
+    public void ToggleScreenShake(bool enabled)
+    {
+        enableScreenShake = enabled;
+        if (!enabled && mainCamera != null)
+        {
+            mainCamera.transform.localPosition = originalCameraPosition;
         }
     }
 }

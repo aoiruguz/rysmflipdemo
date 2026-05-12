@@ -69,5 +69,18 @@ MonoBehaviour:
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: MainStory_Chapter1_Stage1_Clear
-  interferenceCount: 0
+  interferenceTriggers:
+  - triggerProgress: 0.05
+    skillType: 2
   interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0.24836817, g: 0.6336972, b: 0.8679245, a: 1}
+    color2: {r: 0.13207537, g: 0.19352265, b: 0.66666657, a: 1}
+    color3: {r: 0.53111225, g: 0.16017953, b: 0.57232696, a: 1}
+    color4: {r: 0, g: 0.98742133, b: 0.91683453, a: 1}
+    color5: {r: 0.7987421, g: 0.042699993, b: 0.10235846, a: 1}
+  interferenceCount: 0

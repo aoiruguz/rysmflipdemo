@@ -9,6 +9,46 @@ public struct DifficultyDetail
     public ChartData chartAsset;      // 对应已经创建的 ChartData SO
 }
 
+[System.Serializable]
+public struct BackgroundMaterialSettings
+{
+    [Header("动画参数")]
+    [Tooltip("波动速度")]
+    public float wobbleSpeed;
+
+    [Tooltip("波动幅度")]
+    public float wobbleAmount;
+
+    [Tooltip("扩张速度")]
+    public float expansionSpeed;
+
+    [Tooltip("环密度")]
+    public float ringDensity;
+
+    [Header("颜色配置")]
+    public Color color1;
+    public Color color2;
+    public Color color3;
+    public Color color4;
+    public Color color5;
+
+    public static BackgroundMaterialSettings Default()
+    {
+        return new BackgroundMaterialSettings
+        {
+            wobbleSpeed = 5.15f,
+            wobbleAmount = 0.04f,
+            expansionSpeed = 1.75f,
+            ringDensity = 15.32f,
+            color1 = new Color(0.965f, 0.765f, 0.969f, 1f),
+            color2 = new Color(0.918f, 0.604f, 0.941f, 1f),
+            color3 = new Color(0.784f, 0.537f, 0.980f, 1f),
+            color4 = new Color(0.471f, 0.494f, 0.992f, 1f),
+            color5 = new Color(0.310f, 0.549f, 0.992f, 1f)
+        };
+    }
+}
+
 [CreateAssetMenu(fileName = "NewLevel", menuName = "RhythmGame/LevelData")]
 public class LevelData : ScriptableObject
 {
@@ -57,11 +97,19 @@ public class LevelData : ScriptableObject
     public string clearStoryId = "";
 
     [Header("--- 干扰系统 ---")]
-    [Tooltip("干扰技能触发次数（0表示不触发）")]
-    public int interferenceCount = 0;
+    [Tooltip("干扰技能触发配置列表（配置触发时机和技能类型）")]
+    public InterferenceTrigger[] interferenceTriggers = new InterferenceTrigger[0];
 
     [Tooltip("弹幕文本配置")]
     public InterferenceTextConfig interferenceTextConfig;
+
+    [Header("--- 背景材质配置 ---")]
+    [Tooltip("关卡背景材质参数（控制 UI_BG_normal 材质的颜色和动画）")]
+    public BackgroundMaterialSettings backgroundMaterial = BackgroundMaterialSettings.Default();
+
+    [Header("--- 干扰系统（已弃用） ---")]
+    [Tooltip("干扰技能触发次数（已弃用，请使用 interferenceTriggers）")]
+    public int interferenceCount = 0;
 
     // 获取最佳成绩的方法，通常通过 SaveManager 获取，因为这是纯数据 SO。
     // 因为 SO 在磁盘上是只读的。

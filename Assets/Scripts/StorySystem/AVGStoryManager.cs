@@ -156,13 +156,21 @@ public class AVGStoryManager : MonoBehaviour
         }
 
         // 每次播放前都重新查找 StoryPlayer（因为场景切换后引用会丢失）
-        storyPlayer = FindObjectOfType<StoryPlayer>();
+        // 使用 includeInactive = true 来查找被禁用的对象
+        storyPlayer = FindObjectOfType<StoryPlayer>(true);
 
         if (storyPlayer == null)
         {
-            Debug.LogError("[AVGStoryManager] 场景中未找到StoryPlayer组件！");
+            Debug.LogError("[AVGStoryManager] 场景中未找到StoryPlayer组件！请确保场景中有StoryPlayer组件。");
             onComplete?.Invoke();
             return;
+        }
+
+        // 检查 StoryPlayer 所在的 GameObject 是否激活
+        if (!storyPlayer.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning($"[AVGStoryManager] StoryPlayer 所在的对象 {storyPlayer.gameObject.name} 未激活，正在激活...");
+            storyPlayer.gameObject.SetActive(true);
         }
 
         Debug.Log($"[AVGStoryManager] Found StoryPlayer: {storyPlayer.name}, starting story: {storyData.storyId}");
