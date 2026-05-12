@@ -230,6 +230,9 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
+  normalBarrageButton: {fileID: 926322676}
+  enableAutoTrigger: 1
+  autoTriggerInterval: 1
 --- !u!1 &11791094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1459,6 +1462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 172848415}
   - component: {fileID: 172848414}
+  - component: {fileID: 172848416}
   m_Layer: 0
   m_Name: InterferenceManager
   m_TagString: Untagged
@@ -1481,6 +1485,8 @@ MonoBehaviour:
   songCompletionDetector: {fileID: 0}
   interferenceCanvas: {fileID: 0}
   scrollingTextSkill: {fileID: 0}
+  glitchEffectSkill: {fileID: 172848416}
+  glitchMaterial: {fileID: 2100000, guid: 18b8765ddae0f8e45997464d8c38ce6d, type: 2}
   showDebugInfo: 1
 --- !u!4 &172848415
 Transform:
@@ -1497,6 +1503,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &172848416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172848413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39441c8f515d4074288df0c881d09c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GlitchEffectSkill
+  glitchMaterial: {fileID: 2100000, guid: 18b8765ddae0f8e45997464d8c38ce6d, type: 2}
+  duration: 5
+  maxIntensity: 0.6
+  fadeTime: 1
 --- !u!1 &172990287
 GameObject:
   m_ObjectHideFlags: 0
@@ -6137,7 +6159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.34770966, y: 0.23501587}
+  m_AnchoredPosition: {x: -2.483, y: 0.23501587}
   m_SizeDelta: {x: 35.82, y: 16.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &926322676
@@ -6567,6 +6589,9 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
+  normalBarrageButton: {fileID: 0}
+  enableAutoTrigger: 1
+  autoTriggerInterval: 1
 --- !u!114 &951381186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8142,7 +8167,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.739, y: 0.23501587}
+  m_AnchoredPosition: {x: -2.0917096, y: 0.23501587}
   m_SizeDelta: {x: 35.82, y: 16.64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1121279399
@@ -12956,6 +12981,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667001439}
   m_CullTransparentMesh: 1
+--- !u!1 &1669357219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1669357221}
+  - component: {fileID: 1669357220}
+  m_Layer: 0
+  m_Name: BackgroundMaterialController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1669357220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669357219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe9cbeb4e9fa1d4093a5d2c2c0d4556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BackgroundMaterialController
+  backgroundMaterial: {fileID: 2100000, guid: 13d8280bbbc74f14199db0659836ebe8, type: 2}
+  autoLoadMaterial: 1
+  materialPath: Material/UI_BG_normal
+--- !u!4 &1669357221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1669357219}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.44157, y: 1.24395, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1681650951
 GameObject:
   m_ObjectHideFlags: 0
@@ -13839,6 +13911,9 @@ MonoBehaviour:
   perfectThreshold: 50
   greatThreshold: 100
   goodThreshold: 150
+  specialBarrageButton: {fileID: 1121279399}
+  enableComboBarrageTrigger: 1
+  comboTriggerInterval: 10
 --- !u!4 &1795719945
 Transform:
   m_ObjectHideFlags: 0
@@ -14364,14 +14439,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9abaecc3ba11a6e41be6ed43e65b0225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoryManager
-  dialogPanel1: {fileID: 0}
-  dialogText1: {fileID: 0}
-  speakerName1: {fileID: 0}
-  dialogPanel2: {fileID: 0}
-  dialogText2: {fileID: 0}
-  speakerName2: {fileID: 0}
-  skipButton: {fileID: 0}
-  skipButtonObject: {fileID: 0}
+  dialogPanel1: {fileID: 409832743}
+  dialogText1: {fileID: 1327703885}
+  speakerName1: {fileID: 1651164594}
+  dialogPanel2: {fileID: 581183008}
+  dialogText2: {fileID: 402665712}
+  speakerName2: {fileID: 1659915706}
+  skipButton: {fileID: 87362099}
+  skipButtonObject: {fileID: 803100396}
   defaultDialogDisplayDuration: 3
   defaultDialogTransitionDelay: 0.5
 --- !u!4 &1889617446
@@ -15364,3 +15439,4 @@ SceneRoots:
   - {fileID: 1387532109}
   - {fileID: 1889617446}
   - {fileID: 172848415}
+  - {fileID: 1669357221}
