@@ -50,7 +50,6 @@ public class ResultScreenSetupHelper : MonoBehaviour
         CreateRankSection(resultPanel.transform, resultUI);
         CreateScoreSection(resultPanel.transform, resultUI);
         CreateJudgmentSection(resultPanel.transform, resultUI);
-        CreateTimingSection(resultPanel.transform, resultUI);
         CreateNavigationButtons(resultPanel.transform);
 
         Debug.Log("Result Screen UI setup complete!");
@@ -66,13 +65,18 @@ public class ResultScreenSetupHelper : MonoBehaviour
         songText.text = "Song Name";
         resultUI.songNameText = songText;
 
-        // Difficulty
-        GameObject diffObj = CreateText(parent, "Difficulty", new Vector2(0, 270), new Vector2(400, 40));
-        TextMeshProUGUI diffText = diffObj.GetComponent<TextMeshProUGUI>();
-        diffText.fontSize = 28;
-        diffText.text = "Normal";
-        diffText.color = new Color(0.8f, 0.8f, 1f);
-        resultUI.difficultyText = diffText;
+        // Difficulty Icon
+        GameObject diffObj = new GameObject("DifficultyIcon");
+        diffObj.transform.SetParent(parent, false);
+        RectTransform diffRect = diffObj.AddComponent<RectTransform>();
+        diffRect.anchorMin = new Vector2(0.5f, 0.5f);
+        diffRect.anchorMax = new Vector2(0.5f, 0.5f);
+        diffRect.anchoredPosition = new Vector2(0, 270);
+        diffRect.sizeDelta = new Vector2(200, 60);
+
+        Image diffImage = diffObj.AddComponent<Image>();
+        diffImage.color = Color.white;
+        resultUI.difficultyIconObject = diffObj;
     }
 
     private void CreateRankSection(Transform parent, ResultScreenUI resultUI)
@@ -89,7 +93,7 @@ public class ResultScreenSetupHelper : MonoBehaviour
 
         Image rankImage = rankObj.AddComponent<Image>();
         rankImage.color = Color.white;
-        resultUI.rankIcon = rankImage;
+        resultUI.rankIconObject = rankObj;
 
         // Full Combo Icon
         GameObject fcObj = CreateText(parent, "FullComboIcon", new Vector2(-400, -100), new Vector2(250, 50));
@@ -128,38 +132,16 @@ public class ResultScreenSetupHelper : MonoBehaviour
         rateText.color = Color.cyan;
         resultUI.achievementRateText = rateText;
 
-        // Achievement Score Label
-        CreateLabel(parent, "ScoreLabel", new Vector2(centerX, 80), "分数");
-
-        // Achievement Score Value
-        GameObject scoreObj = CreateText(parent, "AchievementScore", new Vector2(centerX, 40), new Vector2(400, 50));
-        TextMeshProUGUI scoreText = scoreObj.GetComponent<TextMeshProUGUI>();
-        scoreText.fontSize = 40;
-        scoreText.text = "0000000";
-        resultUI.achievementScoreText = scoreText;
-
         // Max Combo Label
         CreateLabel(parent, "ComboLabel", new Vector2(centerX, -20), "最大连击");
 
-        // Combo Display (MaxCombo / TotalNotes)
-        GameObject comboObj = CreateText(parent, "MaxCombo", new Vector2(centerX - 60, -60), new Vector2(150, 50));
+        // Combo Display (MaxCombo)
+        GameObject comboObj = CreateText(parent, "MaxCombo", new Vector2(centerX, -60), new Vector2(200, 50));
         TextMeshProUGUI comboText = comboObj.GetComponent<TextMeshProUGUI>();
         comboText.fontSize = 36;
         comboText.text = "0";
-        comboText.alignment = TextAlignmentOptions.Right;
+        comboText.alignment = TextAlignmentOptions.Center;
         resultUI.maxComboText = comboText;
-
-        GameObject slashObj = CreateText(parent, "Slash", new Vector2(centerX, -60), new Vector2(40, 50));
-        TextMeshProUGUI slashText = slashObj.GetComponent<TextMeshProUGUI>();
-        slashText.fontSize = 36;
-        slashText.text = "/";
-
-        GameObject totalObj = CreateText(parent, "TotalNotes", new Vector2(centerX + 60, -60), new Vector2(150, 50));
-        TextMeshProUGUI totalText = totalObj.GetComponent<TextMeshProUGUI>();
-        totalText.fontSize = 36;
-        totalText.text = "0";
-        totalText.alignment = TextAlignmentOptions.Left;
-        resultUI.totalNotesText = totalText;
     }
 
     private void CreateJudgmentSection(Transform parent, ResultScreenUI resultUI)
@@ -185,29 +167,7 @@ public class ResultScreenSetupHelper : MonoBehaviour
         resultUI.missCountText = missText;
     }
 
-    private void CreateTimingSection(Transform parent, ResultScreenUI resultUI)
-    {
-        float startX = 350;
-        float startY = -140;
 
-        // Late
-        CreateLabel(parent, "LateLabel", new Vector2(startX, startY), "Late");
-        GameObject lateObj = CreateText(parent, "LateCount", new Vector2(startX + 100, startY), new Vector2(100, 40));
-        TextMeshProUGUI lateText = lateObj.GetComponent<TextMeshProUGUI>();
-        lateText.fontSize = 28;
-        lateText.text = "0";
-        lateText.alignment = TextAlignmentOptions.Right;
-        resultUI.lateCountText = lateText;
-
-        // Fast
-        CreateLabel(parent, "FastLabel", new Vector2(startX, startY - 45), "Fast");
-        GameObject fastObj = CreateText(parent, "FastCount", new Vector2(startX + 100, startY - 45), new Vector2(100, 40));
-        TextMeshProUGUI fastText = fastObj.GetComponent<TextMeshProUGUI>();
-        fastText.fontSize = 28;
-        fastText.text = "0";
-        fastText.alignment = TextAlignmentOptions.Right;
-        resultUI.fastCountText = fastText;
-    }
 
     private void CreateJudgmentRow(Transform parent, string judgmentName, Vector2 position, Color color, out TextMeshProUGUI countText)
     {

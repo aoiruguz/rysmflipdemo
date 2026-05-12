@@ -9,13 +9,22 @@ using System.Collections;
 /// </summary>
 public class ResultScreenUI : MonoBehaviour
 {
+    [Header("Difficulty Display")]
+    public GameObject difficultyIconObject;
+    [Tooltip("按顺序放入图片: 0:Easy, 1:Normal, 2:Hard")]
+    public Sprite[] difficultySprites;
+
     [Header("Rank Display")]
-    public Image rankIcon;
-    public Sprite rankS;
-    public Sprite rankA;
-    public Sprite rankB;
-    public Sprite rankC;
-    public Sprite rankF;
+    public GameObject rankIconObject; // 评级显示的物体
+    public Sprite[] rankSprites;      // 所有的评级图片数组
+    public GameObject rankBackgroundObject; // 评级背景物体
+    [Tooltip("按顺序放入图片: 0:S, 1:A, 2:B, 3:C, 4:F")]
+    public Sprite[] rankBackgroundSprites; // 评级背景图片数组
+
+    [Header("Level (Rating) Display")]
+    public GameObject levelIconObject;
+    [Tooltip("按顺序放入图片: 0:LV1, 1:LV2, ... 9:LV10")]
+    public Sprite[] levelSprites;
 
     [Header("Special Icons")]
     public GameObject fullComboIcon;
@@ -23,16 +32,13 @@ public class ResultScreenUI : MonoBehaviour
 
     [Header("Score Display")]
     public TextMeshProUGUI achievementRateText;
-    public TextMeshProUGUI achievementScoreText;
 
     [Header("Play Count & Fans Display")]
     public TextMeshProUGUI playCountText; // 播放量
-    public TextMeshProUGUI newFansText; // 本局获得粉丝
     public TextMeshProUGUI totalFansText; // 总粉丝数
 
     [Header("Combo Display")]
     public TextMeshProUGUI maxComboText;
-    public TextMeshProUGUI totalNotesText;
 
     [Header("Judgment Counts")]
     public TextMeshProUGUI perfectCountText;
@@ -40,13 +46,8 @@ public class ResultScreenUI : MonoBehaviour
     public TextMeshProUGUI goodCountText;
     public TextMeshProUGUI missCountText;
 
-    [Header("Timing Display")]
-    public TextMeshProUGUI lateCountText;
-    public TextMeshProUGUI fastCountText;
-
     [Header("Song Info")]
     public TextMeshProUGUI songNameText;
-    public TextMeshProUGUI difficultyText;
 
     [Header("Animation")]
     public float animationDelay = 0.5f;
@@ -98,11 +99,14 @@ public class ResultScreenUI : MonoBehaviour
         if (songNameText != null)
             songNameText.text = playData.songName;
 
-        if (difficultyText != null)
-            difficultyText.text = playData.difficulty.ToString();
+        // Difficulty Icon
+        DisplayDifficultyIcon(playData.difficulty);
 
         // Rank Icon
         DisplayRankIcon(playData.GetRank());
+
+        // Level Icon (Rating LV.1 - LV.10)
+        DisplayLevelIcon();
 
         // Special Icons
         if (fullComboIcon != null)
@@ -116,15 +120,9 @@ public class ResultScreenUI : MonoBehaviour
         if (achievementRateText != null)
             achievementRateText.text = $"{achievementRate:F2}%";
 
-        if (achievementScoreText != null)
-            achievementScoreText.text = playData.GetAchievementScore().ToString("D7");
-
         // Combo
         if (maxComboText != null)
             maxComboText.text = playData.maxCombo.ToString();
-
-        if (totalNotesText != null)
-            totalNotesText.text = playData.totalNotes.ToString();
 
         // Judgment Counts
         if (perfectCountText != null)
@@ -138,13 +136,6 @@ public class ResultScreenUI : MonoBehaviour
 
         if (missCountText != null)
             missCountText.text = playData.missCount.ToString();
-
-        // Late/Fast Counts
-        if (lateCountText != null)
-            lateCountText.text = playData.lateCount.ToString();
-
-        if (fastCountText != null)
-            fastCountText.text = playData.fastCount.ToString();
 
         // 播放量和粉丝数显示
         DisplayPlayCountAndFans();
@@ -180,11 +171,7 @@ public class ResultScreenUI : MonoBehaviour
             playCountText.text = ScoreCalculator.FormatLargeNumber(playCount);
         }
 
-        // 显示本局获得粉丝
-        if (newFansText != null)
-        {
-            newFansText.text = $"+{ScoreCalculator.FormatLargeNumber(newFans)}";
-        }
+
 
         // 显示总粉丝数
         if (totalFansText != null)
@@ -200,26 +187,134 @@ public class ResultScreenUI : MonoBehaviour
     /// </summary>
     private void DisplayRankIcon(string rank)
     {
-        if (rankIcon == null) return;
+        if (rankIconObject == null || rankSprites == null || rankSprites.Length == 0) return;
 
-        Sprite sprite = rank switch
+        // 直接获取物体上的 Image 组件并修改图片
+        Image img = rankIconObject.GetComponent<Image>();
+        if (img == null)
         {
-            "S" => rankS,
-            "A" => rankA,
-            "B" => rankB,
-            "C" => rankC,
-            "F" => rankF,
-            _ => rankF
+            Debug.LogWarning($"[ResultScreenUI] {rankIconObject.name} has no Image component!");
+            return;
+        }
+
+        int index = rank switch
+        {
+            "S" => 0,
+            "A" => 1,
+            "B" => 2,
+            "C" => 3,
+            "F" => 4,
+            _ => 4
         };
 
-        if (sprite != null)
+        if (index < rankSprites.Length && rankSprites[index] != null)
         {
-            rankIcon.sprite = sprite;
-            rankIcon.enabled = true;
+            img.sprite = rankSprites[index];
+            img.SetNativeSize(); // 同步修改 RectTransform 的宽高
+            img.enabled = true;
         }
         else
         {
-            Debug.LogWarning($"[ResultScreenUI] Rank sprite for '{rank}' not assigned!");
+            Debug.LogWarning($"[ResultScreenUI] Rank sprite for '{rank}' at index {index} not assigned!");
+        }
+
+        // --- 设置评级背景 ---
+        if (rankBackgroundObject != null && rankBackgroundSprites != null && rankBackgroundSprites.Length > 0)
+        {
+            Image bgImg = rankBackgroundObject.GetComponent<Image>();
+            if (bgImg == null)
+            {
+                Debug.LogWarning($"[ResultScreenUI] {rankBackgroundObject.name} has no Image component!");
+            }
+            else
+            {
+                // 确保索引不越界（如果背景图只有4张而Rank有5个，会自动取最后一张）
+                int bgIndex = Mathf.Clamp(index, 0, rankBackgroundSprites.Length - 1);
+                if (rankBackgroundSprites[bgIndex] != null)
+                {
+                    bgImg.sprite = rankBackgroundSprites[bgIndex];
+                    bgImg.SetNativeSize();
+                    bgImg.enabled = true;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 显示难度图标
+    /// </summary>
+    private void DisplayDifficultyIcon(ChartDifficulty difficulty)
+    {
+        if (difficultyIconObject == null || difficultySprites == null || difficultySprites.Length == 0) return;
+
+        Image img = difficultyIconObject.GetComponent<Image>();
+        if (img == null)
+        {
+            Debug.LogWarning($"[ResultScreenUI] {difficultyIconObject.name} has no Image component!");
+            return;
+        }
+
+        int index = (int)difficulty;
+
+        if (index < difficultySprites.Length && difficultySprites[index] != null)
+        {
+            img.sprite = difficultySprites[index];
+            img.SetNativeSize(); // 同步修改 RectTransform 的宽高
+            img.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning($"[ResultScreenUI] Difficulty sprite for '{difficulty}' at index {index} not assigned!");
+        }
+    }
+
+    /// <summary>
+    /// 显示等级(RatingLevel)图标
+    /// </summary>
+    private void DisplayLevelIcon()
+    {
+        if (levelIconObject == null || levelSprites == null || levelSprites.Length == 0) return;
+
+        // 1. 获取 LevelData 和 ChartData (仿照剧情读取逻辑)
+        LevelData currentLevelData = LevelUIManager.GetCurrentLevelData();
+        ChartData currentChart = LevelUIManager.GetSelectedChart();
+
+        if (currentLevelData == null || currentChart == null)
+        {
+            Debug.LogWarning("[ResultScreenUI] LevelData or ChartData is null, cannot display level icon.");
+            return;
+        }
+
+        // 2. 查找当前难度的 ratingLevel
+        int ratingLevel = 0;
+        foreach (var detail in currentLevelData.difficulties)
+        {
+            if (detail.difficulty == currentChart.difficulty)
+            {
+                ratingLevel = detail.ratingLevel;
+                break;
+            }
+        }
+
+        // 3. 显示对应的图片 (ratingLevel 通常是 1-10)
+        Image img = levelIconObject.GetComponent<Image>();
+        if (img == null)
+        {
+            Debug.LogWarning($"[ResultScreenUI] {levelIconObject.name} has no Image component!");
+            return;
+        }
+
+        int index = Mathf.Clamp(ratingLevel - 1, 0, levelSprites.Length - 1);
+
+        if (index < levelSprites.Length && levelSprites[index] != null)
+        {
+            img.sprite = levelSprites[index];
+            img.SetNativeSize(); // 同步修改 RectTransform 的宽高，实现自适应缩放
+            img.enabled = true;
+        }
+        else
+        {
+            Debug.LogWarning($"[ResultScreenUI] Level sprite for rating {ratingLevel} at index {index} not assigned!");
         }
     }
 

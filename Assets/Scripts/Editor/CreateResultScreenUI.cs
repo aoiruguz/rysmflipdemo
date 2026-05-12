@@ -71,7 +71,7 @@ public class CreateResultScreenUI : EditorWindow
         rankRect.sizeDelta = new Vector2(150, 150);
 
         Image rankImage = rankObj.AddComponent<Image>();
-        resultUI.rankIcon = rankImage;
+        resultUI.rankIconObject = rankObj;
 
         // Full Combo Icon
         GameObject fcObj = CreateTextObject(parent, "FullComboIcon", new Vector2(-250, 0), "FULL COMBO");
@@ -90,10 +90,6 @@ public class CreateResultScreenUI : EditorWindow
         CreateLabel(parent, "AchievementRateLabel", new Vector2(0, 200), "达成率");
         resultUI.achievementRateText = CreateTextObject(parent, "AchievementRateText", new Vector2(0, 170), "0.00%").GetComponent<TextMeshProUGUI>();
 
-        // Achievement Score
-        CreateLabel(parent, "AchievementScoreLabel", new Vector2(0, 120), "分数");
-        resultUI.achievementScoreText = CreateTextObject(parent, "AchievementScoreText", new Vector2(0, 90), "0000000").GetComponent<TextMeshProUGUI>();
-
         // Max Combo
         CreateLabel(parent, "MaxComboLabel", new Vector2(0, 40), "最大连击");
         GameObject comboContainer = new GameObject("ComboContainer");
@@ -101,9 +97,7 @@ public class CreateResultScreenUI : EditorWindow
         RectTransform comboRect = comboContainer.AddComponent<RectTransform>();
         comboRect.anchoredPosition = new Vector2(0, 10);
 
-        resultUI.maxComboText = CreateTextObject(comboContainer.transform, "MaxComboText", new Vector2(-30, 0), "0").GetComponent<TextMeshProUGUI>();
-        CreateLabel(comboContainer.transform, "Slash", new Vector2(0, 0), "/");
-        resultUI.totalNotesText = CreateTextObject(comboContainer.transform, "TotalNotesText", new Vector2(30, 0), "0").GetComponent<TextMeshProUGUI>();
+        resultUI.maxComboText = CreateTextObject(comboContainer.transform, "MaxComboText", new Vector2(0, 0), "0").GetComponent<TextMeshProUGUI>();
     }
 
     private static void CreateJudgmentDisplay(Transform parent, ResultScreenUI resultUI)
@@ -126,13 +120,6 @@ public class CreateResultScreenUI : EditorWindow
         // Miss
         CreateLabel(parent, "MissLabel", new Vector2(150, startY - spacing * 3), "Miss");
         resultUI.missCountText = CreateTextObject(parent, "MissCount", new Vector2(250, startY - spacing * 3), "0").GetComponent<TextMeshProUGUI>();
-
-        // Late/Fast
-        CreateLabel(parent, "LateLabel", new Vector2(150, startY - spacing * 4), "Late");
-        resultUI.lateCountText = CreateTextObject(parent, "LateCount", new Vector2(250, startY - spacing * 4), "0").GetComponent<TextMeshProUGUI>();
-
-        CreateLabel(parent, "FastLabel", new Vector2(150, startY - spacing * 5), "Fast");
-        resultUI.fastCountText = CreateTextObject(parent, "FastCount", new Vector2(250, startY - spacing * 5), "0").GetComponent<TextMeshProUGUI>();
     }
 
     private static void CreateSongInfo(Transform parent, ResultScreenUI resultUI)
@@ -141,9 +128,15 @@ public class CreateResultScreenUI : EditorWindow
         resultUI.songNameText = CreateTextObject(parent, "SongNameText", new Vector2(0, 250), "Song Name").GetComponent<TextMeshProUGUI>();
         resultUI.songNameText.fontSize = 32;
 
-        // Difficulty
-        resultUI.difficultyText = CreateTextObject(parent, "DifficultyText", new Vector2(0, 220), "Normal").GetComponent<TextMeshProUGUI>();
-        resultUI.difficultyText.fontSize = 20;
+        // Difficulty Icon
+        GameObject diffObj = new GameObject("DifficultyIcon");
+        diffObj.transform.SetParent(parent, false);
+        RectTransform diffRect = diffObj.AddComponent<RectTransform>();
+        diffRect.anchoredPosition = new Vector2(0, 220);
+        diffRect.sizeDelta = new Vector2(100, 30);
+
+        Image diffImage = diffObj.AddComponent<Image>();
+        resultUI.difficultyIconObject = diffObj;
     }
 
     private static GameObject CreateTextObject(Transform parent, string name, Vector2 position, string text)
