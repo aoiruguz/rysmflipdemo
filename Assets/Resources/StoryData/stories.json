@@ -1,8 +1,8 @@
 {
   "stories": [
     {
-      "storyId": "BigMap_Enter",
-      "storyName": "初入大地图",
+      "storyId": "NewGame_Opening",
+      "storyName": "游戏开场剧情",
       "triggerType": 0,
       "triggerCondition": "Big Map",
       "dialogues": [

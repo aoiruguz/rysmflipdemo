@@ -162,7 +162,7 @@ public class ChartEditorUIGenerator : EditorWindow
 
         // Note Type Text
         GameObject noteTypeText = CreateText("NoteTypeText", panel.transform, new Vector2(280, 25), new Vector2(0, -95));
-        noteTypeText.GetComponent<TextMeshProUGUI>().text = "Type: Color - ColorA";
+        noteTypeText.GetComponent<TextMeshProUGUI>().text = "Type: Color - J_Color0_Red";
         noteTypeText.GetComponent<TextMeshProUGUI>().fontSize = 16;
     }
 

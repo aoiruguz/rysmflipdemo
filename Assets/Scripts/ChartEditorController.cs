@@ -160,26 +160,26 @@ public class ChartEditorController : MonoBehaviour
     {
         if (note == null) return;
 
-        // Cycle through: ColorA -> ColorB -> ColorC -> DirectionalLeft -> DirectionalRight -> ColorA
+        // Cycle through: J_Color0_Red -> L_Color1_Yellow -> K_Color2_Blue -> DirectionalLeft -> DirectionalRight -> J_Color0_Red
         NoteType currentType = note.NoteType;
 
         if (currentType == NoteType.Color)
         {
             GameColor currentColor = note.Color;
 
-            if (currentColor == GameColor.ColorC)
+            if (currentColor == GameColor.K_Color2_Blue)
             {
-                // Switch from ColorC to DirectionalLeft
+                // Switch from K_Color2_Blue to DirectionalLeft
                 ChangeToDirectionalNote(note, NoteType.DirectionalLeft);
             }
             else
             {
-                // Cycle through colors: A -> B -> C
+                // Cycle through colors: J(0) -> L(1) -> K(2)
                 GameColor newColor = currentColor switch
                 {
-                    GameColor.ColorA => GameColor.ColorB,
-                    GameColor.ColorB => GameColor.ColorC,
-                    _ => GameColor.ColorA
+                    GameColor.J_Color0_Red => GameColor.L_Color1_Yellow,
+                    GameColor.L_Color1_Yellow => GameColor.K_Color2_Blue,
+                    _ => GameColor.J_Color0_Red
                 };
 
                 UpdateNoteColor(note, newColor);
@@ -193,8 +193,8 @@ public class ChartEditorController : MonoBehaviour
         }
         else if (currentType == NoteType.DirectionalRight)
         {
-            // Switch from DirectionalRight to ColorA
-            ChangeToColorNote(note, GameColor.ColorA);
+            // Switch from DirectionalRight to J_Color0_Red
+            ChangeToColorNote(note, GameColor.J_Color0_Red);
         }
     }
 
