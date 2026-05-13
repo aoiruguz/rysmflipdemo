@@ -10,26 +10,11 @@ public class BackgroundMaterialController : MonoBehaviour
     [Tooltip("要控制的背景材质（通常是 UI_BG_normal）")]
     public Material backgroundMaterial;
 
-    [Header("自动查找")]
-    [Tooltip("如果未手动指定材质，自动从 Resources 加载")]
-    public bool autoLoadMaterial = true;
 
-    [Tooltip("自动加载的材质路径")]
-    public string materialPath = "Material/UI_BG_normal";
 
     private void Start()
     {
-        // 如果没有指定材质，尝试自动加载
-        if (backgroundMaterial == null && autoLoadMaterial)
-        {
-            backgroundMaterial = Resources.Load<Material>(materialPath);
 
-            if (backgroundMaterial == null)
-            {
-                Debug.LogError($"[BackgroundMaterialController] Failed to load material from: {materialPath}");
-                return;
-            }
-        }
 
         // 应用关卡材质配置
         ApplyLevelMaterialSettings();
