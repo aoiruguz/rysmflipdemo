@@ -190,9 +190,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2069901050142795864}
+  - component: {fileID: 1097830465490142068}
   - component: {fileID: 9180934745666368643}
   - component: {fileID: 4295093418640370038}
-  - component: {fileID: 1097830465490142068}
   - component: {fileID: 4465401115025079399}
   m_Layer: 0
   m_Name: NotePrefab
@@ -217,6 +217,30 @@ Transform:
   - {fileID: 1014560656316771932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1097830465490142068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7312989398368265476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 101d7c47fe279a24d862479fe68e69b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Note
+  normalSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
+  sprite0_J_Red: {fileID: 21300000, guid: daa2f919043d6ef479c4f7d320533cce, type: 3}
+  sprite1_L_Yellow: {fileID: 21300000, guid: 82270f35f328d77479a7692dfe26eefb, type: 3}
+  sprite2_K_Blue: {fileID: 21300000, guid: cc5b7932fc72d5b42a918ab02d2a62e6, type: 3}
+  leftSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
+  rightSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
+  missAnimDuration: 0.35
+  missTargetColor: {r: 1, g: 0.4, b: 0.4, a: 0}
+  missShakeStrength: 0.05
+  missShakeVibrato: 30
+  missShakeRandomness: 90
+  spawnAnimDuration: 0.4
 --- !u!212 &9180934745666368643
 SpriteRenderer:
   serializedVersion: 2
@@ -322,24 +346,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
---- !u!114 &1097830465490142068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7312989398368265476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 101d7c47fe279a24d862479fe68e69b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Note
-  normalSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
-  sprite0_J_Red: {fileID: 21300000, guid: daa2f919043d6ef479c4f7d320533cce, type: 3}
-  sprite1_L_Yellow: {fileID: 21300000, guid: 82270f35f328d77479a7692dfe26eefb, type: 3}
-  sprite2_K_Blue: {fileID: 21300000, guid: cc5b7932fc72d5b42a918ab02d2a62e6, type: 3}
-  leftSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
-  rightSwipeSprite: {fileID: 21300000, guid: c95283fe9dc80f94e89220c10b1dcb74, type: 3}
 --- !u!50 &4465401115025079399
 Rigidbody2D:
   serializedVersion: 5

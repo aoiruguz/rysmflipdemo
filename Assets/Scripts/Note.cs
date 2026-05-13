@@ -1,12 +1,17 @@
 using UnityEngine;
+using DG.Tweening;
+using TMPro;
 
 public class Note : MonoBehaviour
 {
     private SpriteRenderer mainRenderer;
+    private TextMeshPro tmpText;
+    private bool isDead = false;
 
     void Awake()
     {
         mainRenderer = GetComponent<SpriteRenderer>();
+        tmpText = GetComponentInChildren<TextMeshPro>();
     }
 
     [Header("State Sprites")]
@@ -28,6 +33,22 @@ public class Note : MonoBehaviour
     public NoteType NoteType { get; private set; }
     public float HitTimeMs { get; private set; }
 
+    [Header("Miss Animation Settings")]
+    [Tooltip("Miss 动画持续时间")]
+    public float missAnimDuration = 0.35f;
+    [Tooltip("Miss 时的目标颜色（通常是红色且透明度为0）")]
+    public Color missTargetColor = new Color(1f, 0.4f, 0.4f, 0f);
+    [Tooltip("颤抖强度")]
+    public float missShakeStrength = 0.15f;
+    [Tooltip("颤抖频率 (Vibrato)")]
+    public int missShakeVibrato = 30;
+    [Tooltip("颤抖随机度")]
+    public float missShakeRandomness = 90f;
+
+    [Header("Spawn Animation Settings")]
+    [Tooltip("出现时的渐现时间")]
+    public float spawnAnimDuration = 0.2f;
+
     private float speed;
     private float missY;
     private System.Action<Note> onMiss;
@@ -44,6 +65,7 @@ public class Note : MonoBehaviour
         this.onMiss = onMiss;
 
         UpdateVisual();
+        PlaySpawnAnimation();
     }
 
     // For directional notes
@@ -57,6 +79,7 @@ public class Note : MonoBehaviour
         this.onMiss = onMiss;
 
         UpdateVisual();
+        PlaySpawnAnimation();
     }
 
     private void UpdateVisual()
@@ -96,13 +119,64 @@ public class Note : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         // Simple downward movement based on the speed calculated by GameManager
         transform.Translate(Vector3.down * speed * Time.deltaTime);
 
         if (transform.position.y < missY)
         {
+            isDead = true;
             onMiss?.Invoke(this);
-            Destroy(gameObject);
+            PlayMissAnimation();
         }
+    }
+
+    private void PlaySpawnAnimation()
+    {
+        // 1. SpriteRenderer 渐现
+        if (mainRenderer != null)
+        {
+            // 初始设为透明
+            Color c = mainRenderer.color;
+            c.a = 0f;
+            mainRenderer.color = c;
+            // 渐变到不透明
+            mainRenderer.DOFade(1f, spawnAnimDuration).SetEase(Ease.OutQuad);
+        }
+
+        // 2. TextMeshPro 渐现
+        if (tmpText != null)
+        {
+            // 初始设为透明
+            Color c = tmpText.color;
+            c.a = 0f;
+            tmpText.color = c;
+            // 渐变到不透明
+            tmpText.DOFade(1f, spawnAnimDuration).SetEase(Ease.OutQuad);
+        }
+    }
+
+    private void PlayMissAnimation()
+    {
+        // 1. 颜色变红并快速降低透明度
+        if (mainRenderer != null)
+        {
+            mainRenderer.DOColor(missTargetColor, missAnimDuration).SetEase(Ease.OutQuad);
+        }
+
+        if (tmpText != null)
+        {
+            tmpText.DOColor(missTargetColor, missAnimDuration).SetEase(Ease.OutQuad);
+        }
+
+        // 2. 颤抖效果
+        transform.DOShakePosition(missAnimDuration, strength: missShakeStrength, vibrato: missShakeVibrato, randomness: missShakeRandomness)
+            .OnComplete(() => {
+                if (this != null && gameObject != null)
+                {
+                    Destroy(gameObject);
+                }
+            });
     }
 }
