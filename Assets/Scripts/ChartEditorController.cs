@@ -407,7 +407,6 @@ public class ChartEditorController : MonoBehaviour
         while (noteIndex < chart.notes.Count)
         {
             float currentTimeMs = noteManager.GetCurrentSongTimeMs();
-            UIManager.Instance?.UpdateTimeDisplay(currentTimeMs);
 
             float targetSpawnTimeMs = chart.notes[noteIndex].hitTime - noteTravelTimeMs + runtimeGlobalOffsetMs;
 

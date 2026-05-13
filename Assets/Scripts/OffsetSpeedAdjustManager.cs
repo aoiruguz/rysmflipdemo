@@ -2,12 +2,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class OffsetSpeedAdjustManager : MonoBehaviour
 {
     [Header("UI References")]
-    public Text offsetValueText;
-    public Text travelTimeValueText;
+    public TextMeshProUGUI offsetValueText;
+    public TextMeshProUGUI travelTimeValueText;
     public Button offsetIncreaseButton;
     public Button offsetDecreaseButton;
     public Button travelTimeIncreaseButton;

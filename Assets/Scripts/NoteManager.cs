@@ -50,23 +50,11 @@ public class NoteManager : MonoBehaviour
     [Tooltip("四条Lane的 UI 参照对象，对应4条竖直的游戏路线")]
     public RectTransform[] rectLaneAnchors;
 
-    [Header("Fallback Coordinates")]
-    /// <summary>如果没有设置UI参照，使用的默认Note生成的Y坐标</summary>
-    public float spawnY = 6f;
-    
-    /// <summary>如果没有设置UI参照，使用的默认Note判定区域的Y坐标</summary>
-    public float catchY = -4f;
-    
-    /// <summary>如果没有设置UI参照，使用的默认Note失误区域的Y坐标</summary>
-    public float missY = -6f;
-    
-    /// <summary>如果没有设置UI参照，使用的默认四条Lane的X坐标</summary>
-    public float[] laneXPositions = new float[] { -3.75f, -1.25f, 1.25f, 3.75f };
-
-    [Header("Difficulty Hints")]
-    /// <summary>难度提示UI的父对象，包含Easy/Normal/Hard三个子对象</summary>
-    public GameObject hintParent;
-
+    // 内部运行时坐标（由 UI Alignment 同步得出）
+    [HideInInspector] public float spawnY;
+    [HideInInspector] public float catchY;
+    [HideInInspector] public float missY;
+    [HideInInspector] public float[] laneXPositions = new float[4];
     /// <summary>计算出的Note速度（像素/秒），基于飞行时间和距离</summary>
     public float CurrentSpeed { get; private set; }
     
@@ -93,8 +81,7 @@ private int totalNotes = 0;
     /// 3. 初始化HealthSystem（生命值系统）
     /// 4. 配置音频播放器
     /// 5. 计算Note速度
-    /// 6. 激活难度提示UI
-    /// 7. 启动游戏协程
+    /// 6. 启动游戏协程
     /// </summary>
     void Start()
     {
@@ -146,20 +133,34 @@ private int totalNotes = 0;
         if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.volume = GameSettings.MusicVolume;
 
-        // --- 适配 UI Canvas 坐标系统 ---
-        // 如果配置了 UI 参照点，则使用 UI 元素的世界坐标，保证动态 Note 和静态 UI 一一对应
+        // --- 强制从 UI Canvas 坐标系统同步 ---
+        // 既然不再使用绝对数值，必须确保 UI 参照点已分配
         if (rectSpawnPoint != null) spawnY = rectSpawnPoint.position.y;
+        else Debug.LogError("[NoteManager] rectSpawnPoint is not assigned!");
+
         if (rectCatchPoint != null) catchY = rectCatchPoint.position.y;
+        else Debug.LogError("[NoteManager] rectCatchPoint is not assigned!");
+
         if (rectMissPoint != null) missY = rectMissPoint.position.y;
-        if (rectLaneAnchors != null && rectLaneAnchors.Length > 0)
+        else Debug.LogError("[NoteManager] rectMissPoint is not assigned!");
+
+        if (rectLaneAnchors != null && rectLaneAnchors.Length >= 4)
         {
-            for (int i = 0; i < rectLaneAnchors.Length && i < laneXPositions.Length; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (rectLaneAnchors[i] != null)
                 {
                     laneXPositions[i] = rectLaneAnchors[i].position.x;
                 }
+                else
+                {
+                    Debug.LogError($"[NoteManager] rectLaneAnchors[{i}] is not assigned!");
+                }
             }
+        }
+        else
+        {
+            Debug.LogError("[NoteManager] rectLaneAnchors is not assigned or has insufficient elements (need 4)!");
         }
 
         // --- 核心：基于同步后的 noteTravelTime 计算速度 ---
@@ -171,50 +172,9 @@ private int totalNotes = 0;
         // 设置音乐片段
      audioSource.clip = currentChart.audioClip;
 
-        // 激活对应难度的提示UI
-        ActivateDifficultyHints();
-
-    // 启动游戏主流程协程
         StartCoroutine(PlayRoutine());
     }
 
-    /// <summary>
-    /// 激活对应难度的提示UI
-    /// 根据当前谱面难度，显示对应的难度提示标签（Easy/Normal/Hard）
-    /// </summary>
-    private void ActivateDifficultyHints()
-    {
-        // 检查提示UI父对象是否存在
-        if (hintParent == null)
-        {
-      Debug.LogWarning("Hint parent not assigned in NoteManager!");
-  return;
-        }
-
-        // 查找三个难度对应的UI子对象
-     Transform easyHint = hintParent.transform.Find("Easy");
-        Transform normalHint = hintParent.transform.Find("Normal");
- Transform hardHint = hintParent.transform.Find("Hard");
-
-      // 先全部关闭
-      if (easyHint != null) easyHint.gameObject.SetActive(false);
-        if (normalHint != null) normalHint.gameObject.SetActive(false);
-    if (hardHint != null) hardHint.gameObject.SetActive(false);
-
-  // 根据难度激活对应的提示UI
-        switch (currentChart.difficulty)
-        {
-            case ChartDifficulty.Easy:
-       if (easyHint != null) easyHint.gameObject.SetActive(true);
-     break;
-    case ChartDifficulty.Normal:
- if (normalHint != null) normalHint.gameObject.SetActive(true);
-     break;
-        case ChartDifficulty.Hard:
- if (hardHint != null) hardHint.gameObject.SetActive(true);
-                break;
-      }
-    }
 
     /// <summary>
     /// PlayRoutine 协程：游戏主循环
@@ -248,8 +208,6 @@ private int totalNotes = 0;
           // 获取当前歌曲时间（相对于音乐开始）
         float currentTimeMs = GetCurrentSongTimeMs();
       
-// 更新UI时间显示
-       UIManager.Instance?.UpdateTimeDisplay(currentTimeMs);
 
             // 当达到时间0时，启动音乐播放
      if (!musicPlayed && currentTimeMs >= 0)

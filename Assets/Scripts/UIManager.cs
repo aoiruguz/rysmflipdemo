@@ -8,10 +8,8 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public TextMeshProUGUI comboText;
-    public Text offsetText;
-    public Text globalOffsetText;
+    public TextMeshProUGUI offsetText;
     public TextMeshProUGUI songTitleText;
-    public Text timeDisplayText;
     public TextMeshProUGUI songClearText; // 歌曲完成文本
 
     [Header("Judgment Image Display")]
@@ -37,7 +35,6 @@ private Coroutine titleRoutine;
         if (offsetText) offsetText.text = "";
         if (songTitleText) songTitleText.color = new Color(1, 1, 1, 0);
         if (songClearText) songClearText.gameObject.SetActive(false);
-        UpdateGlobalOffsetDisplay();
     }
 
     public void ShowSongTitle(string title)
@@ -61,23 +58,6 @@ private Coroutine titleRoutine;
         songTitleText.color = Color.white;
     }
 
-    public void UpdateGlobalOffsetDisplay()
-    {
-        if (globalOffsetText)
-        {
-            float offsetMs = GameSettings.GlobalOffset * 1000f;
-            string sign = offsetMs >= 0 ? "+" : "";
-            globalOffsetText.text = $"Global Offset: {sign}{offsetMs:F0}ms";
-        }
-    }
-
-    public void UpdateTimeDisplay(float timeMs)
-    {
-        if (timeDisplayText)
-        {
-            timeDisplayText.text = $"{timeMs:F0}ms";
-        }
-    }
 
     public void ShowJudgment(string judgment, float offsetMs, int combo, bool showOffset = true)
     {
@@ -116,7 +96,6 @@ private Coroutine titleRoutine;
             {
                 string sign = offsetMs >= 0 ? "+" : "";
                 offsetText.text = $"{sign}{offsetMs:F0}ms";
-                offsetText.color = GetJudgmentColor(judgment);
             }
             else
             {
@@ -135,15 +114,6 @@ private Coroutine titleRoutine;
         hideRoutine = StartCoroutine(HideJudgmentAfterDelay(0.5f)); // 缩短显示时间，提升反馈节奏
     }
 
-    private Color GetJudgmentColor(string judgment)
-    {
-        switch (judgment)
-        {
-            case "PERFECT": return Color.yellow;
-            case "GOOD": return Color.cyan;
-            default: return Color.red;
-        }
-    }
 
     private IEnumerator HideJudgmentAfterDelay(float delay)
     {

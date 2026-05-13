@@ -17,9 +17,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("四条Lane的 UI 参照对象，对应4条竖直的游戏路线")]
     public RectTransform[] rectLaneAnchors;
 
-    [Header("Lane Settings (Fallback Coordinates)")]
-    public float[] laneXPositions = new float[] { -3.75f, -1.25f, 1.25f, 3.75f };
-    public float catchHeight = -4f;
+    // 内部运行时坐标（由 UI Alignment 同步得出）
+    [HideInInspector] public float[] laneXPositions = new float[4];
+    [HideInInspector] public float catchHeight;
 
     [Header("Accurate Mode Settings")]
     public float accurateTimeWindow = 150f; // 150ms 时间窗口
@@ -118,16 +118,29 @@ public class PlayerController : MonoBehaviour
             catchHeight = rectCatchPoint.position.y;
             Debug.Log($"[PlayerController] catchHeight synced from UI: {catchHeight:F3}");
         }
-        if (rectLaneAnchors != null && rectLaneAnchors.Length > 0)
+        else
         {
-            for (int i = 0; i < rectLaneAnchors.Length && i < laneXPositions.Length; i++)
+            Debug.LogError("[PlayerController] rectCatchPoint is not assigned!");
+        }
+
+        if (rectLaneAnchors != null && rectLaneAnchors.Length >= 4)
+        {
+            for (int i = 0; i < 4; i++)
             {
                 if (rectLaneAnchors[i] != null)
                 {
                     laneXPositions[i] = rectLaneAnchors[i].position.x;
                 }
+                else
+                {
+                    Debug.LogError($"[PlayerController] rectLaneAnchors[{i}] is not assigned!");
+                }
             }
             Debug.Log($"[PlayerController] laneXPositions synced from UI");
+        }
+        else
+        {
+            Debug.LogError("[PlayerController] rectLaneAnchors is not assigned or has insufficient elements (need 4)!");
         }
     }
 
@@ -198,17 +211,7 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        // Adjust Global Offset: Up = increase (+5ms), Down = decrease (-5ms)
-        if (keyboard.upArrowKey.wasPressedThisFrame)
-        {
-            GameSettings.AdjustOffset(0.005f);
-            UIManager.Instance?.UpdateGlobalOffsetDisplay();
-        }
-        if (keyboard.downArrowKey.wasPressedThisFrame)
-        {
-            GameSettings.AdjustOffset(-0.005f);
-            UIManager.Instance?.UpdateGlobalOffsetDisplay();
-        }
+
     }
 
     public void ToggleSettings()
