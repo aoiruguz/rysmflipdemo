@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 2959224472a8fa540b382ff5d2d395d5
+guid: 7281ea797fa420745813a03c9bb0f1db
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 666915938854397447
-    second: stageScene_0
+      213: -5426935907237772588
+    second: lianmaiPK_0
+  - first:
+      213: 7217493889433669108
+    second: lianmaiPK_1
+  - first:
+      213: -1799188371054995174
+    second: lianmaiPK_2
+  - first:
+      213: -3544116756231326529
+    second: lianmaiPK_3
+  - first:
+      213: 1892045524195098195
+    second: lianmaiPK_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +61,7 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 1
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -72,7 +84,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,13 +112,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stageScene_0
+      name: lianmaiPK_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 480
-        height: 1120
+        y: 1
+        width: 11
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +127,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 706667e438c514900800000000000000
-      internalID: 666915938854397447
+      spriteID: 4d2c746ab86afa4b0800000000000000
+      internalID: -5426935907237772588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lianmaiPK_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 12
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fd0f38d370b92460800000000000000
+      internalID: 7217493889433669108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lianmaiPK_2
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 0
+        width: 13
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a19d04385bff707e0800000000000000
+      internalID: -1799188371054995174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lianmaiPK_3
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 0
+        width: 8
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb472567694c0dec0800000000000000
+      internalID: -3544116756231326529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: lianmaiPK_4
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 35e34883165e14a10800000000000000
+      internalID: 1892045524195098195
       vertices: []
       indices: 
       edges: []
@@ -135,7 +235,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      stageScene_0: 666915938854397447
+      lianmaiPK_0: -5426935907237772588
+      lianmaiPK_1: 7217493889433669108
+      lianmaiPK_2: -1799188371054995174
+      lianmaiPK_3: -3544116756231326529
+      lianmaiPK_4: 1892045524195098195
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 2959224472a8fa540b382ff5d2d395d5
+guid: 1f871d7d95f2b754abfc216b54c8a14e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 666915938854397447
-    second: stageScene_0
+      213: 1601726176828576927
+    second: Hard_1_0
+  - first:
+      213: -1749609720397191298
+    second: Hard_1_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,7 +52,7 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 1
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
@@ -72,7 +75,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stageScene_0
+      name: Hard_1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 480
-        height: 1120
+        y: 9
+        width: 63
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 706667e438c514900800000000000000
-      internalID: 666915938854397447
+      spriteID: f94df45b8797a3610800000000000000
+      internalID: 1601726176828576927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hard_1_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 63
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e77a728aa3328b7e0800000000000000
+      internalID: -1749609720397191298
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      stageScene_0: 666915938854397447
+      Hard_1_0: 1601726176828576927
+      Hard_1_1: -1749609720397191298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
