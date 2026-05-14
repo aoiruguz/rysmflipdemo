@@ -55,6 +55,7 @@ public class GameProgressData
     public List<StoryProgressData> storyProgress = new List<StoryProgressData>();
 
     // 称号系统
+    public string playerName = "玩家";
     public string playerTitle = "小透明";
     public List<string> defeatedEnemies = new List<string>();
 

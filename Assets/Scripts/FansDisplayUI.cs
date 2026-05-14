@@ -11,8 +11,11 @@ public class FansDisplayUI : MonoBehaviour
     [Tooltip("显示总粉丝数的文本")]
     public TextMeshProUGUI totalFansText;
 
-    [Tooltip("显示章节解锁进度的文本")]
-    public TextMeshProUGUI chapterProgressText;
+    [Tooltip("显示我方名字的文本")]
+    public TextMeshProUGUI playerNameText;
+
+    [Tooltip("显示我方称号的文本")]
+    public TextMeshProUGUI playerTitleText;
 
     [Header("Display Settings")]
     [Tooltip("是否在Start时自动更新显示")]
@@ -44,7 +47,6 @@ public class FansDisplayUI : MonoBehaviour
     public void UpdateFansDisplay()
     {
         long totalFans = FansDataManager.GetTotalFans();
-        int unlockedChapter = FansDataManager.GetUnlockedChapter();
 
         // 显示总粉丝数
         if (totalFansText != null)
@@ -56,34 +58,20 @@ public class FansDisplayUI : MonoBehaviour
             Debug.LogWarning("[FansDisplayUI] totalFansText is not assigned!");
         }
 
-        // 显示章节进度
-        if (chapterProgressText != null)
+        // 显示名字和称号
+        if (SaveManager.Instance != null)
         {
-            int nextChapter = unlockedChapter + 1;
-            if (nextChapter < 3) // 还有下一章
+            if (playerNameText != null)
             {
-                long requiredFans = FansDataManager.GetRequiredFansForNextChapter(unlockedChapter);
-                long remainingFans = requiredFans - totalFans;
-                if (remainingFans > 0)
-                {
-                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlock: {ScoreCalculator.FormatLargeNumber(remainingFans)} more fans needed";
-                }
-                else
-                {
-                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlocked!";
-                }
+                playerNameText.text = SaveManager.Instance.GetPlayerName();
             }
-            else
+            if (playerTitleText != null)
             {
-                chapterProgressText.text = "All Chapters Unlocked!";
+                playerTitleText.text = SaveManager.Instance.GetPlayerTitle();
             }
-        }
-        else
-        {
-            Debug.LogWarning("[FansDisplayUI] chapterProgressText is not assigned!");
         }
 
-        Debug.Log($"[FansDisplayUI] Total Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}, Unlocked Chapter: {unlockedChapter + 1}");
+        Debug.Log($"[FansDisplayUI] Total Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}");
     }
 
     /// <summary>

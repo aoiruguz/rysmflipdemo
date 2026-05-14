@@ -539,6 +539,24 @@ public class SaveManager : MonoBehaviour
     }
 
     // ===================== 称号系统接口 =====================
+    
+    /// <summary>
+    /// 获取主角当前名字
+    /// </summary>
+    public string GetPlayerName()
+    {
+        return currentProgress.playerName;
+    }
+
+    /// <summary>
+    /// 设置主角名字
+    /// </summary>
+    public void SetPlayerName(string name)
+    {
+        currentProgress.playerName = name;
+        SaveProgress();
+        Debug.Log($"[SaveManager] Player name updated to: {name}");
+    }
 
     /// <summary>
     /// 获取主角当前称号
