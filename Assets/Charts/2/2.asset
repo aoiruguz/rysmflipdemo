@@ -17,7 +17,7 @@ MonoBehaviour:
   displayBPM: 129
   previewMusic: {fileID: 8300000, guid: 76d378ee353e9e74c8bf0ac04c97170b, type: 3}
   enemyAvatar: {fileID: -3865947708495969005, guid: 89cb91ca1f0304c4da165267970e99af, type: 3}
-  enemyInfo: 
+  enemyInfo: "\u5927\u80C3\u888B\u72C2\u70AB\u6D41\u91CF\uFF0C\u6B63\u4E49\u5E08\u6233\u7834\u8D2A\u5A6A\uFF01\n\u4E00\u8FB9\u662F\u5634\u4E0A\u4F5B\u7CFB\u3001\u5FC3\u91CC\u8D2A\u6EE1\u7684\u5403\u64AD\u4E00\u54E5\uFF0C\n\u4E00\u8FB9\u662F\u770B\u7834\u5957\u8DEF\u3001\u6574\u987F\u4E71\u8C61\u7684\u8282\u594F\u5E26\u5E08\u3002\n\u6309\u51C6\u8282\u62CD\uFF0C\u51FB\u788E\u865A\u4F2A\uFF01"
   enemyFans: 10000
   chapterGroup: 1
   isMainStoryLevel: 0
@@ -27,20 +27,61 @@ MonoBehaviour:
   requiredFans: -1
   difficulties:
   - difficulty: 0
-    ratingLevel: 0
+    ratingLevel: 2
     mapper: 
     chartAsset: {fileID: 11400000, guid: 09f9d03e1b2ea744894008b772a21001, type: 2}
-  - difficulty: 0
-    ratingLevel: 0
+  - difficulty: 1
+    ratingLevel: 5
     mapper: 
-    chartAsset: {fileID: 0}
+    chartAsset: {fileID: 11400000, guid: 091ef51193fa2b64f927c875f7d27628, type: 2}
   - difficulty: 2
     ratingLevel: 9
     mapper: 
     chartAsset: {fileID: 11400000, guid: 26bb241234f4ef34a8fe19837d2759ab, type: 2}
-  openingDialogues: []
+  openingDialogues:
+  - panelIndex: 2
+    speakerName: BOSS
+    text: "\u60F3\u652F\u6301\u5C31\u968F\u624B\u610F\u601D\u4E00\u4E0B\uFF0C\u81EA\u613F\u5C31\u5B8C\u4E8B\u4E86\u3002 "
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u5634\u4E0A\u8BF4\u7740\u4E0D\u5F3A\u6C42\uFF0C\u5B9E\u9645\u4E0A\u53E5\u53E5\u90FD\u5728\u6697\u793A\u6002\u607F\uFF01"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u9AA8\u5B50\u91CC\u5C31\u662F\u8D2A\u5A6A\u6210\u6027\uFF0C\u53EA\u60F3\u6536\u5272\u7C89\u4E1D\u94B1\u5305\u3002"
+  - panelIndex: 2
+    speakerName: BOSS
+    text: "\u6211\u7C89\u4E1D\u81EA\u613F\u5BA0\u6211\uFF0C\u8FD9\u662F\u6211\u7684\u4EBA\u683C\u9B45\u529B\uFF01"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u6211\u4E0D\u4FE1\uFF0C\u4F60\u4E00\u5B9A\u662FPUA\u7ED1\u67B6\u7C89\u4E1D\u7ED9\u4F60\u5237\u793C\u7269\uFF01"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u6211\u4ECA\u5929\u5C31\u8981\u66FF\u5929\u5BF9\u7EBF\uFF0C\u4F38\u5F20\u6B63\u4E49\uFF01"
+  - panelIndex: 2
+    speakerName: BOSS
+    text: "\u4F60\u6765\u6211\u76F4\u64AD\u95F4\u8E6D\u70ED\u5EA6\uFF0C\u4F60\u624D\u662F\u771F\u7684\u8D2A\u5427\uFF01"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u6211\u4E0D\u88C5\u4E86\uFF0C\u6211\u644A\u724C\u4E86\uFF0C\u6211\u5C31\u662F\u8981\u6D41\u91CF\uFF01"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u6BCF\u4E2A\u4EBA\u90FD\u6709\u673A\u4F1A\u8D70\u7EA2\uFF0C\u4E3A\u4EC0\u4E48\u4E0D\u80FD\u662F\u6211\uFF1F"
+  - panelIndex: 1
+    speakerName: "\u4E3B\u89D2"
+    text: "\u4E0E\u5176\u8BA9\u4F60\u8D70\u7EA2\u6536\u5272\u7C89\u4E1D\uFF0C\u4E0D\u5982\u8BA9\u6211\u6765\u4F38\u5F20\u6B63\u4E49\uFF01"
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: 
-  interferenceCount: 0
+  interferenceTriggers: []
   interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0.965, g: 0.765, b: 0.969, a: 1}
+    color2: {r: 0.918, g: 0.604, b: 0.941, a: 1}
+    color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
+    color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
+    color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+  interferenceCount: 0

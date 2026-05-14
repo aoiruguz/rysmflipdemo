@@ -96,6 +96,13 @@ public class ScoreManager : MonoBehaviour
             HealthSystem.Instance?.CheckComboHeal(Combo);
         }
 
+        // Boss战模式：根据判定改变粉丝数
+        BossHealthSystem bossHealth = FindFirstObjectByType<BossHealthSystem>();
+        if (bossHealth != null)
+        {
+            bossHealth.OnJudgment(judgment);
+        }
+
         // 检测Combo触发特殊弹幕
         CheckComboBarrageTrigger();
 
@@ -129,6 +136,14 @@ public class ScoreManager : MonoBehaviour
         lastTriggeredCombo = 0; // 重置触发记录
         HealthSystem.Instance?.TakeDamage();
         HealthSystem.Instance?.ResetComboTracking();
+
+        // Boss战模式：根据判定改变粉丝数
+        BossHealthSystem bossHealth = FindFirstObjectByType<BossHealthSystem>();
+        if (bossHealth != null)
+        {
+            bossHealth.OnJudgment("MISS");
+        }
+
         MissEffectManager.Instance?.PlayMissEffects();
         UIManager.Instance?.ShowJudgment("MISS", 0, Combo, false);
     }

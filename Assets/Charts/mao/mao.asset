@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
+  m_Name: mao
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: "\u732B\u7CFB\u75C5\u7684\u6700\u540E\u547D"
+  composer: 
+  displayBPM: 0
+  previewMusic: {fileID: 8300000, guid: db8fcbd195a08724282d6f429fc1d9cf, type: 3}
+  enemyAvatar: {fileID: -3542775681898570189, guid: 3a553b0a5c40a6940b7c23aac8c06318, type: 3}
+  enemyInfo: "\u732B\u732B\uFF01"
+  enemyFans: 10000
+  chapterGroup: 1
+  isMainStoryLevel: 0
+  requiredChapterGroup: 0
+  requiredFansForChapter: 0
+  isLockedByDefault: 1
+  requiredFans: -1
+  difficulties:
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 4373f70cc8c4c6948ad776b476ba941b, type: 2}
+  - difficulty: 1
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 1f2939f1c96e37a488d8bb2e7500f9b3, type: 2}
+  - difficulty: 2
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 3905b7b80588cdd4ca1f4abe16006161, type: 2}
+  openingDialogues: []
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  clearStoryId: 
+  interferenceTriggers: []
+  interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0.965, g: 0.765, b: 0.969, a: 1}
+    color2: {r: 0.918, g: 0.604, b: 0.941, a: 1}
+    color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
+    color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
+    color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+  interferenceCount: 0

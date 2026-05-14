@@ -59,10 +59,19 @@ public class LevelData : ScriptableObject
     public AudioClip previewMusic;    // 预览音乐（展开面板时播放）
 
     [Header("--- 敌人与剧情 ---")]
-    public Sprite enemyAvatar;        // 敌人头像
+    [Tooltip("敌人头像（未击败时）")]
+    public Sprite enemyAvatar;
+    [Tooltip("敌人头像（击败后）")]
+    public Sprite enemyAvatarDefeated;
     [TextArea] public string enemyInfo; // 敌人信息
     [Tooltip("敌人的粉丝数（战斗力）")]
     public long enemyFans = 10000;    // 敌人的粉丝数
+
+    [Header("--- 敌人称号 ---")]
+    [Tooltip("未击败时显示的称号")]
+    public string enemyTitleUncleared = "挑战者";
+    [Tooltip("击败后显示的称号（例如：前挑战者）")]
+    public string enemyTitleCleared = "已击败";
 
     [Header("--- 关卡分组 ---")]
     [Tooltip("关卡组编号（1-4）")]
@@ -173,5 +182,31 @@ public class LevelData : ScriptableObject
         condition += $"2. 粉丝数达到 {requiredFansForChapter}";
 
         return condition;
+    }
+
+    // 获取当前应该显示的敌人称号
+    public string GetCurrentEnemyTitle()
+    {
+        if (SaveManager.Instance == null)
+            return enemyTitleUncleared;
+
+        // 使用存档系统的击败状态判断
+        return SaveManager.Instance.IsEnemyDefeated(levelName) ? enemyTitleCleared : enemyTitleUncleared;
+    }
+
+    // 获取当前应该显示的敌人头像
+    public Sprite GetCurrentEnemyAvatar()
+    {
+        if (SaveManager.Instance == null)
+            return enemyAvatar;
+
+        // 使用存档系统的击败状态判断
+        bool isDefeated = SaveManager.Instance.IsEnemyDefeated(levelName);
+
+        // 如果击败后头像未设置，则使用原头像
+        if (isDefeated && enemyAvatarDefeated != null)
+            return enemyAvatarDefeated;
+
+        return enemyAvatar;
     }
 }

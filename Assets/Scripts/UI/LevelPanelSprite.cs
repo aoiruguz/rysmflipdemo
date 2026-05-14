@@ -68,10 +68,10 @@ public class LevelPanelSprite : MonoBehaviour
             return;
         }
 
-        // 设置敌人头像
-        if (enemyIconSprite != null && levelData.enemyAvatar != null)
+        // 设置敌人头像（根据击败状态）
+        if (enemyIconSprite != null)
         {
-            enemyIconSprite.sprite = levelData.enemyAvatar;
+            enemyIconSprite.sprite = levelData.GetCurrentEnemyAvatar();
         }
 
         // 设置敌人名字

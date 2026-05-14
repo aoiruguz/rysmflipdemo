@@ -1,0 +1,1360 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c28ff51db076d0408bc9887e2912374, type: 3}
+  m_Name: EASY
+  m_EditorClassIdentifier: Assembly-CSharp::ChartData
+  songName: pixel advanture story
+  difficulty: 0
+  bpm: 0
+  offset: 0
+  notes:
+  - spawnTime: 244
+    hitTime: 2244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 994
+    hitTime: 2994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 1744
+    hitTime: 3744
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 2119
+    hitTime: 4119
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 2494
+    hitTime: 4494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 3244
+    hitTime: 5244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 3619
+    hitTime: 5619
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 3994
+    hitTime: 5994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 4744
+    hitTime: 6744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 5494
+    hitTime: 7494
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 5869
+    hitTime: 7869
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 6244
+    hitTime: 8244
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 6619
+    hitTime: 8619
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 6994
+    hitTime: 8994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 7744
+    hitTime: 9744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 8119
+    hitTime: 10119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 8494
+    hitTime: 10494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 9244
+    hitTime: 11244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 9619
+    hitTime: 11619
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 9994
+    hitTime: 11994
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 10369
+    hitTime: 12369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 10744
+    hitTime: 12744
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 11119
+    hitTime: 13119
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 11494
+    hitTime: 13494
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 12244
+    hitTime: 14244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 12619
+    hitTime: 14619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 13182
+    hitTime: 15182
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 13369
+    hitTime: 15369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 13557
+    hitTime: 15557
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 13932
+    hitTime: 15932
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 14119
+    hitTime: 16119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 14307
+    hitTime: 16307
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 14682
+    hitTime: 16682
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 14869
+    hitTime: 16869
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 15057
+    hitTime: 17057
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 15619
+    hitTime: 17619
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 16182
+    hitTime: 18182
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 16369
+    hitTime: 18369
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 16557
+    hitTime: 18557
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 16932
+    hitTime: 18932
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 17119
+    hitTime: 19119
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 17307
+    hitTime: 19307
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 17682
+    hitTime: 19682
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 18244
+    hitTime: 20244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 18994
+    hitTime: 20994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 19369
+    hitTime: 21369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 19744
+    hitTime: 21744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 20119
+    hitTime: 22119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 20494
+    hitTime: 22494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 21244
+    hitTime: 23244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 21619
+    hitTime: 23619
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 21994
+    hitTime: 23994
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 22369
+    hitTime: 24369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 22744
+    hitTime: 24744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 23119
+    hitTime: 25119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 23494
+    hitTime: 25494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 23869
+    hitTime: 25869
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 24244
+    hitTime: 26244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 24994
+    hitTime: 26994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 25369
+    hitTime: 27369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 25744
+    hitTime: 27744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 26119
+    hitTime: 28119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 26494
+    hitTime: 28494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 26869
+    hitTime: 28869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 27244
+    hitTime: 29244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 27619
+    hitTime: 29619
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 27994
+    hitTime: 29994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 28744
+    hitTime: 30744
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 29119
+    hitTime: 31119
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 29494
+    hitTime: 31494
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 29682
+    hitTime: 31682
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 29869
+    hitTime: 31869
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 30244
+    hitTime: 32244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 30619
+    hitTime: 32619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 30994
+    hitTime: 32994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 31369
+    hitTime: 33369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 31744
+    hitTime: 33744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 32119
+    hitTime: 34119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 32494
+    hitTime: 34494
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 32869
+    hitTime: 34869
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 33244
+    hitTime: 35244
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 33619
+    hitTime: 35619
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 33994
+    hitTime: 35994
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 34369
+    hitTime: 36369
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 34557
+    hitTime: 36557
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 34744
+    hitTime: 36744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 35119
+    hitTime: 37119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 35307
+    hitTime: 37307
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 35494
+    hitTime: 37494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 35869
+    hitTime: 37869
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 36057
+    hitTime: 38057
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 36432
+    hitTime: 38432
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 36994
+    hitTime: 38994
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 37369
+    hitTime: 39369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 37744
+    hitTime: 39744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 38119
+    hitTime: 40119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 38494
+    hitTime: 40494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 38869
+    hitTime: 40869
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 39244
+    hitTime: 41244
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 39619
+    hitTime: 41619
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 39994
+    hitTime: 41994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 40369
+    hitTime: 42369
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 40744
+    hitTime: 42744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 41494
+    hitTime: 43494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 42057
+    hitTime: 44057
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 42994
+    hitTime: 44994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 43744
+    hitTime: 45744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 44494
+    hitTime: 46494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 44869
+    hitTime: 46869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 45244
+    hitTime: 47244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 45619
+    hitTime: 47619
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 45994
+    hitTime: 47994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 46369
+    hitTime: 48369
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 46744
+    hitTime: 48744
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 46932
+    hitTime: 48932
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 47119
+    hitTime: 49119
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 47494
+    hitTime: 49494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 47869
+    hitTime: 49869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 48244
+    hitTime: 50244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 48432
+    hitTime: 50432
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 48619
+    hitTime: 50619
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 48994
+    hitTime: 50994
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 49182
+    hitTime: 51182
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 49369
+    hitTime: 51369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 49744
+    hitTime: 51744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 50119
+    hitTime: 52119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 50307
+    hitTime: 52307
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 50494
+    hitTime: 52494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 52369
+    hitTime: 54369
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 52557
+    hitTime: 54557
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 53119
+    hitTime: 55119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 53307
+    hitTime: 55307
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 54244
+    hitTime: 56244
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 54619
+    hitTime: 56619
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 55369
+    hitTime: 57369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 55557
+    hitTime: 57557
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 56119
+    hitTime: 58119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 56307
+    hitTime: 58307
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 56682
+    hitTime: 58682
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 57244
+    hitTime: 59244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 57432
+    hitTime: 59432
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 57619
+    hitTime: 59619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 57807
+    hitTime: 59807
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 58744
+    hitTime: 60744
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 59494
+    hitTime: 61494
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 60244
+    hitTime: 62244
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 60619
+    hitTime: 62619
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 60994
+    hitTime: 62994
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 61369
+    hitTime: 63369
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 61744
+    hitTime: 63744
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 62119
+    hitTime: 64119
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 62494
+    hitTime: 64494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 62869
+    hitTime: 64869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 63244
+    hitTime: 65244
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 63994
+    hitTime: 65994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 64744
+    hitTime: 66744
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 65494
+    hitTime: 67494
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 65869
+    hitTime: 67869
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 66244
+    hitTime: 68244
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 66994
+    hitTime: 68994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 67369
+    hitTime: 69369
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 67744
+    hitTime: 69744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 68494
+    hitTime: 70494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 68682
+    hitTime: 70682
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 68869
+    hitTime: 70869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 69057
+    hitTime: 71057
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 69244
+    hitTime: 71244
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 69619
+    hitTime: 71619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 69994
+    hitTime: 71994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 70369
+    hitTime: 72369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 70744
+    hitTime: 72744
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 71119
+    hitTime: 73119
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 71494
+    hitTime: 73494
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 71869
+    hitTime: 73869
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 72244
+    hitTime: 74244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 72994
+    hitTime: 74994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 73369
+    hitTime: 75369
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 73744
+    hitTime: 75744
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 74119
+    hitTime: 76119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 74494
+    hitTime: 76494
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 74869
+    hitTime: 76869
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 75057
+    hitTime: 77057
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 75432
+    hitTime: 77432
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 75994
+    hitTime: 77994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 76744
+    hitTime: 78744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 77494
+    hitTime: 79494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 78244
+    hitTime: 80244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 78619
+    hitTime: 80619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 78994
+    hitTime: 80994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 79744
+    hitTime: 81744
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 80494
+    hitTime: 82494
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 80869
+    hitTime: 82869
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 81244
+    hitTime: 83244
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 81619
+    hitTime: 83619
+    duration: 0
+    lane: 0
+    color: 0
+    noteType: 0
+  - spawnTime: 81994
+    hitTime: 83994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 82557
+    hitTime: 84557
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 82932
+    hitTime: 84932
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 83119
+    hitTime: 85119
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 83494
+    hitTime: 85494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 84244
+    hitTime: 86244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 84619
+    hitTime: 86619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 84994
+    hitTime: 86994
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 85369
+    hitTime: 87369
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 85744
+    hitTime: 87744
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 86119
+    hitTime: 88119
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 86494
+    hitTime: 88494
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 86869
+    hitTime: 88869
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 87244
+    hitTime: 89244
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 87619
+    hitTime: 89619
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 87994
+    hitTime: 89994
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 88182
+    hitTime: 90182
+    duration: 0
+    lane: 3
+    color: 0
+    noteType: 0
+  - spawnTime: 88557
+    hitTime: 90557
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 88932
+    hitTime: 90932
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 89307
+    hitTime: 91307
+    duration: 0
+    lane: 2
+    color: 0
+    noteType: 0
+  - spawnTime: 89494
+    hitTime: 91494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 89869
+    hitTime: 91869
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 90244
+    hitTime: 92244
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 90432
+    hitTime: 92432
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 90619
+    hitTime: 92619
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 90994
+    hitTime: 92994
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 91557
+    hitTime: 93557
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 91932
+    hitTime: 93932
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  - spawnTime: 92494
+    hitTime: 94494
+    duration: 0
+    lane: 1
+    color: 0
+    noteType: 0
+  audioClip: {fileID: 8300000, guid: 0a2790d233631a849a754a750e9a143e, type: 3}
+  chapterIndex: 0
+  isBossStage: 0

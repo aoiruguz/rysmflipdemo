@@ -7564,6 +7564,10 @@ MonoBehaviour:
   - {fileID: 812086436}
   - {fileID: 0}
   - {fileID: 566714100}
+  playerNamePanel: {fileID: 1510559964}
+  enemyNamePanel: {fileID: 1023790939}
+  playerHealthBar: {fileID: 1486794854}
+  enemyHealthBar: {fileID: 2043426891}
   enableCompletionDetection: 1
   delayBeforeShowingResult: 3
   delayBeforeGameOverResult: 3
@@ -10608,6 +10612,10 @@ MonoBehaviour:
   storyManager: {fileID: 1889617445}
   noteManager: {fileID: 610100204}
   gameplayUI: {fileID: 812086436}
+  playerNamePanel: {fileID: 1510559964}
+  enemyNamePanel: {fileID: 1023790939}
+  playerHealthBar: {fileID: 1486794854}
+  enemyHealthBar: {fileID: 2043426891}
   pauseGameDuringStory: 1
 --- !u!1 &1893796383
 GameObject:

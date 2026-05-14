@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
+  m_Name: 4
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: 
+  composer: 
+  displayBPM: 0
+  previewMusic: {fileID: 0}
+  enemyAvatar: {fileID: 0}
+  enemyInfo: "\u767E\u4E07\u996D\u5708\u72C2\u70ED\u6F6E\uFF0C\u4E00\u4EBA\u72EC\u6218\u5168\u7F51\u6F6E\uFF01\n\u4E00\u8FB9\u662F\u65E0\u8111\u62A4\u4E3B\u3001\u584C\u623F\u53CD\u566C\u7684\u50F5\u5C38\u7C89\u6D77\uFF0C\n\u4E00\u8FB9\u662F\u575A\u5B88\u672C\u5FC3\u3001\u5BA1\u5224\u55A7\u56A3\u7684\u6700\u7EC8\u5F3A\u8005\u3002\n\u7EC8\u6781\u8282\u594F\u6218\uFF0C\u6289\u62E9\u4F60\u7684\u7ED3\u5C40\uFF01"
+  enemyFans: 10000
+  chapterGroup: 1
+  isMainStoryLevel: 0
+  requiredChapterGroup: 0
+  requiredFansForChapter: 0
+  isLockedByDefault: 1
+  requiredFans: -1
+  difficulties:
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 0}
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 0}
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 0}
+  openingDialogues:
+  - panelIndex: 1
+    speakerName: 
+    text: "\u4F60\u4EEC\u5E72\u4EC0\u4E48\uFF1F\u4E0D\u662F\u8BF4\u597D\u4E00\u751F\u63A8\u5417\uFF1F"
+  - panelIndex: 2
+    speakerName: 
+    text: "\u4F60\u592A\u8BA9\u6211\u4EEC\u5931\u671B\u4E86\u2026\u2026\u584C\u623F...\u623F..."
+  - panelIndex: 1
+    speakerName: 
+    text: "\u5BB6\u4EBA\u4EEC\u966A\u6211\u4E00\u8DEF\u8D70\u6765\uFF0C\u90FD\u5FD8\u4E86\u5417\uFF1F"
+  - panelIndex: 2
+    speakerName: 
+    text: "\u4F60...\u53D8...\u4E86...\u4E0D\u662F\u5F53\u521D\u6211\u4EEC\u559C\u6B22\u7684\u6837\u5B50..."
+  - panelIndex: 1
+    speakerName: 
+    text: "\u4F60\u4EEC\u60F3\u600E\u4E48\u6837\uFF1F"
+  - panelIndex: 2
+    speakerName: 
+    text: "\u4F60\u5C31\u8BE5\u542C\u6211\u4EEC\u7684\uFF0C\u670D...\u4ECE...\u4ECE\u2026\u2026\u6309\u6211\u4EEC\u7684\u60F3\u6CD5\u6765\uFF01"
+  - panelIndex: 1
+    speakerName: 
+    text: "\u767D\u65E5\u505A\u68A6\uFF01\u4F60\u4EEC\u8FD9\u7FA4\u53DB\u5F92\uFF01"
+  - panelIndex: 2
+    speakerName: 
+    text: "\u4E0D\u542C\u7C89\u4E1D\u7684\u662F\u5427\uFF1F"
+  - panelIndex: 2
+    speakerName: 
+    text: "\u8131\u7C89\u56DE\u8E29\uFF0C\u6BC1\u6389\u4F60\uFF01"
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  clearStoryId: 
+  interferenceTriggers: []
+  interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0.965, g: 0.765, b: 0.969, a: 1}
+    color2: {r: 0.918, g: 0.604, b: 0.941, a: 1}
+    color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
+    color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
+    color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+  interferenceCount: 0

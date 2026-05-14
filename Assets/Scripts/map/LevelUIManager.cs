@@ -17,6 +17,7 @@ public class LevelUIManager : MonoBehaviour
 
     public Image enemyImage;
     public TextMeshProUGUI enemyDescriptionText;
+    public TextMeshProUGUI enemyTitleText;
 
     [Header("难度评级显示 (三个难度)")]
     public TextMeshProUGUI easyRatingText;
@@ -120,8 +121,15 @@ public class LevelUIManager : MonoBehaviour
         composerText.text = "Artist: " + data.composer;
         bpmText.text = "BPM: " + data.displayBPM.ToString();
 
-        enemyImage.sprite = data.enemyAvatar;
+        // 显示敌人头像（根据击败状态）
+        enemyImage.sprite = data.GetCurrentEnemyAvatar();
         enemyDescriptionText.text = data.enemyInfo;
+
+        // 显示敌人称号（根据击败状态）
+        if (enemyTitleText != null)
+        {
+            enemyTitleText.text = data.GetCurrentEnemyTitle();
+        }
 
         // 显示三个难度的 rating
         UpdateAllDifficultyRatings(data);
@@ -262,11 +270,26 @@ public class LevelUIManager : MonoBehaviour
             return;
         }
 
-        // 传递 chart 和 LevelData 并跳转场景
+        // 传递 chart 和 LevelData 并启动异步加载
         selectedChart = chartToLoad;
         selectedLevelData = currentLevelData;
         Debug.Log($"[LevelUI] 加载关卡: {currentLevelData.levelName}, 难度: {selectedDifficulty}");
-        SceneManager.LoadScene(gameSceneName);
+        StartCoroutine(LoadSceneAsync());
+    }
+
+    // 异步加载场景
+    private System.Collections.IEnumerator LoadSceneAsync()
+    {
+        // 开始异步加载场景
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(gameSceneName);
+
+        // 等待场景加载完成
+        while (!asyncLoad.isDone)
+        {
+            // 这里可以获取加载进度: asyncLoad.progress (0-0.9)
+            // 转场特效可以在这里添加
+            yield return null;
+        }
     }
 
     // 获取当前粉丝量

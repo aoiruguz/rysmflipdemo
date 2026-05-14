@@ -13,6 +13,18 @@ public class PlaySceneInitializer : MonoBehaviour
     public NoteManager noteManager;
     public GameObject gameplayUI;
 
+    [Header("角色名字UI（剧情+结算复用）")]
+    [Tooltip("玩家名字Panel")]
+    public GameObject playerNamePanel;
+    [Tooltip("敌人名字Panel")]
+    public GameObject enemyNamePanel;
+
+    [Header("战斗界面血条UI")]
+    [Tooltip("玩家血条Panel")]
+    public GameObject playerHealthBar;
+    [Tooltip("敌人血条Panel")]
+    public GameObject enemyHealthBar;
+
     [Header("设置")]
     [Tooltip("是否暂停游戏时间播放剧情")]
     public bool pauseGameDuringStory = true;
@@ -42,6 +54,16 @@ public class PlaySceneInitializer : MonoBehaviour
         // 暂时隐藏游戏 UI
         if (gameplayUI != null)
             gameplayUI.SetActive(false);
+
+        // 隐藏血条，显示名字Panel（剧情阶段）
+        if (playerHealthBar != null)
+            playerHealthBar.SetActive(false);
+        if (enemyHealthBar != null)
+            enemyHealthBar.SetActive(false);
+        if (playerNamePanel != null)
+            playerNamePanel.SetActive(true);
+        if (enemyNamePanel != null)
+            enemyNamePanel.SetActive(true);
 
         // 暂停 NoteManager
         if (noteManager != null)
@@ -123,6 +145,16 @@ public class PlaySceneInitializer : MonoBehaviour
         // 恢复游戏时间
         if (pauseGameDuringStory)
             Time.timeScale = 1f;
+
+        // 隐藏名字Panel，显示血条（战斗阶段）
+        if (playerNamePanel != null)
+            playerNamePanel.SetActive(false);
+        if (enemyNamePanel != null)
+            enemyNamePanel.SetActive(false);
+        if (playerHealthBar != null)
+            playerHealthBar.SetActive(true);
+        if (enemyHealthBar != null)
+            enemyHealthBar.SetActive(true);
 
         // 显示游戏 UI
         if (gameplayUI != null)

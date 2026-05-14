@@ -48,109 +48,6 @@
       ]
     },
     {
-      "storyId": "Level_01_Complete",
-      "storyName": "完成第一关",
-      "triggerType": 1,
-      "triggerCondition": "Level_01",
-      "dialogues": [
-        {
-          "characterName": "粉丝",
-          "dialogueText": "太棒了！你的表演让我热血沸腾！",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "",
-          "audioClipPath": ""
-        },
-        {
-          "characterName": "经纪人",
-          "dialogueText": "不错的开始，但这只是第一步。接下来的挑战会更难哦。",
-          "speakerPosition": "right",
-          "leftCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
-          "rightCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
-          "backgroundSpritePath": "",
-          "audioClipPath": ""
-        }
-      ]
-    },
-    {
-      "storyId": "Level_04_Opening",
-      "storyName": "第四关开场-存在的质问",
-      "triggerType": 0,
-      "triggerCondition": "Big Map",
-      "dialogues": [
-        {
-          "characterName": "",
-          "dialogueText": "战斗结束瞬间，屏幕变静。无数张张开的嘴悬浮在空中，没有五官只有黑洞般的瞳孔，它们随着你的呼吸频率开合。",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "小猫",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "第四关1",
-          "audioClipPath": ""
-        },
-        {
-          "characterName": "",
-          "dialogueText": "背景音不是音乐，而是成千上万个点赞、转发声组成的白噪音，最后汇聚成一个低沉的嗡鸣。",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "小猫",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "第四关2",
-          "audioClipPath": ""
-        },
-        {
-          "characterName": "",
-          "dialogueText": "嘴巴里吐出的字是像素块拼凑而成的，会不断重组。",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "小猫",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "第四关3",
-          "audioClipPath": ""
-        },
-        {
-          "characterName": "",
-          "dialogueText": "你是在发声，还是在被听见？",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "小猫",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "第四关4",
-          "audioClipPath": ""
-        },
-        {
-          "characterName": "",
-          "dialogueText": "你是主宰者，还是回声的一部分？",
-          "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "小猫",
-            "scale": 1.0
-          },
-          "rightCharacter": null,
-          "backgroundSpritePath": "第四关5",
-          "audioClipPath": ""
-        }
-      ]
-    },
-    {
       "storyId": "MainStory_Chapter1_Stage1_Clear",
       "storyName": "第一关通关剧情",
       "triggerType": 1,
@@ -161,10 +58,13 @@
           "dialogueText": "内个，你现在服了吗？",
           "speakerPosition": "left",
           "leftCharacter": {
-            "spritePath": "playercat1",
+            "spritePath": "bingfeilinshizichan/playercat1",
             "scale": 1.0
           },
-          "rightCharacter": null,
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/speed1",
+            "scale": 1.0
+          },
           "backgroundSpritePath": "",
           "audioClipPath": ""
         },
@@ -173,11 +73,11 @@
           "dialogueText": "我 —— 算 —— 个 —— 屁！！！",
           "speakerPosition": "right",
           "leftCharacter": {
-            "spritePath": "playercat1",
+            "spritePath": "bingfeilinshizichan/playercat1",
             "scale": 1.0
           },
           "rightCharacter": {
-            "spritePath": "speed1",
+            "spritePath": "bingfeilinshizichan/speed1",
             "scale": 1.0
           },
           "backgroundSpritePath": "",
@@ -186,6 +86,127 @@
         {
           "characterName": "主角",
           "dialogueText": "线下唯唯诺诺，网上重拳出击，纯属网络巨婴\n别拿冲动当热血，别拿发疯做性格，\n红温破防只会暴露你格局小、心智不成熟。\n真正的强者都是淡定控场、逻辑碾压，\n从来不靠大吼大叫撑排面。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/speed1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "BOSS",
+          "dialogueText": "以后… 我跟导师混！又要到饭了，兄弟们！\n这波是流量饭，不丢人！一点不丢人！",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/speed11",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+    {
+      "storyId": "MainStory_Chapter2_Stage1_Clear",
+      "storyName": "第二关通关剧情",
+      "triggerType": 1,
+      "triggerCondition": "MainStory_Chapter2_Stage1",
+      "dialogues": [
+        {
+          "characterName": "主角",
+          "dialogueText": "吃着粉丝的饭，揣着粉丝的钱，把粉丝当提款机，把直播当敛财工具。\n贪恋流量打赏，被欲望绑着走，看似吃得满嘴流油，实则灵魂早就饿扁了。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter":{
+            "spritePath": "bingfeilinshizichan/lz1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "主角",
+          "dialogueText": "正义可不会伸张它自己，流量就该给我！让我来伸张正义，审判网络毒瘤！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/lz1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "粮砸",
+          "dialogueText": "天天摆烂干饭、套路粉丝，确实是我格局小了。味再足也填不满贪心的窟窿……",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/lz1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "粮砸",
+          "dialogueText": "我彻底被训服了！第 57 个民族，味真族全族集合！今天起导师的话就是圣经！",
+          "speakerPosition": "right",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/lz9",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+        {
+      "storyId": "MainStory_Chapter3_Stage1_Clear",
+      "storyName": "第三关通关剧情",
+      "triggerType": 1,
+      "triggerCondition": "MainStory_Chapter3_Stage1",
+      "dialogues": [
+        {
+          "characterName": "主角",
+          "dialogueText": "你整天把“没人比我更懂”挂在嘴边，主打一个我说赢就是赢，事实全靠编。\n你只是被流量绑架、被虚荣洗脑的网红傀儡。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "bingfeilinshizichan/playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "bingfeilinshizichan/pepe1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "主角",
+          "dialogueText": "流量喂大了你的狂妄，热度蒙蔽了你的双眼。可是流量没有永恒！",
           "speakerPosition": "left",
           "leftCharacter": {
             "spritePath": "playercat1",
@@ -199,8 +220,23 @@
           "audioClipPath": ""
         },
         {
-          "characterName": "BOSS",
-          "dialogueText": "以后… 我跟导师混！又要到饭了，兄弟们！\n这波是流量饭，不丢人！一点不丢人！",
+          "characterName": "懂大王",
+          "dialogueText": "这一波是秦始皇照镜子——双赢！能让我抬不起头的，只有太阳… 还有你，",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": "playercat1",
+            "scale": 1.0
+          },
+          "rightCharacter": {
+            "spritePath": "speed1",
+            "scale": 1.0
+          },
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "懂大王",
+          "dialogueText": "但是伟大的导师，你说的是我还是你？",
           "speakerPosition": "right",
           "leftCharacter": {
             "spritePath": "playercat1",

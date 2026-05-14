@@ -21,6 +21,18 @@ public class SongCompletionDetector : MonoBehaviour
     [Tooltip("显示结算界面时需要关闭的 Panel 列表")]
     public GameObject[] panelsToHideOnResult;
 
+    [Header("角色名字UI（结算阶段显示）")]
+    [Tooltip("玩家名字Panel")]
+    public GameObject playerNamePanel;
+    [Tooltip("敌人名字Panel")]
+    public GameObject enemyNamePanel;
+
+    [Header("战斗界面血条UI（结算时隐藏）")]
+    [Tooltip("玩家血条Panel")]
+    public GameObject playerHealthBar;
+    [Tooltip("敌人血条Panel")]
+    public GameObject enemyHealthBar;
+
     [Tooltip("是否启用完成检测（调延迟界面可以禁用此项）")]
     public bool enableCompletionDetection = true;
 
@@ -187,6 +199,16 @@ public class SongCompletionDetector : MonoBehaviour
         {
             noteManager.StopGame();
         }
+
+        // 隐藏血条，显示名字Panel（结算阶段）
+        if (playerHealthBar != null)
+            playerHealthBar.SetActive(false);
+        if (enemyHealthBar != null)
+            enemyHealthBar.SetActive(false);
+        if (playerNamePanel != null)
+            playerNamePanel.SetActive(true);
+        if (enemyNamePanel != null)
+            enemyNamePanel.SetActive(true);
 
         // 关闭指定的 Panel 列表
         HidePanels();
