@@ -537,4 +537,45 @@ public class SaveManager : MonoBehaviour
         SaveProgress();
         Debug.Log("[SaveManager] Big Map entered, first time flag cleared");
     }
+
+    // ===================== 称号系统接口 =====================
+
+    /// <summary>
+    /// 获取主角当前称号
+    /// </summary>
+    public string GetPlayerTitle()
+    {
+        return currentProgress.playerTitle;
+    }
+
+    /// <summary>
+    /// 设置主角称号
+    /// </summary>
+    public void SetPlayerTitle(string title)
+    {
+        currentProgress.playerTitle = title;
+        SaveProgress();
+        Debug.Log($"[SaveManager] Player title updated to: {title}");
+    }
+
+    /// <summary>
+    /// 检查敌人是否被击败过
+    /// </summary>
+    public bool IsEnemyDefeated(string levelName)
+    {
+        return currentProgress.defeatedEnemies.Contains(levelName);
+    }
+
+    /// <summary>
+    /// 标记敌人为已击败
+    /// </summary>
+    public void MarkEnemyDefeated(string levelName)
+    {
+        if (!currentProgress.defeatedEnemies.Contains(levelName))
+        {
+            currentProgress.defeatedEnemies.Add(levelName);
+            SaveProgress();
+            Debug.Log($"[SaveManager] Enemy defeated: {levelName}");
+        }
+    }
 }

@@ -54,6 +54,10 @@ public class GameProgressData
     // 剧情进度
     public List<StoryProgressData> storyProgress = new List<StoryProgressData>();
 
+    // 称号系统
+    public string playerTitle = "小透明";
+    public List<string> defeatedEnemies = new List<string>();
+
     // 存档版本
     public int saveVersion = 1;
 }
