@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
 
 /// <summary>
 /// 基于 Sprite 的关卡面板组件
@@ -12,6 +13,7 @@ public class LevelPanelSprite : MonoBehaviour
     public SpriteRenderer enemyIconSprite;
     public SpriteRenderer buttonSprite;
     public SpriteRenderer lockIconSprite;
+    public SpriteRenderer hoverHighlightSprite;
 
     [Header("文本引用 (TextMeshPro 3D)")]
     public TextMeshPro enemyNameText;
@@ -30,6 +32,7 @@ public class LevelPanelSprite : MonoBehaviour
     public Color buttonNormalColor = new Color(0.2f, 0.5f, 0.8f, 1f);
     public Color buttonHoverColor = new Color(0.3f, 0.6f, 0.9f, 1f);
     public Color buttonDisabledColor = new Color(0.3f, 0.3f, 0.3f, 0.5f);
+    public float hoverFadeDuration = 0.15f;
 
     private bool isUnlocked = false;
     private bool isHovering = false;
@@ -41,6 +44,14 @@ public class LevelPanelSprite : MonoBehaviour
         {
             long currentFans = SaveManager.Instance != null ? SaveManager.Instance.GetTotalFans() : 0;
             Initialize(levelData, currentFans);
+        }
+
+        // 默认状态下强制不透明度为 0
+        if (hoverHighlightSprite != null)
+        {
+            Color c = hoverHighlightSprite.color;
+            c.a = 0f;
+            hoverHighlightSprite.color = c;
         }
     }
 
@@ -155,6 +166,13 @@ public class LevelPanelSprite : MonoBehaviour
         isHovering = true;
         if (buttonSprite != null)
             buttonSprite.color = buttonHoverColor;
+
+        // 悬浮高亮 Sprite 快速过渡到 100% 不透明度
+        if (hoverHighlightSprite != null)
+        {
+            hoverHighlightSprite.DOKill();
+            hoverHighlightSprite.DOFade(1f, hoverFadeDuration);
+        }
     }
 
     /// <summary>
@@ -165,6 +183,13 @@ public class LevelPanelSprite : MonoBehaviour
         isHovering = false;
         if (buttonSprite != null && isUnlocked)
             buttonSprite.color = buttonNormalColor;
+
+        // 悬浮高亮 Sprite 快速过渡到 0% 不透明度
+        if (hoverHighlightSprite != null)
+        {
+            hoverHighlightSprite.DOKill();
+            hoverHighlightSprite.DOFade(0f, hoverFadeDuration);
+        }
     }
 
     /// <summary>
