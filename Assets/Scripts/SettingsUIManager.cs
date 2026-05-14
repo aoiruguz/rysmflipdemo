@@ -17,11 +17,18 @@ public class SettingsUIManager : MonoBehaviour
     public TextMeshProUGUI noteVolumeText;
 
     [Header("分辨率设置")]
-    public TMP_Dropdown resolutionDropdown;
+    /// <summary>
+    /// 分辨率 ToggleGroup，用于实现多选一按钮
+    /// </summary>
+    public ToggleGroup resolutionToggleGroup;
+    /// <summary>
+    /// 按顺序对应 1280x720 / 1920x1080 / 2560x1440 / 3840x2160
+    /// </summary>
+    public Toggle[] resolutionToggles;
     private Resolution[] resolutions;
 
     [Header("窗口模式")]
-    public TMP_Dropdown fullScreenModeDropdown;
+    public Toggle fullScreenToggle;
 
     [Header("输入模式")]
     public Button inputModeButton;
@@ -34,11 +41,6 @@ public class SettingsUIManager : MonoBehaviour
     [Header("关闭按钮")]
     public Button closeButton;
 
-    [Header("返回标题页")]
-    [Tooltip("返回标题页按钮（可选）")]
-    public Button returnToTitleButton;
-    [Tooltip("标题页场景名称")]
-    public string titleSceneName = "Title";
 
     private void Awake()
     {
@@ -49,8 +51,6 @@ public class SettingsUIManager : MonoBehaviour
             inputModeButton.onClick.AddListener(ToggleInputMode);
         if (offsetSpeedButton != null)
             offsetSpeedButton.onClick.AddListener(OpenOffsetSpeedScene);
-        if (returnToTitleButton != null)
-            returnToTitleButton.onClick.AddListener(ReturnToTitle);
 
         // 设置滑块监听
         if (musicVolumeSlider != null)
@@ -58,17 +58,17 @@ public class SettingsUIManager : MonoBehaviour
         if (noteVolumeSlider != null)
             noteVolumeSlider.onValueChanged.AddListener(OnNoteVolumeChanged);
 
-        // 设置下拉菜单监听
-        if (resolutionDropdown != null)
-            resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
-        if (fullScreenModeDropdown != null)
-            fullScreenModeDropdown.onValueChanged.AddListener(OnFullScreenModeChanged);
+        // 设置窗口模式 Toggle 监听
+        if (fullScreenToggle != null)
+            fullScreenToggle.onValueChanged.AddListener(OnFullScreenToggleChanged);
+
+        // 为分辨率 Toggle 绑定监听
+        InitializeResolutionToggles();
 
         // 初始化分辨率选项
         InitializeResolutions();
 
-        // 初始化窗口模式选项
-        InitializeFullScreenModes();
+        // 初始化窗口模式（不需要 Dropdown 初始化）
 
         // 默认隐藏
         gameObject.SetActive(false);
@@ -103,68 +103,64 @@ public class SettingsUIManager : MonoBehaviour
             UpdateNoteVolumeText(GameSettings.NoteVolume);
         }
 
-        // 分辨率设置
-        if (resolutionDropdown != null)
+        // 分辨率设置：找到匹配的 Toggle 并激活
+        if (resolutionToggles != null && resolutions != null)
         {
             int currentWidth = GameSettings.ResolutionWidth;
             int currentHeight = GameSettings.ResolutionHeight;
 
             for (int i = 0; i < resolutions.Length; i++)
             {
-                if (resolutions[i].width == currentWidth && resolutions[i].height == currentHeight)
-                {
-                    resolutionDropdown.value = i;
-                    break;
-                }
+                if (i >= resolutionToggles.Length) break;
+                bool isMatch = resolutions[i].width == currentWidth && resolutions[i].height == currentHeight;
+                // 关闭通知以避免触发 ApplyResolution
+                resolutionToggles[i].SetIsOnWithoutNotify(isMatch);
             }
         }
 
-        // 窗口模式
-        if (fullScreenModeDropdown != null)
+        // 窗口模式：选中对应窗口化，不选中对应全屏
+        if (fullScreenToggle != null)
         {
-            fullScreenModeDropdown.value = GameSettings.FullScreenMode;
+            // 如果模式 == 0（Windowed），设为选中
+            fullScreenToggle.SetIsOnWithoutNotify(GameSettings.FullScreenMode == 0);
         }
 
         // 输入模式
         UpdateInputModeText();
     }
 
-    // 初始化分辨率选项
+    // 初始化分辨率数据数组（不再依赖 Dropdown）
     private void InitializeResolutions()
     {
-        if (resolutionDropdown == null) return;
-
-        resolutionDropdown.ClearOptions();
-
-        // 定义支持的16:9分辨率
-        List<Resolution> supportedResolutions = new List<Resolution>
+        resolutions = new Resolution[]
         {
-            CreateResolution(1280, 720),
+            CreateResolution(1280,  720),
             CreateResolution(1920, 1080),
             CreateResolution(2560, 1440),
             CreateResolution(3840, 2160)
         };
+    }
 
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
+    // 为分辨率 Toggle 数组绑定监听，并设置 ToggleGroup
+    private void InitializeResolutionToggles()
+    {
+        if (resolutionToggles == null || resolutionToggles.Length == 0) return;
 
-        // 添加支持的分辨率选项
-        for (int i = 0; i < supportedResolutions.Count; i++)
+        for (int i = 0; i < resolutionToggles.Length; i++)
         {
-            Resolution res = supportedResolutions[i];
-            options.Add(res.width + " x " + res.height);
+            if (resolutionToggles[i] == null) continue;
 
-            // 查找最接近当前分辨率的选项
-            if (res.width == Screen.width && res.height == Screen.height)
+            // 确保 Toggle 加入 ToggleGroup
+            if (resolutionToggleGroup != null)
+                resolutionToggles[i].group = resolutionToggleGroup;
+
+            // 用局部变量捕获索引，避免闭包陷阱
+            int index = i;
+            resolutionToggles[i].onValueChanged.AddListener((isOn) =>
             {
-                currentResolutionIndex = i;
-            }
+                if (isOn) OnResolutionToggleChanged(index);
+            });
         }
-
-        resolutions = supportedResolutions.ToArray();
-        resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
     }
 
     // 创建分辨率对象
@@ -177,22 +173,7 @@ public class SettingsUIManager : MonoBehaviour
         return res;
     }
 
-    // 初始化窗口模式选项
-    private void InitializeFullScreenModes()
-    {
-        if (fullScreenModeDropdown == null) return;
-
-        fullScreenModeDropdown.ClearOptions();
-        List<string> options = new List<string>
-        {
-            "Windowed",
-            "Fullscreen",
-            "Borderless Window"
-        };
-        fullScreenModeDropdown.AddOptions(options);
-        fullScreenModeDropdown.value = GameSettings.FullScreenMode;
-        fullScreenModeDropdown.RefreshShownValue();
-    }
+    // (已移除 InitializeFullScreenModes)
 
     // 音乐音量改变
     private void OnMusicVolumeChanged(float value)
@@ -211,21 +192,22 @@ public class SettingsUIManager : MonoBehaviour
         UpdateNoteVolumeText(value);
     }
 
-    // 分辨率改变
-    private void OnResolutionChanged(int index)
+    // Toggle 选中时触发的分辨率切换
+    private void OnResolutionToggleChanged(int index)
     {
-        if (index < 0 || index >= resolutions.Length) return;
+        if (resolutions == null || index < 0 || index >= resolutions.Length) return;
 
         Resolution resolution = resolutions[index];
         GameSettings.ApplyResolution(resolution.width, resolution.height, GameSettings.FullScreenMode);
-        Debug.Log($"[Settings] 分辨率已更改: {resolution.width}x{resolution.height}");
+        Debug.Log($"[Settings] 分辨率已更改（Toggle）: {resolution.width}x{resolution.height}");
     }
 
-    // 窗口模式改变
-    private void OnFullScreenModeChanged(int index)
+    // 窗口模式切换：选中对应窗口化，未选中对应全屏
+    private void OnFullScreenToggleChanged(bool isWindowed)
     {
-        GameSettings.ApplyResolution(GameSettings.ResolutionWidth, GameSettings.ResolutionHeight, index);
-        Debug.Log($"[Settings] 窗口模式已更改: {index}");
+        int mode = isWindowed ? 0 : 1; // 0 为窗口，1 为全屏
+        GameSettings.ApplyResolution(GameSettings.ResolutionWidth, GameSettings.ResolutionHeight, mode);
+        Debug.Log($"[Settings] 窗口模式已更改（Toggle）: {(isWindowed ? "窗口化" : "全屏")}");
     }
 
     // 切换输入模式
@@ -249,29 +231,6 @@ public class SettingsUIManager : MonoBehaviour
         SceneManager.LoadScene(offsetSpeedSceneName);
     }
 
-    /// <summary>
-    /// 返回标题页
-    /// 可以在 Inspector 中将按钮的 OnClick 事件绑定到此方法
-    /// </summary>
-    public void ReturnToTitle()
-    {
-        if (string.IsNullOrEmpty(titleSceneName))
-        {
-            Debug.LogWarning("[Settings] 标题页场景名称未设置！");
-            return;
-        }
-
-        Debug.Log($"[Settings] 返回标题页: {titleSceneName}");
-
-        // 保存当前设置
-        if (SaveManager.Instance != null)
-        {
-            SaveManager.Instance.SaveGame();
-        }
-
-        // 加载标题页场景
-        SceneManager.LoadScene(titleSceneName);
-    }
 
     // 更新音乐音量文本
     private void UpdateMusicVolumeText(float value)
