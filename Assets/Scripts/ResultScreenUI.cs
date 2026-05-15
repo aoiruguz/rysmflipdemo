@@ -163,7 +163,7 @@ public class ResultScreenUI : MonoBehaviour
         long newFans = ScoreCalculator.CalculateFansGain(playCount, playData.isReplay);
 
         // 获取总粉丝数
-        long totalFans = FansDataManager.GetTotalFans();
+        long totalFans = SaveManager.Instance.GetTotalFans();
 
         // 显示播放量
         if (playCountText != null)

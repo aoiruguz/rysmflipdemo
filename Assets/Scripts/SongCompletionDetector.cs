@@ -21,6 +21,14 @@ public class SongCompletionDetector : MonoBehaviour
     [Tooltip("显示结算界面时需要关闭的 Panel 列表")]
     public GameObject[] panelsToHideOnResult;
 
+    [Header("Fade Image Controller")]
+    [Tooltip("图片淡入淡出控制器")]
+    public FadeImageController fadeImageController;
+
+    [Header("Victory Animation")]
+    [Tooltip("Animator component to trigger victory animation")]
+    public Animator victoryAnimator;
+
     [Header("角色名字UI（结算阶段显示）")]
     [Tooltip("玩家名字Panel")]
     public GameObject playerNamePanel;
@@ -134,6 +142,12 @@ public class SongCompletionDetector : MonoBehaviour
             PlayDataCollector.Instance.CollectFinalData();
         }
 
+        // 显示 "You Lose" 图片（淡入淡出）
+        if (fadeImageController != null)
+        {
+            fadeImageController.ShowYouLose();
+        }
+
         // 显示 Game Over 文本
         UIManager.Instance?.ShowSongClearText("Game Over");
 
@@ -151,10 +165,22 @@ public class SongCompletionDetector : MonoBehaviour
 
         Debug.Log("[SongCompletionDetector] Song completed!");
 
+        // Set victory animation
+        if (victoryAnimator != null)
+        {
+            victoryAnimator.SetBool("vic", true);
+        }
+
         // 收集最终游戏数据
         if (PlayDataCollector.Instance != null)
         {
             PlayDataCollector.Instance.CollectFinalData();
+        }
+
+        // 显示 "You Win" 图片（淡入淡出）
+        if (fadeImageController != null)
+        {
+            fadeImageController.ShowYouWin();
         }
 
         string resultText = "Song Clear!";

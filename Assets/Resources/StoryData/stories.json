@@ -1,4 +1,11 @@
 {
+  "_comment_schema": "剧情系统配置文件说明",
+  "_comment_triggerType": "触发类型: 0=场景触发(进入场景时), 1=关卡通关触发(完成关卡后)",
+  "_comment_triggerCondition": "触发条件: triggerType=0时填场景名称(如Big Map), triggerType=1时填关卡ID(如MainStory_Chapter1_Stage1)",
+  "_comment_storyId": "剧情唯一标识符，用于代码中引用和触发判断",
+  "_comment_storyName": "剧情显示名称，用于编辑器和调试",
+  "_comment_speakerPosition": "说话者位置: left=左侧角色说话, right=右侧角色说话",
+
   "stories": [
     {
       "storyId": "NewGame_Opening",
@@ -209,11 +216,11 @@
           "dialogueText": "流量喂大了你的狂妄，热度蒙蔽了你的双眼。可是流量没有永恒！",
           "speakerPosition": "left",
           "leftCharacter": {
-            "spritePath": "playercat1",
+            "spritePath": "bingfeilinshizichan/playercat1",
             "scale": 1.0
           },
           "rightCharacter": {
-            "spritePath": "speed1",
+            "spritePath": "bingfeilinshizichan/pepe1",
             "scale": 1.0
           },
           "backgroundSpritePath": "",
@@ -224,11 +231,11 @@
           "dialogueText": "这一波是秦始皇照镜子——双赢！能让我抬不起头的，只有太阳… 还有你，",
           "speakerPosition": "left",
           "leftCharacter": {
-            "spritePath": "playercat1",
+            "spritePath": "bingfeilinshizichan/playercat1",
             "scale": 1.0
           },
           "rightCharacter": {
-            "spritePath": "speed1",
+            "spritePath": "bingfeilinshizichan/pepe11",
             "scale": 1.0
           },
           "backgroundSpritePath": "",
@@ -239,11 +246,11 @@
           "dialogueText": "但是伟大的导师，你说的是我还是你？",
           "speakerPosition": "right",
           "leftCharacter": {
-            "spritePath": "playercat1",
+            "spritePath": "bingfeilinshizichan/playercat1",
             "scale": 1.0
           },
           "rightCharacter": {
-            "spritePath": "speed11",
+            "spritePath": "bingfeilinshizichan/pepe11",
             "scale": 1.0
           },
           "backgroundSpritePath": "",
@@ -335,6 +342,94 @@
           "speakerPosition": "left",
           "leftCharacter": {
             "spritePath": "",
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+     {
+      "storyId": "ENDA",
+      "storyName": "游戏结局A",
+      "triggerType": 0,
+      "triggerCondition": "Big Map",
+      "dialogues": [
+        {
+          "characterName": "",
+          "dialogueText": "关掉窗口，退出直播间，这一切终于结束了。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null,
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "你终于听到了童年午后的蝉鸣，还有那时自己内心的回响。！",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null, 
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "跟随着它，你再次看到了被忽略已久的风景。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null,
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        }
+      ]
+    },
+     {
+      "storyId": "ENDB",
+      "storyName": "游戏结局B",
+      "triggerType": 0,
+      "triggerCondition": "Big Map",
+      "dialogues": [
+        {
+          "characterName": "",
+          "dialogueText": "再次打开直播间的窗口，拥抱无垠的网络风光。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null,
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "听到粉丝如潮水般的应援声，你深知这盛景只属于你。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null, 
+            "scale": 1.0
+          },
+          "rightCharacter": null,
+          "backgroundSpritePath": "",
+          "audioClipPath": ""
+        },
+        {
+          "characterName": "",
+          "dialogueText": "而你，将永远在流量的顶端游戏众生。",
+          "speakerPosition": "left",
+          "leftCharacter": {
+            "spritePath": null,
             "scale": 1.0
           },
           "rightCharacter": null,

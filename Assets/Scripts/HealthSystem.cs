@@ -11,6 +11,10 @@ public class HealthSystem : MonoBehaviour
     [Tooltip("Damage taken per miss (1/5 of a heart = 1 segment)")]
     public int damagePerMiss = 1;
 
+    [Header("Hurt Animation")]
+    [Tooltip("Animator component to trigger hurt animation")]
+    public Animator hurtAnimator;
+
     [Header("Combo Healing Settings")]
     [Tooltip("Combo required to heal on Easy difficulty")]
     public int easyComboThreshold = 10;
@@ -54,6 +58,12 @@ public class HealthSystem : MonoBehaviour
         CurrentHealth = Mathf.Max(0, CurrentHealth);
 
         Debug.Log($"[HealthSystem] Took damage. Current health: {CurrentHealth}/{maxHealth}");
+
+        // Trigger hurt animation
+        if (hurtAnimator != null)
+        {
+            hurtAnimator.SetTrigger("hurt");
+        }
 
         if (CurrentHealth <= 0)
         {
@@ -113,6 +123,12 @@ public class HealthSystem : MonoBehaviour
     private void OnGameOver()
     {
         Debug.Log("[HealthSystem] Game Over!");
+
+        // Set die animation
+        if (hurtAnimator != null)
+        {
+            hurtAnimator.SetBool("die", true);
+        }
 
         // 通知 SongCompletionDetector 处理场景跳转
         if (SongCompletionDetector.Instance != null)

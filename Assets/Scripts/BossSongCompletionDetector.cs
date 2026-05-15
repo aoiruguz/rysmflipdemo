@@ -20,6 +20,10 @@ public class BossSongCompletionDetector : MonoBehaviour
     [Tooltip("显示结算界面时需要关闭的 Panel 列表")]
     public GameObject[] panelsToHideOnResult;
 
+    [Header("Fade Image Controller")]
+    [Tooltip("图片淡入淡出控制器")]
+    public FadeImageController fadeImageController;
+
     [Tooltip("是否启用完成检测")]
     public bool enableCompletionDetection = true;
 
@@ -123,6 +127,12 @@ public class BossSongCompletionDetector : MonoBehaviour
             BossPlayDataCollector.Instance.CollectFinalData();
         }
 
+        // 显示 "You Lose" 图片（淡入淡出）
+        if (fadeImageController != null)
+        {
+            fadeImageController.ShowYouLose();
+        }
+
         // 显示 Game Over 文本
         UIManager.Instance?.ShowSongClearText("Game Over");
 
@@ -144,6 +154,12 @@ public class BossSongCompletionDetector : MonoBehaviour
         if (BossPlayDataCollector.Instance != null)
         {
             BossPlayDataCollector.Instance.CollectFinalData();
+        }
+
+        // 显示 "You Win" 图片（淡入淡出）
+        if (fadeImageController != null)
+        {
+            fadeImageController.ShowYouWin();
         }
 
         string resultText = "Boss Defeated!";

@@ -91,8 +91,20 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData.chapterIndex = chart.chapterIndex;
             CurrentPlayData.isBossStage = chart.isBossStage;
 
-            // 检查是否为重复挑战（已通关的关卡）
-            CurrentPlayData.isReplay = ClearDataManager.IsChartCleared(chart);
+            // 判断是否为重复挑战（使用 SaveManager 而不是 ClearDataManager）
+            LevelData levelData = LevelUIManager.GetCurrentLevelData();
+            if (levelData != null && SaveManager.Instance != null)
+            {
+                CurrentPlayData.isReplay = SaveManager.Instance.IsLevelCleared(
+                    levelData.levelName,
+                    chart.songName,
+                    chart.difficulty
+                );
+            }
+            else
+            {
+                CurrentPlayData.isReplay = false;
+            }
         }
 
         Debug.Log("[PlayDataCollector] Initialized for PlayScene");
@@ -163,24 +175,24 @@ public class PlayDataCollector : MonoBehaviour
 
         long newFans = ScoreCalculator.CalculateFansGain(playCount, CurrentPlayData.isReplay);
 
-        // 保存粉丝数（通过 SaveManager，会自动检查并解锁章节）
-        FansDataManager.AddFans(newFans);
+        // ❌ 删除：不再通过 FansDataManager 添加粉丝（SaveLevelResult 内部会处理）
+        // FansDataManager.AddFans(newFans);
 
-        // 标记关卡为已通关（如果不是重复挑战）
-        if (!CurrentPlayData.isReplay)
-        {
-            ChartData chart = SongSelectionManager.GetSelectedChart();
-            if (chart != null)
-            {
-                ClearDataManager.MarkChartCleared(chart);
-            }
-        }
+        // ❌ 删除：不再通过 ClearDataManager 标记通关（SaveLevelResult 内部会处理）
+        // if (!CurrentPlayData.isReplay)
+        // {
+        //     ChartData chart = SongSelectionManager.GetSelectedChart();
+        //     if (chart != null)
+        //     {
+        //         ClearDataManager.MarkChartCleared(chart);
+        //     }
+        // }
 
-        // 保存到新的存档系统
+        // 保存到新的存档系统（内部会自动添加粉丝、标记通关、标记敌人击败）
         SaveLevelResultToSaveManager(playCount, newFans);
 
         // 获取总粉丝数用于日志
-        long totalFans = FansDataManager.GetTotalFans();
+        long totalFans = SaveManager.Instance.GetTotalFans();
 
         // Log the collected data
         Debug.Log($"[PlayDataCollector] === Play Data Summary ===");
@@ -270,16 +282,37 @@ public class PlayDataCollector : MonoBehaviour
             return;
         }
 
-        // 获取关卡名称（从 PlaySceneInitializer 获取）
+        // 获取关卡数据（从 PlaySceneInitializer 或 LevelUIManager 获取）
         PlaySceneInitializer initializer = FindFirstObjectByType<PlaySceneInitializer>();
-        string levelName = initializer != null ? initializer.GetCurrentLevelName() : "Unknown";
+        LevelData levelData = LevelUIManager.GetCurrentLevelData();
 
         // 计算评级
         string rank = CurrentPlayData.GetRank();
 
-        // 保存到 SaveManager
+        if (levelData == null)
+        {
+            Debug.LogWarning("[PlayDataCollector] LevelData not found, using fallback save method");
+            string levelName = initializer != null ? initializer.GetCurrentLevelName() : "Unknown";
+
+            SaveManager.Instance.SaveLevelResult(
+                levelName,
+                CurrentPlayData.songName,
+                CurrentPlayData.difficulty,
+                CurrentPlayData.GetAchievementScore(),
+                rank,
+                CurrentPlayData.perfectCount,
+                CurrentPlayData.greatCount,
+                CurrentPlayData.goodCount,
+                CurrentPlayData.missCount,
+                CurrentPlayData.maxCombo,
+                newFans
+            );
+            return;
+        }
+
+        // 使用带 LevelData 的重载方法保存（这样才能正确触发主线剧情）
         SaveManager.Instance.SaveLevelResult(
-            levelName,
+            levelData,
             CurrentPlayData.songName,
             CurrentPlayData.difficulty,
             CurrentPlayData.GetAchievementScore(),
@@ -292,7 +325,7 @@ public class PlayDataCollector : MonoBehaviour
             newFans
         );
 
-        Debug.Log($"[PlayDataCollector] Saved level result to SaveManager: {levelName} - {CurrentPlayData.difficulty}");
+        Debug.Log($"[PlayDataCollector] Saved level result to SaveManager: {levelData.levelName} - {CurrentPlayData.difficulty}, isMainStoryLevel: {levelData.isMainStoryLevel}");
     }
 
     /// <summary>

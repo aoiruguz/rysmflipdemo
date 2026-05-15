@@ -117,30 +117,30 @@ public class SongSelectionManager : MonoBehaviour
     /// </summary>
     private void UpdateFansDisplay()
     {
-        long totalFans = FansDataManager.GetTotalFans();
-        int unlockedChapter = FansDataManager.GetUnlockedChapter();
+        long totalFans = SaveManager.Instance.GetTotalFans();
+        int unlockedChapter = SaveManager.Instance.GetUnlockedChapter();
 
         // 显示总粉丝数
         if (totalFansText != null)
         {
-            totalFansText.text = $"Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}";
+            totalFansText.text = ScoreCalculator.FormatLargeNumber(totalFans);
         }
 
         // 显示章节进度
         if (chapterProgressText != null)
         {
             int nextChapter = unlockedChapter + 1;
-            if (nextChapter < 3) // 还有下一章
+            if (nextChapter <= 4) // 还有下一章（最多4章）
             {
-                long requiredFans = FansDataManager.GetRequiredFansForNextChapter(unlockedChapter);
+                long requiredFans = SaveManager.Instance.GetRequiredFansForChapter(nextChapter);
                 long remainingFans = requiredFans - totalFans;
                 if (remainingFans > 0)
                 {
-                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlock: {ScoreCalculator.FormatLargeNumber(remainingFans)} more fans needed";
+                    chapterProgressText.text = $"Chapter {nextChapter} Unlock: {ScoreCalculator.FormatLargeNumber(remainingFans)} more fans needed";
                 }
                 else
                 {
-                    chapterProgressText.text = $"Chapter {nextChapter + 1} Unlocked!";
+                    chapterProgressText.text = $"Chapter {nextChapter} Unlocked!";
                 }
             }
             else

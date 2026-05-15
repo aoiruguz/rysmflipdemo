@@ -59,16 +59,25 @@ public class LevelData : ScriptableObject
     public AudioClip previewMusic;    // 预览音乐（展开面板时播放）
 
     [Header("--- 敌人与剧情 ---")]
-    [Tooltip("敌人头像（未击败时）")]
+    [Tooltip("敌人名称")]
+    public string enemyName = "对手";
+
+    [Tooltip("敌人头像（未击败时）- 用于详情面板")]
     public Sprite enemyAvatar;
-    [Tooltip("敌人头像（击败后）")]
+    [Tooltip("敌人头像（击败后）- 用于详情面板")]
     public Sprite enemyAvatarDefeated;
+
+    [Tooltip("大地图小图标（未击败时）")]
+    public Sprite mapIconUndefeated;
+    [Tooltip("大地图小图标（击败后）")]
+    public Sprite mapIconDefeated;
+
     [TextArea] public string enemyInfo; // 敌人信息
     [Tooltip("敌人的粉丝数（战斗力）")]
     public long enemyFans = 10000;    // 敌人的粉丝数
 
     [Header("--- 敌人称号 ---")]
-    [Tooltip("未击败时显示的称号")]
+    [Tooltip("未击败时显示的称号（首次击败后玩家会获得此称号）")]
     public string enemyTitleUncleared = "挑战者";
     [Tooltip("击败后显示的称号（例如：前挑战者）")]
     public string enemyTitleCleared = "已击败";
@@ -78,15 +87,6 @@ public class LevelData : ScriptableObject
     public int chapterGroup = 1;
     [Tooltip("是否是主线关卡")]
     public bool isMainStoryLevel = false;
-    [Tooltip("解锁所需的前置关卡组（0 表示默认解锁）")]
-    public int requiredChapterGroup = 0;
-    [Tooltip("解锁该组所需的粉丝数")]
-    public long requiredFansForChapter = 0;
-
-    [Header("--- 状态与解锁 ---")]
-    public bool isLockedByDefault = true;
-    [Tooltip("解锁所需粉丝量，负数表示默认解锁")]
-    public int requiredFans = -1;
 
     [Header("--- 难度配置 (数组按 E/N/H 顺序填写) ---")]
     public DifficultyDetail[] difficulties = new DifficultyDetail[3];
@@ -128,60 +128,27 @@ public class LevelData : ScriptableObject
         return 0;
     }
 
-    // 检查是否解锁
-    public bool IsUnlocked(long currentFans)
-    {
-        if (requiredFans < 0)
-            return true; // 负数表示默认解锁
-        return currentFans >= requiredFans;
-    }
-
-    // 检查关卡组是否解锁
-    public bool IsChapterUnlocked(long currentFans)
-    {
-        // 第一组默认解锁
-        if (requiredChapterGroup == 0)
-            return true;
-
-        // 检查前置关卡组的主线是否通关
-        bool previousChapterCleared = CheckPreviousChapterCleared();
-
-        // 检查粉丝数是否达标
-        bool fansEnough = currentFans >= requiredFansForChapter;
-
-        return previousChapterCleared && fansEnough;
-    }
-
-    // 检查前置关卡组的主线关卡是否通关
-    private bool CheckPreviousChapterCleared()
+    /// <summary>
+    /// 检查关卡是否解锁（统一入口）
+    /// 同一章节的所有关卡（主线+支线）使用相同的解锁条件
+    /// </summary>
+    public bool IsUnlocked()
     {
         if (SaveManager.Instance == null)
             return false;
 
-        // 需要检查前置关卡组的主线关卡是否通关
-        // 这里需要通过 SaveManager 查询
-        return SaveManager.Instance.IsChapterMainStoryCleared(requiredChapterGroup);
+        return SaveManager.Instance.IsChapterUnlocked(chapterGroup);
     }
 
-    // 获取解锁条件文本
+    /// <summary>
+    /// 获取解锁条件文本
+    /// </summary>
     public string GetUnlockConditionText()
     {
-        if (requiredFans < 0)
-            return "已解锁";
-        return $"粉丝量达到 {requiredFans} 时解锁";
-    }
+        if (SaveManager.Instance == null)
+            return "未知解锁条件";
 
-    // 获取关卡组解锁条件文本
-    public string GetChapterUnlockConditionText()
-    {
-        if (requiredChapterGroup == 0)
-            return "默认解锁";
-
-        string condition = $"需要：\n";
-        condition += $"1. 通关第 {requiredChapterGroup} 组主线关卡\n";
-        condition += $"2. 粉丝数达到 {requiredFansForChapter}";
-
-        return condition;
+        return SaveManager.Instance.GetChapterUnlockConditionText(chapterGroup);
     }
 
     // 获取当前应该显示的敌人称号
@@ -194,7 +161,7 @@ public class LevelData : ScriptableObject
         return SaveManager.Instance.IsEnemyDefeated(levelName) ? enemyTitleCleared : enemyTitleUncleared;
     }
 
-    // 获取当前应该显示的敌人头像
+    // 获取当前应该显示的敌人头像（详情面板用）
     public Sprite GetCurrentEnemyAvatar()
     {
         if (SaveManager.Instance == null)
@@ -208,5 +175,21 @@ public class LevelData : ScriptableObject
             return enemyAvatarDefeated;
 
         return enemyAvatar;
+    }
+
+    // 获取当前应该显示的大地图小图标
+    public Sprite GetCurrentMapIcon()
+    {
+        if (SaveManager.Instance == null)
+            return mapIconUndefeated;
+
+        // 使用存档系统的击败状态判断
+        bool isDefeated = SaveManager.Instance.IsEnemyDefeated(levelName);
+
+        // 如果击败后图标未设置，则使用未击败图标
+        if (isDefeated && mapIconDefeated != null)
+            return mapIconDefeated;
+
+        return mapIconUndefeated;
     }
 }

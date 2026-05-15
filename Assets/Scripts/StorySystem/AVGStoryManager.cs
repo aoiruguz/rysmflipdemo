@@ -125,6 +125,20 @@ public class AVGStoryManager : MonoBehaviour
     }
 
     /// <summary>
+    /// 播放剧情但不保存到存档（用于可重复播放的剧情）
+    /// </summary>
+    public void PlayStoryWithoutSaving(string storyId, Action onComplete = null)
+    {
+        if (!_storiesById.TryGetValue(storyId, out StoryData storyData))
+        {
+            Debug.LogWarning($"[AVGStoryManager] 未找到storyId为\"{storyId}\"的剧情数据");
+            onComplete?.Invoke();
+            return;
+        }
+        PlayStory(storyData, onComplete, saveToRecord: false);
+    }
+
+    /// <summary>
     /// 按触发类型和条件自动查找并播放剧情
     /// </summary>
     public bool CheckAndPlayStoryByTrigger(StoryTriggerType triggerType, string triggerCondition, Action onComplete = null)
@@ -146,7 +160,7 @@ public class AVGStoryManager : MonoBehaviour
 
     // ===================== 播放控制 =====================
 
-    private void PlayStory(StoryData storyData, Action onComplete)
+    private void PlayStory(StoryData storyData, Action onComplete, bool saveToRecord = true)
     {
         if (_isPlaying)
         {
@@ -179,8 +193,18 @@ public class AVGStoryManager : MonoBehaviour
         storyPlayer.Play(storyData, () =>
         {
             _isPlaying = false;
-            SaveManager.Instance.MarkStoryWatched(storyData.storyId);
-            Debug.Log($"[AVGStoryManager] Story completed: {storyData.storyId}");
+
+            // 只有在 saveToRecord 为 true 时才保存到存档
+            if (saveToRecord)
+            {
+                SaveManager.Instance.MarkStoryWatched(storyData.storyId);
+                Debug.Log($"[AVGStoryManager] Story completed and saved: {storyData.storyId}");
+            }
+            else
+            {
+                Debug.Log($"[AVGStoryManager] Story completed (not saved): {storyData.storyId}");
+            }
+
             onComplete?.Invoke();
         });
     }

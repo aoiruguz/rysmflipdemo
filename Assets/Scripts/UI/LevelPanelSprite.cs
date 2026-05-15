@@ -68,10 +68,10 @@ public class LevelPanelSprite : MonoBehaviour
             return;
         }
 
-        // 设置敌人头像（根据击败状态）
+        // 设置大地图小图标（根据击败状态）
         if (enemyIconSprite != null)
         {
-            enemyIconSprite.sprite = levelData.GetCurrentEnemyAvatar();
+            enemyIconSprite.sprite = levelData.GetCurrentMapIcon();
         }
 
         // 设置敌人名字
@@ -83,11 +83,11 @@ public class LevelPanelSprite : MonoBehaviour
         // 设置粉丝量
         if (fansCountText != null)
         {
-            fansCountText.text = $"粉丝: {levelData.enemyFans}";
+            fansCountText.text = levelData.enemyFans.ToString();
         }
 
-        // 检查是否解锁
-        isUnlocked = levelData.IsChapterUnlocked(currentFans);
+        // 使用统一的解锁判断
+        isUnlocked = levelData.IsUnlocked();
 
         // 设置按钮状态
         UpdateVisualState();
@@ -143,12 +143,13 @@ public class LevelPanelSprite : MonoBehaviour
     /// </summary>
     private void OnMouseDown()
     {
-        if (!isUnlocked || levelData == null)
+        // 允许未解锁的关卡也能打开面板查看信息
+        if (levelData == null)
             return;
 
-        Debug.Log($"[LevelPanelSprite] Challenge level: {levelData.levelName}");
+        Debug.Log($"[LevelPanelSprite] Open level details: {levelData.levelName} (Unlocked: {isUnlocked})");
 
-        // 触发关卡选择逻辑
+        // 触发关卡选择逻辑（无论是否解锁都可以打开）
         if (LevelUIManager.Instance != null)
         {
             LevelUIManager.Instance.ShowLevelDetails(levelData);
@@ -160,12 +161,13 @@ public class LevelPanelSprite : MonoBehaviour
     /// </summary>
     private void OnMouseEnter()
     {
-        if (!isUnlocked)
-            return;
-
+        // 允许未解锁的关卡也显示悬停效果
         isHovering = true;
+
         if (buttonSprite != null)
-            buttonSprite.color = buttonHoverColor;
+        {
+            buttonSprite.color = isUnlocked ? buttonHoverColor : buttonDisabledColor;
+        }
 
         // 悬浮高亮 Sprite 快速过渡到 100% 不透明度
         if (hoverHighlightSprite != null)
@@ -200,7 +202,8 @@ public class LevelPanelSprite : MonoBehaviour
         if (levelData == null)
             return;
 
-        isUnlocked = levelData.IsChapterUnlocked(currentFans);
+        // 使用统一的解锁判断
+        isUnlocked = levelData.IsUnlocked();
         UpdateVisualState();
     }
 

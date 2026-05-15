@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c28ff51db076d0408bc9887e2912374, type: 3}
-  m_Name: NORMAL
+  m_Name: Normal
   m_EditorClassIdentifier: Assembly-CSharp::ChartData
-  songName: pixel advanture story
+  songName: 'ai -  (9shope) [normal]'
   difficulty: 1
   bpm: 0
   offset: 0
@@ -898,13 +898,13 @@ MonoBehaviour:
     duration: 0
     lane: 1
     color: 2
-    noteType: 2
+    noteType: 1
   - spawnTime: 52557
     hitTime: 54557
     duration: 0
-    lane: 2
-    color: 2
-    noteType: 1
+    lane: 0
+    color: 0
+    noteType: 2
   - spawnTime: 52932
     hitTime: 54932
     duration: 0
@@ -915,92 +915,92 @@ MonoBehaviour:
     hitTime: 55119
     duration: 0
     lane: 2
-    color: 2
-    noteType: 1
+    color: 0
+    noteType: 2
   - spawnTime: 53307
     hitTime: 55307
     duration: 0
-    lane: 1
+    lane: 3
     color: 2
     noteType: 1
   - spawnTime: 54244
     hitTime: 56244
     duration: 0
-    lane: 0
+    lane: 2
     color: 0
-    noteType: 2
+    noteType: 1
   - spawnTime: 54432
     hitTime: 56432
     duration: 0
     lane: 1
-    color: 2
-    noteType: 2
+    color: 0
+    noteType: 0
   - spawnTime: 54619
     hitTime: 56619
     duration: 0
-    lane: 2
+    lane: 1
     color: 2
-    noteType: 2
+    noteType: 1
   - spawnTime: 54807
     hitTime: 56807
     duration: 0
-    lane: 3
+    lane: 0
     color: 2
-    noteType: 1
+    noteType: 0
   - spawnTime: 55182
     hitTime: 57182
     duration: 0
-    lane: 2
-    color: 2
-    noteType: 1
+    lane: 0
+    color: 0
+    noteType: 2
   - spawnTime: 55369
     hitTime: 57369
     duration: 0
     lane: 1
-    color: 2
-    noteType: 2
+    color: 0
+    noteType: 0
   - spawnTime: 55557
     hitTime: 57557
     duration: 0
-    lane: 2
-    color: 2
-    noteType: 1
+    lane: 1
+    color: 0
+    noteType: 0
   - spawnTime: 55932
     hitTime: 57932
     duration: 0
     lane: 1
-    color: 2
-    noteType: 2
+    color: 0
+    noteType: 0
   - spawnTime: 56119
     hitTime: 58119
     duration: 0
-    lane: 2
-    color: 2
-    noteType: 1
+    lane: 1
+    color: 0
+    noteType: 0
   - spawnTime: 56307
     hitTime: 58307
     duration: 0
     lane: 1
-    color: 2
-    noteType: 2
+    color: 0
+    noteType: 0
   - spawnTime: 56682
     hitTime: 58682
     duration: 0
-    lane: 2
+    lane: 1
     color: 2
-    noteType: 1
+    noteType: 2
   - spawnTime: 57244
     hitTime: 59244
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
     noteType: 2
   - spawnTime: 57432
     hitTime: 59432
     duration: 0
-    lane: 2
-    color: 2
-    noteType: 2
+    lane: 3
+    color: 0
+    noteType: 0
   - spawnTime: 57619
     hitTime: 59619
     duration: 0
@@ -1257,13 +1257,13 @@ MonoBehaviour:
     hitTime: 74994
     duration: 0
     lane: 1
-    color: 2
+    color: 0
     noteType: 0
   - spawnTime: 73182
     hitTime: 75182
     duration: 0
     lane: 1
-    color: 2
+    color: 0
     noteType: 0
   - spawnTime: 73369
     hitTime: 75369
@@ -1281,13 +1281,13 @@ MonoBehaviour:
     hitTime: 75744
     duration: 0
     lane: 1
-    color: 2
+    color: 0
     noteType: 0
   - spawnTime: 73932.5
     hitTime: 75932.5
     duration: 0
     lane: 1
-    color: 2
+    color: 0
     noteType: 0
   - spawnTime: 74119
     hitTime: 76119

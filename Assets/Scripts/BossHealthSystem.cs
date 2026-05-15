@@ -77,8 +77,8 @@ public class BossHealthSystem : MonoBehaviour
         }
         else
         {
-            // 从FansDataManager读取累计粉丝数作为最大值
-            MaxFans = FansDataManager.GetTotalFans();
+            // 从SaveManager读取累计粉丝数作为最大值
+            MaxFans = SaveManager.Instance.GetTotalFans();
             CurrentFans = MaxFans; // 复制为当前值
         }
 

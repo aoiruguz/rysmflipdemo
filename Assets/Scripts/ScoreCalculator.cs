@@ -182,29 +182,11 @@ public class ScoreCalculator
     }
 
     /// <summary>
-    /// 格式化大数字显示（K, M）
+    /// 格式化大数字显示（带逗号分隔）
     /// </summary>
     public static string FormatLargeNumber(long number)
     {
-        if (number >= 100000000) // 100M
-        {
-            float millions = number / 1000000f;
-            return $"{millions:F2}M";
-        }
-        else if (number >= 1000000) // 1M
-        {
-            float millions = number / 1000000f;
-            return $"{millions:F2}M";
-        }
-        else if (number >= 10000) // 10K
-        {
-            float thousands = number / 1000f;
-            return $"{thousands:F2}K";
-        }
-        else
-        {
-            return number.ToString();
-        }
+        return number.ToString("N0");
     }
 
     /// <summary>

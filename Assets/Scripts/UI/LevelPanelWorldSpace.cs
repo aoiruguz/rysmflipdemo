@@ -66,8 +66,8 @@ public class LevelPanelWorldSpace : MonoBehaviour
             fansCountText.text = $"粉丝: {levelData.enemyFans}";
         }
 
-        // 检查是否解锁（使用关卡组解锁逻辑）
-        isUnlocked = levelData.IsChapterUnlocked(currentFans);
+        // 使用统一的解锁判断
+        isUnlocked = levelData.IsUnlocked();
 
         // 设置按钮状态
         UpdateVisualState();
@@ -145,7 +145,8 @@ public class LevelPanelWorldSpace : MonoBehaviour
         if (levelData == null)
             return;
 
-        isUnlocked = levelData.IsChapterUnlocked(currentFans);
+        // 使用统一的解锁判断
+        isUnlocked = levelData.IsUnlocked();
         UpdateVisualState();
     }
 

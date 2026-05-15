@@ -16,15 +16,17 @@ MonoBehaviour:
   composer: ai
   displayBPM: 160
   previewMusic: {fileID: 8300000, guid: 0a2790d233631a849a754a750e9a143e, type: 3}
-  enemyAvatar: {fileID: -3542775681898570189, guid: 3a553b0a5c40a6940b7c23aac8c06318, type: 3}
+  enemyName: "\u5BF9\u624B"
+  enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
+  enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
+  mapIconUndefeated: {fileID: 21300000, guid: e8e214ae3956a7b478403ccb7e78b922, type: 3}
+  mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
   enemyInfo: "\u50CF\u7D20\u5192\u9669"
   enemyFans: 10000
+  enemyTitleUncleared: "\u6311\u6218\u8005"
+  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
   chapterGroup: 1
   isMainStoryLevel: 0
-  requiredChapterGroup: 0
-  requiredFansForChapter: 0
-  isLockedByDefault: 1
-  requiredFans: -1
   difficulties:
   - difficulty: 0
     ratingLevel: 3
@@ -33,7 +35,7 @@ MonoBehaviour:
   - difficulty: 1
     ratingLevel: 5
     mapper: 
-    chartAsset: {fileID: 11400000, guid: 798c811734a9b004087ab6bc67c2e167, type: 2}
+    chartAsset: {fileID: 11400000, guid: 881c0dca9727b6c4ebc2b93bc169c689, type: 2}
   - difficulty: 2
     ratingLevel: 10
     mapper: 

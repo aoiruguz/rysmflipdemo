@@ -12,6 +12,7 @@ public class PlaySceneInitializer : MonoBehaviour
     public StoryManager storyManager;
     public NoteManager noteManager;
     public GameObject gameplayUI;
+    public FadeImageController fadeImageController;
 
     [Header("角色名字UI（剧情+结算复用）")]
     [Tooltip("玩家名字Panel")]
@@ -26,8 +27,8 @@ public class PlaySceneInitializer : MonoBehaviour
     public GameObject enemyHealthBar;
 
     [Header("设置")]
-    [Tooltip("是否暂停游戏时间播放剧情")]
-    public bool pauseGameDuringStory = true;
+    [Tooltip("剧情结束后延迟多久显示开始PK图片（秒）")]
+    public float startBattleDelay = 0.3f;
 
     private ChartData currentChart;
     private LevelData currentLevelData;
@@ -65,9 +66,7 @@ public class PlaySceneInitializer : MonoBehaviour
         if (enemyNamePanel != null)
             enemyNamePanel.SetActive(true);
 
-        // 暂停 NoteManager
-        if (noteManager != null)
-            noteManager.enabled = false;
+        // 注意：不再禁用 NoteManager，而是让它等待开始信号
 
         // 尝试获取 LevelData（从 LevelUIManager 的静态变量或其他方式）
         currentLevelData = GetCurrentLevelData();
@@ -80,10 +79,6 @@ public class PlaySceneInitializer : MonoBehaviour
         {
             if (storyManager != null)
             {
-                // 暂停游戏时间
-                if (pauseGameDuringStory)
-                    Time.timeScale = 0f;
-
                 // 播放剧情，已通关则显示跳过按钮
                 storyManager.ShowDialogues(
                     currentLevelData.openingDialogues,
@@ -142,10 +137,6 @@ public class PlaySceneInitializer : MonoBehaviour
     {
         Debug.Log("[PlaySceneInitializer] Story complete, starting game");
 
-        // 恢复游戏时间
-        if (pauseGameDuringStory)
-            Time.timeScale = 1f;
-
         // 隐藏名字Panel，显示血条（战斗阶段）
         if (playerNamePanel != null)
             playerNamePanel.SetActive(false);
@@ -160,9 +151,24 @@ public class PlaySceneInitializer : MonoBehaviour
         if (gameplayUI != null)
             gameplayUI.SetActive(true);
 
-        // 启动 NoteManager
+        // 允许 NoteManager 开始游戏
         if (noteManager != null)
-            noteManager.enabled = true;
+            noteManager.AllowGameStart();
+
+        // 延迟显示"开始PK"图片
+        if (fadeImageController != null)
+        {
+            StartCoroutine(ShowStartBattleDelayed());
+        }
+    }
+
+    /// <summary>
+    /// 延迟显示开始PK图片
+    /// </summary>
+    private System.Collections.IEnumerator ShowStartBattleDelayed()
+    {
+        yield return new WaitForSeconds(startBattleDelay);
+        fadeImageController.ShowStartBattle();
     }
 
     /// <summary>

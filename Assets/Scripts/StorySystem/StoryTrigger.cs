@@ -17,6 +17,9 @@ public class StoryTrigger : MonoBehaviour
     [Tooltip("是否只触发一次（推荐保持true，配合存档系统使用）")]
     public bool triggerOnce = true;
 
+    [Tooltip("是否允许重复播放（true=每次都播放且不记录到存档，false=正常检查存档）")]
+    public bool allowRepeat = false;
+
     [Header("回调事件")]
     [Tooltip("剧情播放完成后触发（无论是跳过还是正常结束）")]
     public UnityEvent onStoryComplete;
@@ -62,11 +65,20 @@ public class StoryTrigger : MonoBehaviour
         }
 
         _hasTriggered = true;
-        bool started = AVGStoryManager.Instance.CheckAndPlayStory(storyId, OnComplete);
-        if (!started)
+
+        // 如果允许重复播放，使用不保存到存档的播放方式
+        if (allowRepeat)
         {
-            // 剧情已看过或不存在，直接触发回调
-            OnComplete();
+            AVGStoryManager.Instance.PlayStoryWithoutSaving(storyId, OnComplete);
+        }
+        else
+        {
+            bool started = AVGStoryManager.Instance.CheckAndPlayStory(storyId, OnComplete);
+            if (!started)
+            {
+                // 剧情已看过或不存在，直接触发回调
+                OnComplete();
+            }
         }
     }
 

@@ -61,6 +61,9 @@ public class NoteManager : MonoBehaviour
     /// <summary>游戏是否已开始</summary>
     private bool isGameStarted = false;
 
+    /// <summary>是否允许开始游戏（用于等待剧情播放完成）</summary>
+    private bool canStartGame = false;
+
     /// <summary>游戏是否已停止（用于结算时停止生成Note和音乐）</summary>
     private bool isGameStopped = false;
 
@@ -183,7 +186,7 @@ private int totalNotes = 0;
     /// 2. 等待预延迟时间
     /// 3. 启动音乐播放
     /// 4. 按时间顺序生成Note
-    /// 
+    ///
     /// 工作流程：
     /// - 每帧检查当前时间与下一个Note的生成时间
  /// - 当currentTime >= targetSpawnTime时，生成Note
@@ -191,6 +194,12 @@ private int totalNotes = 0;
     /// </summary>
     private IEnumerator PlayRoutine()
     {
+        // 等待允许开始游戏的信号（等待剧情播放完成）
+        while (!canStartGame)
+        {
+            yield return null;
+        }
+
       // 显示歌曲标题，持续时间为 prePlayDelay + 1 秒
         UIManager.Instance?.ShowSongTitle(currentChart.songName);
 
@@ -362,5 +371,14 @@ private int totalNotes = 0;
         }
 
         Debug.Log("[NoteManager] Game stopped, all remaining notes destroyed");
+    }
+
+    /// <summary>
+    /// 允许游戏开始（由 PlaySceneInitializer 在剧情播放完成后调用）
+    /// </summary>
+    public void AllowGameStart()
+    {
+        canStartGame = true;
+        Debug.Log("[NoteManager] Game start allowed");
     }
 }

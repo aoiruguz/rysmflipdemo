@@ -4,7 +4,16 @@ using UnityEngine;
 /// 粉丝数据管理器（重构版）
 /// 纯业务逻辑类，不负责数据持久化
 /// 所有数据从 SaveManager 读取和写入
+///
+/// ⚠️ 已废弃：请直接使用 SaveManager 代替
+/// 此类只是 SaveManager 的简单包装，已无存在必要
+/// - GetTotalFans() → SaveManager.Instance.GetTotalFans()
+/// - AddFans() → SaveManager.Instance.AddFans()
+/// - GetUnlockedChapter() → SaveManager.Instance.GetUnlockedChapter()
+/// - IsChapterUnlocked() → SaveManager.Instance.IsChapterUnlocked()
+/// - GetRequiredFansForNextChapter() → SaveManager.Instance.GetRequiredFansForNextChapter()
 /// </summary>
+[System.Obsolete("FansDataManager 已废弃，请直接使用 SaveManager.Instance 代替", false)]
 public static class FansDataManager
 {
     /// <summary>

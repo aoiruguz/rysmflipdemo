@@ -294,6 +294,9 @@ public class SaveManager : MonoBehaviour
     public void SaveLevelResult(LevelData levelData, string songName, ChartDifficulty difficulty,
         int score, string rank, int perfect, int great, int good, int miss, int maxCombo, long fansEarned)
     {
+        // 检查是否是首次击败（在调用原有保存方法之前检查）
+        bool wasNotDefeated = !IsEnemyDefeated(levelData.levelName);
+
         // 调用原有的保存方法
         SaveLevelResult(levelData.levelName, songName, difficulty, score, rank, perfect, great, good, miss, maxCombo, fansEarned);
 
@@ -302,6 +305,18 @@ public class SaveManager : MonoBehaviour
         {
             Debug.Log($"[SaveManager] Main story level cleared: {levelData.levelName} (Chapter {levelData.chapterGroup})");
             MarkChapterMainStoryCleared(levelData.chapterGroup, levelData.levelName);
+        }
+
+        // 标记敌人为已击败（所有关卡通关后都标记）
+        MarkEnemyDefeated(levelData.levelName);
+        Debug.Log($"[SaveManager] Enemy defeated: {levelData.levelName}");
+
+        // 如果是首次击败，玩家获得敌人的称号（enemyTitleUncleared）
+        if (wasNotDefeated && !string.IsNullOrEmpty(levelData.enemyTitleUncleared))
+        {
+            string oldTitle = currentProgress.playerTitle;
+            SetPlayerTitle(levelData.enemyTitleUncleared);
+            Debug.Log($"[SaveManager] 🎉 Earned new title from defeating {levelData.enemyName}: {oldTitle} → {levelData.enemyTitleUncleared}");
         }
     }
 
@@ -356,6 +371,150 @@ public class SaveManager : MonoBehaviour
     {
         currentProgress.totalFans += fansToAdd;
         SaveProgress();
+
+        // 自动检查并解锁新章节
+        CheckAndUnlockChapters();
+    }
+
+    /// <summary>
+    /// 章节解锁配置
+    /// </summary>
+    [System.Serializable]
+    public class ChapterUnlockConfig
+    {
+        public int chapterIndex;                    // 章节编号 (1-4)
+        public long requiredFans;                   // 需要的粉丝数
+        public bool requirePreviousChapterCleared;  // 是否需要通关前一章主线
+    }
+
+    /// <summary>
+    /// 章节解锁配置表（集中管理所有章节的解锁条件）
+    /// </summary>
+    private static readonly ChapterUnlockConfig[] chapterUnlockConfigs = new ChapterUnlockConfig[]
+    {
+        new ChapterUnlockConfig { chapterIndex = 1, requiredFans = 0, requirePreviousChapterCleared = false },
+        new ChapterUnlockConfig { chapterIndex = 2, requiredFans = 1000000, requirePreviousChapterCleared = true },      // 100万 + 通关第1章
+        new ChapterUnlockConfig { chapterIndex = 3, requiredFans = 10000000, requirePreviousChapterCleared = true },     // 1000万 + 通关第2章
+        new ChapterUnlockConfig { chapterIndex = 4, requiredFans = 100000000, requirePreviousChapterCleared = true },    // 1亿 + 通关第3章
+    };
+
+    /// <summary>
+    /// 获取章节解锁配置
+    /// </summary>
+    private ChapterUnlockConfig GetChapterConfig(int chapterIndex)
+    {
+        foreach (var config in chapterUnlockConfigs)
+        {
+            if (config.chapterIndex == chapterIndex)
+                return config;
+        }
+        return null;
+    }
+
+    /// <summary>
+    /// 检查指定章节是否解锁（统一的解锁判断入口）
+    /// </summary>
+    /// <param name="chapterIndex">章节编号 (1-4)</param>
+    /// <returns>是否解锁</returns>
+    public bool IsChapterUnlocked(int chapterIndex)
+    {
+        // 第 1 章默认解锁
+        if (chapterIndex == 1)
+            return true;
+
+        // 获取配置
+        var config = GetChapterConfig(chapterIndex);
+        if (config == null)
+        {
+            Debug.LogWarning($"[SaveManager] No unlock config found for chapter {chapterIndex}");
+            return false;
+        }
+
+        // 检查粉丝数
+        long currentFans = currentProgress.totalFans;
+        bool fansEnough = currentFans >= config.requiredFans;
+
+        // 检查前置章节主线是否通关
+        bool previousCleared = true;
+        if (config.requirePreviousChapterCleared)
+        {
+            int previousChapter = chapterIndex - 1;
+            previousCleared = IsChapterMainStoryCleared(previousChapter);
+        }
+
+        return fansEnough && previousCleared;
+    }
+
+    /// <summary>
+    /// 获取章节解锁所需的粉丝数
+    /// </summary>
+    public long GetRequiredFansForChapter(int chapterIndex)
+    {
+        var config = GetChapterConfig(chapterIndex);
+        return config != null ? config.requiredFans : 0;
+    }
+
+    /// <summary>
+    /// 获取章节解锁条件文本
+    /// </summary>
+    public string GetChapterUnlockConditionText(int chapterIndex)
+    {
+        if (chapterIndex == 1)
+            return "默认解锁";
+
+        var config = GetChapterConfig(chapterIndex);
+        if (config == null)
+            return "未知解锁条件";
+
+        string condition = "";
+        int previousChapter = chapterIndex - 1;
+
+        // 检查前置章节
+        if (config.requirePreviousChapterCleared)
+        {
+            bool previousCleared = IsChapterMainStoryCleared(previousChapter);
+            if (!previousCleared)
+            {
+                condition += $"需要通关第 {previousChapter} 章主线关卡\n";
+            }
+        }
+
+        // 检查粉丝数
+        long currentFans = currentProgress.totalFans;
+        if (currentFans < config.requiredFans)
+        {
+            long needed = config.requiredFans - currentFans;
+            condition += $"需要 {ScoreCalculator.FormatLargeNumber(needed)} 粉丝";
+        }
+
+        // 如果都满足了
+        if (string.IsNullOrEmpty(condition))
+        {
+            condition = "已满足解锁条件";
+        }
+
+        return condition.TrimEnd('\n');
+    }
+
+    /// <summary>
+    /// 检查并解锁新章节（内部方法）
+    /// </summary>
+    private void CheckAndUnlockChapters()
+    {
+        int currentUnlocked = currentProgress.unlockedChapter;
+
+        for (int i = currentUnlocked + 1; i <= 2; i++)
+        {
+            if (IsChapterUnlocked(i))
+            {
+                SetUnlockedChapter(i);
+                Debug.Log($"[SaveManager] Unlocked chapter {i + 1}");
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     /// <summary>

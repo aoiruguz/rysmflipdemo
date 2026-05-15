@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: 
+  levelName: "\u5408"
   composer: 
   displayBPM: 0
   previewMusic: {fileID: 0}
-  enemyAvatar: {fileID: 0}
+  enemyName: "\u5BF9\u624B"
+  enemyAvatar: {fileID: 21300000, guid: 03b93495dcfc7b244aec9f8dd7396cc3, type: 3}
+  enemyAvatarDefeated: {fileID: 21300000, guid: 03b93495dcfc7b244aec9f8dd7396cc3, type: 3}
+  mapIconUndefeated: {fileID: 21300000, guid: 65f0f4244293db74fbe11ec03df0bd9a, type: 3}
+  mapIconDefeated: {fileID: 21300000, guid: 65f0f4244293db74fbe11ec03df0bd9a, type: 3}
   enemyInfo: "\u767E\u4E07\u996D\u5708\u72C2\u70ED\u6F6E\uFF0C\u4E00\u4EBA\u72EC\u6218\u5168\u7F51\u6F6E\uFF01\n\u4E00\u8FB9\u662F\u65E0\u8111\u62A4\u4E3B\u3001\u584C\u623F\u53CD\u566C\u7684\u50F5\u5C38\u7C89\u6D77\uFF0C\n\u4E00\u8FB9\u662F\u575A\u5B88\u672C\u5FC3\u3001\u5BA1\u5224\u55A7\u56A3\u7684\u6700\u7EC8\u5F3A\u8005\u3002\n\u7EC8\u6781\u8282\u594F\u6218\uFF0C\u6289\u62E9\u4F60\u7684\u7ED3\u5C40\uFF01"
-  enemyFans: 10000
-  chapterGroup: 1
-  isMainStoryLevel: 0
-  requiredChapterGroup: 0
-  requiredFansForChapter: 0
-  isLockedByDefault: 1
-  requiredFans: -1
+  enemyFans: 999999
+  enemyTitleUncleared: "\u6311\u6218\u8005"
+  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  chapterGroup: 4
+  isMainStoryLevel: 1
   difficulties:
   - difficulty: 0
     ratingLevel: 0

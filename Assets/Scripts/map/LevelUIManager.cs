@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections.Generic;
 
 public class LevelUIManager : MonoBehaviour
 {
@@ -16,13 +17,22 @@ public class LevelUIManager : MonoBehaviour
     public TextMeshProUGUI bpmText;
 
     public Image enemyImage;
-    public TextMeshProUGUI enemyDescriptionText;
+    public TextMeshProUGUI enemyNameText;
     public TextMeshProUGUI enemyTitleText;
+    public TextMeshProUGUI enemyFansText;
 
     [Header("难度评级显示 (三个难度)")]
     public TextMeshProUGUI easyRatingText;
     public TextMeshProUGUI normalRatingText;
     public TextMeshProUGUI hardRatingText;
+
+    [Header("难度等级图标素材 (1-10)")]
+    public Sprite[] difficultyLevelSprites = new Sprite[10];
+
+    [Header("难度等级图标显示")]
+    public Image easyLevelIcon;
+    public Image normalLevelIcon;
+    public Image hardLevelIcon;
 
     [Header("难度选择按钮")]
     public Button easyButton;
@@ -32,16 +42,30 @@ public class LevelUIManager : MonoBehaviour
     [Header("当前选中难度信息")]
     public TextMeshProUGUI mapperText;
     public TextMeshProUGUI bestScoreText;
+    public TextMeshProUGUI bestComboText;
+    public TextMeshProUGUI bestAccuracyText;
 
     [Header("解锁/开始按钮")]
     public Button actionButton;
     public TextMeshProUGUI actionButtonText;
+
+    [Header("解锁条件显示")]
+    [Tooltip("已解锁时激活的物体（包含开始按钮）")]
+    public GameObject unlockedPanel;
+    [Tooltip("未解锁时激活的物体（包含解锁条件文本）")]
+    public GameObject lockedPanel;
+    [Tooltip("未解锁时显示的解锁条件文本")]
+    public TextMeshProUGUI unlockConditionText;
 
     [Header("关闭按钮")]
     public Button closeButton;
 
     [Header("场景设置")]
     public string gameSceneName = "PlayScene";
+
+    [Header("打开面板时隐藏的对象")]
+    public List<GameObject> objectsToHideOnOpen = new List<GameObject>();
+    private Dictionary<GameObject, bool> originalActiveStates = new Dictionary<GameObject, bool>();
 
     [Header("音频设置")]
     public AudioSource bgmAudioSource;      // 背景音乐播放器
@@ -112,18 +136,27 @@ public class LevelUIManager : MonoBehaviour
         currentLevelData = data;
         detailsPanel.SetActive(true);
 
-        levelNameText.text = data.levelName;
-        if (data.difficulties.Length > 0 && data.difficulties[0].chartAsset != null)
-        {
-            songNameText.text = data.difficulties[0].chartAsset.songName;
-        }
+        // 隐藏指定的对象
+        HideConfiguredObjects();
 
-        composerText.text = "Artist: " + data.composer;
-        bpmText.text = "BPM: " + data.displayBPM.ToString();
+        if (levelNameText != null)
+            levelNameText.text = data.levelName;
+
+        if (songNameText != null)
+            songNameText.text = data.levelName;
+
+        if (composerText != null)
+            composerText.text = "Artist: " + data.composer;
+        if (bpmText != null)
+            bpmText.text = data.displayBPM.ToString();
 
         // 显示敌人头像（根据击败状态）
-        enemyImage.sprite = data.GetCurrentEnemyAvatar();
-        enemyDescriptionText.text = data.enemyInfo;
+        if (enemyImage != null)
+            enemyImage.sprite = data.GetCurrentEnemyAvatar();
+
+        // 显示敌人名称
+        if (enemyNameText != null)
+            enemyNameText.text = data.enemyName;
 
         // 显示敌人称号（根据击败状态）
         if (enemyTitleText != null)
@@ -131,11 +164,15 @@ public class LevelUIManager : MonoBehaviour
             enemyTitleText.text = data.GetCurrentEnemyTitle();
         }
 
+        // 显示敌人粉丝数
+        if (enemyFansText != null)
+            enemyFansText.text = data.enemyFans.ToString();
+
         // 显示三个难度的 rating
         UpdateAllDifficultyRatings(data);
 
-        // 默认选择 Normal 难度
-        selectedDifficulty = ChartDifficulty.Normal;
+        // 选择默认难度：优先选择玩家上次打过的难度，否则选择 Normal
+        selectedDifficulty = GetLastPlayedDifficulty(data);
         RefreshDifficultyUI(data, selectedDifficulty);
         UpdateActionButton();
 
@@ -153,17 +190,57 @@ public class LevelUIManager : MonoBehaviour
                 case ChartDifficulty.Easy:
                     if (easyRatingText != null)
                         easyRatingText.text = "LV." + detail.ratingLevel;
+                    // 设置难度等级图标
+                    if (easyLevelIcon != null && detail.ratingLevel >= 1 && detail.ratingLevel <= 10)
+                        easyLevelIcon.sprite = difficultyLevelSprites[detail.ratingLevel - 1];
                     break;
                 case ChartDifficulty.Normal:
                     if (normalRatingText != null)
                         normalRatingText.text = "LV." + detail.ratingLevel;
+                    // 设置难度等级图标
+                    if (normalLevelIcon != null && detail.ratingLevel >= 1 && detail.ratingLevel <= 10)
+                        normalLevelIcon.sprite = difficultyLevelSprites[detail.ratingLevel - 1];
                     break;
                 case ChartDifficulty.Hard:
                     if (hardRatingText != null)
                         hardRatingText.text = "LV." + detail.ratingLevel;
+                    // 设置难度等级图标
+                    if (hardLevelIcon != null && detail.ratingLevel >= 1 && detail.ratingLevel <= 10)
+                        hardLevelIcon.sprite = difficultyLevelSprites[detail.ratingLevel - 1];
                     break;
             }
         }
+    }
+
+    // 获取玩家上次打过的难度
+    private ChartDifficulty GetLastPlayedDifficulty(LevelData data)
+    {
+        if (SaveManager.Instance == null || data.difficulties.Length == 0)
+            return ChartDifficulty.Normal;
+
+        ChartDifficulty lastPlayed = ChartDifficulty.Normal;
+        string lastPlayedTime = "";
+
+        // 遍历所有难度，找到最近游玩的
+        foreach (var detail in data.difficulties)
+        {
+            if (detail.chartAsset != null)
+            {
+                var progress = SaveManager.Instance.GetLevelProgress(data.levelName, detail.chartAsset.songName, detail.difficulty);
+                if (progress != null && !string.IsNullOrEmpty(progress.lastPlayedTime))
+                {
+                    // 比较时间，找到最近的
+                    if (string.IsNullOrEmpty(lastPlayedTime) || string.Compare(progress.lastPlayedTime, lastPlayedTime) > 0)
+                    {
+                        lastPlayedTime = progress.lastPlayedTime;
+                        lastPlayed = detail.difficulty;
+                    }
+                }
+            }
+        }
+
+        // 如果没有游玩记录，默认返回 Normal
+        return string.IsNullOrEmpty(lastPlayedTime) ? ChartDifficulty.Normal : lastPlayed;
     }
 
     // 玩家选择难度
@@ -180,24 +257,50 @@ public class LevelUIManager : MonoBehaviour
         {
             if (detail.difficulty == diff)
             {
-                mapperText.text = "Chart: " + detail.mapper;
+                if (mapperText != null)
+                    mapperText.text = "Chart: " + detail.mapper;
 
-                // 从 SaveManager 获取最高分
-                int highScore = 0;
-                string rank = "";
-                if (SaveManager.Instance != null)
+                // 从 SaveManager 获取最佳记录
+                LevelProgressData progress = null;
+                if (SaveManager.Instance != null && detail.chartAsset != null)
                 {
-                    highScore = SaveManager.Instance.GetLevelHighScore(data.levelName, detail.chartAsset.songName, diff);
-                    rank = SaveManager.Instance.GetLevelRank(data.levelName, detail.chartAsset.songName, diff);
+                    progress = SaveManager.Instance.GetLevelProgress(data.levelName, detail.chartAsset.songName, diff);
                 }
 
-                if (highScore > 0)
+                if (progress != null && progress.highScore > 0)
                 {
-                    bestScoreText.text = $"Best: {highScore} ({rank})";
+                    // 显示最高分和评级
+                    if (bestScoreText != null)
+                        bestScoreText.text = $"Best: {progress.highScore} ({progress.rank})";
+
+                    // 显示最佳连击
+                    if (bestComboText != null)
+                        bestComboText.text = progress.bestMaxCombo.ToString();
+
+                    // 计算并显示准确率
+                    if (bestAccuracyText != null)
+                    {
+                        int totalNotes = progress.bestPerfectCount + progress.bestGreatCount + progress.bestGoodCount + progress.bestMissCount;
+                        if (totalNotes > 0)
+                        {
+                            float accuracy = ((float)(progress.bestPerfectCount + progress.bestGreatCount + progress.bestGoodCount) / totalNotes) * 100f;
+                            bestAccuracyText.text = $"{accuracy:F2}%";
+                        }
+                        else
+                        {
+                            bestAccuracyText.text = "---";
+                        }
+                    }
                 }
                 else
                 {
-                    bestScoreText.text = "Best: ---";
+                    // 没有记录
+                    if (bestScoreText != null)
+                        bestScoreText.text = "Best: ---";
+                    if (bestComboText != null)
+                        bestComboText.text = "---";
+                    if (bestAccuracyText != null)
+                        bestAccuracyText.text = "---";
                 }
                 break;
             }
@@ -207,36 +310,55 @@ public class LevelUIManager : MonoBehaviour
     // 更新解锁/开始按钮
     private void UpdateActionButton()
     {
-        if (currentLevelData == null || actionButton == null || actionButtonText == null)
+        if (currentLevelData == null)
             return;
 
-        // 获取当前粉丝量（这里需要从你的游戏数据系统获取）
-        int currentFans = GetCurrentFans();
-
-        bool isUnlocked = currentLevelData.IsUnlocked(currentFans);
+        // 使用统一的解锁判断
+        bool isUnlocked = currentLevelData.IsUnlocked();
 
         if (isUnlocked)
         {
-            // 已解锁，显示 "Easy GO!" / "Normal GO!" / "Hard GO!"
-            actionButton.interactable = true;
-            switch (selectedDifficulty)
+            // 已解锁：激活 unlockedPanel，停用 lockedPanel
+            if (unlockedPanel != null)
+                unlockedPanel.SetActive(true);
+
+            if (lockedPanel != null)
+                lockedPanel.SetActive(false);
+
+            // 更新按钮文本
+            if (actionButton != null)
+                actionButton.interactable = true;
+
+            if (actionButtonText != null)
             {
-                case ChartDifficulty.Easy:
-                    actionButtonText.text = "Easy GO!";
-                    break;
-                case ChartDifficulty.Normal:
-                    actionButtonText.text = "Normal GO!";
-                    break;
-                case ChartDifficulty.Hard:
-                    actionButtonText.text = "Hard GO!";
-                    break;
+                switch (selectedDifficulty)
+                {
+                    case ChartDifficulty.Easy:
+                        actionButtonText.text = "Easy GO!";
+                        break;
+                    case ChartDifficulty.Normal:
+                        actionButtonText.text = "Normal GO!";
+                        break;
+                    case ChartDifficulty.Hard:
+                        actionButtonText.text = "Hard GO!";
+                        break;
+                }
             }
         }
         else
         {
-            // 未解锁，显示解锁条件
-            actionButton.interactable = false;
-            actionButtonText.text = currentLevelData.GetUnlockConditionText();
+            // 未解锁：停用 unlockedPanel，激活 lockedPanel
+            if (unlockedPanel != null)
+                unlockedPanel.SetActive(false);
+
+            if (lockedPanel != null)
+                lockedPanel.SetActive(true);
+
+            // 更新解锁条件文本（使用 LevelData 的统一方法）
+            if (unlockConditionText != null)
+            {
+                unlockConditionText.text = currentLevelData.GetUnlockConditionText();
+            }
         }
     }
 
@@ -246,8 +368,8 @@ public class LevelUIManager : MonoBehaviour
         if (currentLevelData == null)
             return;
 
-        int currentFans = GetCurrentFans();
-        if (!currentLevelData.IsUnlocked(currentFans))
+        // 使用统一的解锁判断
+        if (!currentLevelData.IsUnlocked())
         {
             Debug.LogWarning("关卡未解锁！");
             return;
@@ -318,6 +440,9 @@ public class LevelUIManager : MonoBehaviour
     {
         detailsPanel.SetActive(false);
 
+        // 恢复隐藏的对象
+        ShowConfiguredObjects();
+
         // 停止预览音乐并恢复背景音乐音量
         StopPreviewMusic();
     }
@@ -359,5 +484,37 @@ public class LevelUIManager : MonoBehaviour
         {
             bgmAudioSource.volume = originalBgmVolume;
         }
+    }
+
+    // 隐藏配置的对象
+    private void HideConfiguredObjects()
+    {
+        originalActiveStates.Clear();
+
+        foreach (var obj in objectsToHideOnOpen)
+        {
+            if (obj != null)
+            {
+                // 记录原始激活状态
+                originalActiveStates[obj] = obj.activeSelf;
+                // 隐藏对象
+                obj.SetActive(false);
+            }
+        }
+    }
+
+    // 恢复配置的对象
+    private void ShowConfiguredObjects()
+    {
+        foreach (var kvp in originalActiveStates)
+        {
+            if (kvp.Key != null)
+            {
+                // 恢复到原始激活状态
+                kvp.Key.SetActive(kvp.Value);
+            }
+        }
+
+        originalActiveStates.Clear();
     }
 }

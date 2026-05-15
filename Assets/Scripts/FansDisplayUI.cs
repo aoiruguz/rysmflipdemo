@@ -46,12 +46,12 @@ public class FansDisplayUI : MonoBehaviour
     /// </summary>
     public void UpdateFansDisplay()
     {
-        long totalFans = FansDataManager.GetTotalFans();
+        long totalFans = SaveManager.Instance.GetTotalFans();
 
         // 显示总粉丝数
         if (totalFansText != null)
         {
-            totalFansText.text = $"Fans: {ScoreCalculator.FormatLargeNumber(totalFans)}";
+            totalFansText.text = ScoreCalculator.FormatLargeNumber(totalFans);
         }
         else
         {
@@ -79,7 +79,7 @@ public class FansDisplayUI : MonoBehaviour
     /// </summary>
     public long GetCurrentFans()
     {
-        return FansDataManager.GetTotalFans();
+        return SaveManager.Instance.GetTotalFans();
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class FansDisplayUI : MonoBehaviour
     /// </summary>
     public int GetUnlockedChapter()
     {
-        return FansDataManager.GetUnlockedChapter();
+        return SaveManager.Instance.GetUnlockedChapter();
     }
 
     /// <summary>
@@ -95,6 +95,6 @@ public class FansDisplayUI : MonoBehaviour
     /// </summary>
     public bool IsChapterUnlocked(int chapterIndex)
     {
-        return FansDataManager.IsChapterUnlocked(chapterIndex);
+        return SaveManager.Instance.IsChapterUnlocked(chapterIndex);
     }
 }

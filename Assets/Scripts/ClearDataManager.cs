@@ -4,7 +4,11 @@ using System.Collections.Generic;
 /// <summary>
 /// 通关记录管理器
 /// 记录玩家已通关的关卡，用于判断是否为重复挑战
+///
+/// ⚠️ 已废弃：请使用 SaveManager.IsLevelCleared() 代替
+/// 此类使用 PlayerPrefs 存储，已被统一的 SaveManager (JSON) 系统取代
 /// </summary>
+[System.Obsolete("ClearDataManager 已废弃，请使用 SaveManager.IsLevelCleared() 和 SaveManager.SaveLevelResult() 代替", false)]
 public static class ClearDataManager
 {
     private const string CLEAR_DATA_PREFIX = "ClearedChart_";

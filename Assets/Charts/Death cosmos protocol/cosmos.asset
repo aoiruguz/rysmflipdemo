@@ -16,10 +16,17 @@ MonoBehaviour:
   composer: phoStar
   displayBPM: 178
   previewMusic: {fileID: 8300000, guid: 0eccf221052a6094ba8b6fdc61e877ee, type: 3}
+  enemyName: "\u5BF9\u624B"
   enemyAvatar: {fileID: 0}
+  enemyAvatarDefeated: {fileID: 0}
+  mapIconUndefeated: {fileID: 0}
+  mapIconDefeated: {fileID: 0}
   enemyInfo: 
-  isLockedByDefault: 1
-  requiredFans: -1
+  enemyFans: 10000
+  enemyTitleUncleared: "\u6311\u6218\u8005"
+  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  chapterGroup: 1
+  isMainStoryLevel: 0
   difficulties:
   - difficulty: 0
     ratingLevel: 0
@@ -33,3 +40,20 @@ MonoBehaviour:
     ratingLevel: 7
     mapper: 
     chartAsset: {fileID: 11400000, guid: 57b5d71d76016504ea528e6deb3dc408, type: 2}
+  openingDialogues: []
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  clearStoryId: 
+  interferenceTriggers: []
+  interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0, g: 0, b: 0, a: 1}
+    color2: {r: 1, g: 1, b: 1, a: 1}
+    color3: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+    color4: {r: 1, g: 1, b: 1, a: 1}
+    color5: {r: 0, g: 0, b: 0, a: 1}
+  interferenceCount: 0
