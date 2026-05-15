@@ -136,16 +136,25 @@ public class ScoreSystemTester : EditorWindow
 
     private void CalculateAndDisplay()
     {
-        // 计算播放量
-        long playCount = ScoreCalculator.CalculatePlayCount(
-            chapterIndex,
-            isBossStage,
-            perfectCount,
-            greatCount,
-            goodCount,
-            missCount,
-            maxCombo,
-            isReplay);
+        long playCount;
+        if (isBossStage)
+        {
+            long mult = ScoreCalculator.GetChapterMultiplier(chapterIndex);
+            long bossScore = perfectCount * 100 * mult + greatCount * -300 * mult + goodCount * -600 * mult + missCount * -600 * mult;
+            long comboBonus = ScoreCalculator.CalculateComboBonus(maxCombo, mult);
+            playCount = bossScore + comboBonus;
+            if (playCount < 0) playCount = 0;
+        }
+        else
+        {
+            playCount = ScoreCalculator.CalculatePlayCount(
+                chapterIndex,
+                perfectCount,
+                greatCount,
+                goodCount,
+                missCount,
+                maxCombo);
+        }
 
         // 计算粉丝增量
         long fansGain = ScoreCalculator.CalculateFansGain(playCount, isReplay);

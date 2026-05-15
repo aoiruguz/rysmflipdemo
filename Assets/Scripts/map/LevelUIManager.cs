@@ -43,7 +43,14 @@ public class LevelUIManager : MonoBehaviour
     public TextMeshProUGUI mapperText;
     public TextMeshProUGUI bestScoreText;
     public TextMeshProUGUI bestComboText;
-    public TextMeshProUGUI bestAccuracyText;
+    public TextMeshProUGUI bestViewsText;
+
+    [Header("评级图标显示")]
+    public Image rankIcon;
+    [Tooltip("按顺序存放5个评级素材: S, A, B, C, F")]
+    public Sprite[] rankSprites = new Sprite[5];
+    [Tooltip("未游玩或没有记录时的默认评级素材")]
+    public Sprite unplayedRankSprite;
 
     [Header("解锁/开始按钮")]
     public Button actionButton;
@@ -269,27 +276,25 @@ public class LevelUIManager : MonoBehaviour
 
                 if (progress != null && progress.highScore > 0)
                 {
-                    // 显示最高分和评级
+                    // 显示最高分
                     if (bestScoreText != null)
-                        bestScoreText.text = $"Best: {progress.highScore} ({progress.rank})";
+                        bestScoreText.text = $"Best: {progress.highScore}";
+
+                    // 显示评级图标
+                    if (rankIcon != null)
+                    {
+                        rankIcon.gameObject.SetActive(true);
+                        rankIcon.sprite = GetRankSprite(progress.rank);
+                    }
 
                     // 显示最佳连击
                     if (bestComboText != null)
                         bestComboText.text = progress.bestMaxCombo.ToString();
 
-                    // 计算并显示准确率
-                    if (bestAccuracyText != null)
+                    // 显示播放量 (Views) 采用最高分数值
+                    if (bestViewsText != null)
                     {
-                        int totalNotes = progress.bestPerfectCount + progress.bestGreatCount + progress.bestGoodCount + progress.bestMissCount;
-                        if (totalNotes > 0)
-                        {
-                            float accuracy = ((float)(progress.bestPerfectCount + progress.bestGreatCount + progress.bestGoodCount) / totalNotes) * 100f;
-                            bestAccuracyText.text = $"{accuracy:F2}%";
-                        }
-                        else
-                        {
-                            bestAccuracyText.text = "---";
-                        }
+                        bestViewsText.text = progress.highScore.ToString();
                     }
                 }
                 else
@@ -297,10 +302,17 @@ public class LevelUIManager : MonoBehaviour
                     // 没有记录
                     if (bestScoreText != null)
                         bestScoreText.text = "Best: ---";
+                        
+                    if (rankIcon != null)
+                    {
+                        rankIcon.gameObject.SetActive(true);
+                        rankIcon.sprite = unplayedRankSprite;
+                    }
+
                     if (bestComboText != null)
                         bestComboText.text = "---";
-                    if (bestAccuracyText != null)
-                        bestAccuracyText.text = "---";
+                    if (bestViewsText != null)
+                        bestViewsText.text = "---";
                 }
                 break;
             }
@@ -422,6 +434,23 @@ public class LevelUIManager : MonoBehaviour
             return (int)SaveManager.Instance.GetTotalFans();
         }
         return (int)FansDataManager.GetTotalFans();
+    }
+
+    // 获取评级对应的图标
+    private Sprite GetRankSprite(string rank)
+    {
+        if (rankSprites == null || rankSprites.Length < 5 || string.IsNullOrEmpty(rank)) 
+            return unplayedRankSprite;
+
+        switch (rank.ToUpper())
+        {
+            case "S": return rankSprites[0];
+            case "A": return rankSprites[1];
+            case "B": return rankSprites[2];
+            case "C": return rankSprites[3];
+            case "F": return rankSprites[4];
+            default: return unplayedRankSprite;
+        }
     }
 
     // 供其他场景获取选中的 chart

@@ -19,14 +19,16 @@ public class EyeBlinkEffect : MonoBehaviour
 
     private RectTransform topEyelid;
     private RectTransform bottomEyelid;
+    
     private Image topImage;
     private Image bottomImage;
+    private Image topFiller;
+    private Image bottomFiller;
     
     private float currentProgress = 0f;
 
     private void Awake()
     {
-        // 自动初始化UI结构
         InitializeUI();
     }
 
@@ -54,34 +56,61 @@ public class EyeBlinkEffect : MonoBehaviour
             gameObject.AddComponent<GraphicRaycaster>();
         }
 
-        topEyelid = CreateEyelid("TopEyelid", true, out topImage);
-        bottomEyelid = CreateEyelid("BottomEyelid", false, out bottomImage);
+        topEyelid = CreateEyelid("TopEyelid", true, out topImage, out topFiller);
+        bottomEyelid = CreateEyelid("BottomEyelid", false, out bottomImage, out bottomFiller);
         
         SetEyesStateImmediately(0f);
     }
 
-    private RectTransform CreateEyelid(string name, bool isTop, out Image img)
+    private RectTransform CreateEyelid(string name, bool isTop, out Image edgeImg, out Image fillerImg)
     {
-        GameObject eyelidObj = new GameObject(name);
-        eyelidObj.transform.SetParent(transform, false);
-
-        img = eyelidObj.AddComponent<Image>();
-        img.color = eyelidColor;
+        // 1. 创建父容器
+        GameObject containerObj = new GameObject(name);
+        containerObj.transform.SetParent(transform, false);
+        RectTransform containerRect = containerObj.AddComponent<RectTransform>();
         
-        // 核心：用代码动态生成带有弯曲弧度的眼皮贴图
-        img.sprite = GenerateEyelidSprite(isTop);
-        img.raycastTarget = true;
+        // 2. 创建带有弧度的边缘图片 (Edge)
+        GameObject edgeObj = new GameObject("Edge");
+        edgeObj.transform.SetParent(containerObj.transform, false);
+        edgeImg = edgeObj.AddComponent<Image>();
+        edgeImg.color = eyelidColor;
+        edgeImg.sprite = GenerateEyelidSprite(isTop);
+        edgeImg.raycastTarget = true;
+        
+        RectTransform edgeRect = edgeObj.GetComponent<RectTransform>();
+        edgeRect.anchorMin = new Vector2(0, 0);
+        edgeRect.anchorMax = new Vector2(1, 1);
+        edgeRect.offsetMin = Vector2.zero;
+        edgeRect.offsetMax = Vector2.zero;
 
-        RectTransform rect = eyelidObj.GetComponent<RectTransform>();
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
+        // 3. 创建用来填补背景漏出部分的纯色图片 (Filler)
+        GameObject fillerObj = new GameObject("Filler");
+        fillerObj.transform.SetParent(containerObj.transform, false);
+        fillerImg = fillerObj.AddComponent<Image>();
+        fillerImg.color = eyelidColor;
+        fillerImg.raycastTarget = true;
+        
+        RectTransform fillerRect = fillerObj.GetComponent<RectTransform>();
+        if (isTop)
+        {
+            // 上眼皮的填充物：固定在边缘图片的顶部，向上延伸3000像素防漏
+            fillerRect.anchorMin = new Vector2(0, 1);
+            fillerRect.anchorMax = new Vector2(1, 1);
+            fillerRect.offsetMin = new Vector2(0, 0);
+            fillerRect.offsetMax = new Vector2(0, 3000); 
+        }
+        else
+        {
+            // 下眼皮的填充物：固定在边缘图片的底部，向下延伸3000像素防漏
+            fillerRect.anchorMin = new Vector2(0, 0);
+            fillerRect.anchorMax = new Vector2(1, 0);
+            fillerRect.offsetMin = new Vector2(0, -3000); 
+            fillerRect.offsetMax = new Vector2(0, 0);
+        }
 
-        return rect;
+        return containerRect;
     }
 
-    /// <summary>
-    /// 用代码程序化生成带有弧度的眼皮贴图
-    /// </summary>
     private Sprite GenerateEyelidSprite(bool isTop)
     {
         int width = 512;
@@ -94,10 +123,8 @@ public class EyeBlinkEffect : MonoBehaviour
         for (int x = 0; x < width; x++)
         {
             float u = (float)x / (width - 1);
-            // 用Sin函数生成弯曲的弧线
             float arc = Mathf.Sin(u * Mathf.PI);
             
-            // 顶部眼皮中间往上凹，底部眼皮中间往下凹
             float edgeV = isTop ? (0.5f + arc * 0.3f) : (0.5f - arc * 0.3f);
             
             for (int y = 0; y < height; y++)
@@ -105,7 +132,6 @@ public class EyeBlinkEffect : MonoBehaviour
                 float v = (float)y / (height - 1);
                 float distPixels = (v - edgeV) * height;
                 
-                // 边缘抗锯齿处理，让曲线更平滑
                 float alpha = isTop ? Mathf.Clamp01(distPixels + 0.5f) : Mathf.Clamp01(-distPixels + 0.5f);
                 pixels[y * width + x] = new Color(1, 1, 1, alpha);
             }
@@ -141,25 +167,19 @@ public class EyeBlinkEffect : MonoBehaviour
         StopAllCoroutines();
         currentProgress = Mathf.Clamp01(progress);
         SetEyelidPosition(currentProgress);
-        
-        bool isFullyOpen = currentProgress >= 1f;
-        topImage.raycastTarget = !isFullyOpen;
-        bottomImage.raycastTarget = !isFullyOpen;
+        SetRaycastState(currentProgress < 1f);
     }
 
     private IEnumerator AnimateBlinkSequence()
     {
-        // 第一次眨眼：只睁开一点点 (20%)
         yield return StartCoroutine(MoveToProgress(0.2f, 0.3f));
         yield return StartCoroutine(MoveToProgress(0.0f, 0.2f));
         yield return new WaitForSeconds(0.15f);
 
-        // 第二次眨眼：睁开多一点 (40%)
         yield return StartCoroutine(MoveToProgress(0.4f, 0.3f));
         yield return StartCoroutine(MoveToProgress(0.0f, 0.2f));
         yield return new WaitForSeconds(0.2f);
 
-        // 完全睁开：慢慢睁开到 100%
         yield return StartCoroutine(MoveToProgress(1.0f, animationDuration));
     }
 
@@ -168,14 +188,13 @@ public class EyeBlinkEffect : MonoBehaviour
         float startProgress = currentProgress;
         float elapsed = 0f;
 
-        topImage.raycastTarget = true;
-        bottomImage.raycastTarget = true;
+        SetRaycastState(true);
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
-            float easeT = t * t * (3f - 2f * t); // 平滑缓动
+            float easeT = t * t * (3f - 2f * t); 
             
             currentProgress = Mathf.Lerp(startProgress, targetProgress, easeT);
             SetEyelidPosition(currentProgress);
@@ -186,18 +205,11 @@ public class EyeBlinkEffect : MonoBehaviour
         currentProgress = targetProgress;
         SetEyelidPosition(currentProgress);
 
-        if (currentProgress >= 1f)
-        {
-            topImage.raycastTarget = false;
-            bottomImage.raycastTarget = false;
-        }
+        SetRaycastState(currentProgress < 1f);
     }
 
     private void SetEyelidPosition(float progress)
     {
-        // progress: 0 = 闭眼, 1 = 睁眼
-        
-        // 闭眼时两者交叉重叠覆盖全屏，睁眼时移出屏幕
         float topOffset = Mathf.Lerp(-0.3f, 0.5f, progress);
         topEyelid.anchorMin = new Vector2(0, topOffset);
         topEyelid.anchorMax = new Vector2(1, 1f + topOffset);
@@ -207,12 +219,25 @@ public class EyeBlinkEffect : MonoBehaviour
         bottomEyelid.anchorMax = new Vector2(1, 1f + bottomOffset);
     }
 
+    private void SetRaycastState(bool state)
+    {
+        if (topImage != null) topImage.raycastTarget = state;
+        if (bottomImage != null) bottomImage.raycastTarget = state;
+        if (topFiller != null) topFiller.raycastTarget = state;
+        if (bottomFiller != null) bottomFiller.raycastTarget = state;
+    }
+
     private void OnDestroy()
     {
-        // 释放动态生成的贴图内存
         if (topImage != null && topImage.sprite != null)
+        {
             Destroy(topImage.sprite.texture);
+            Destroy(topImage.sprite);
+        }
         if (bottomImage != null && bottomImage.sprite != null)
+        {
             Destroy(bottomImage.sprite.texture);
+            Destroy(bottomImage.sprite);
+        }
     }
 }

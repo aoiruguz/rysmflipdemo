@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: cosmos
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: cosmos
+  levelName: Death Cosmos Protocol
   composer: phoStar
   displayBPM: 178
   previewMusic: {fileID: 8300000, guid: 0eccf221052a6094ba8b6fdc61e877ee, type: 3}
-  enemyName: "\u5BF9\u624B"
-  enemyAvatar: {fileID: 0}
-  enemyAvatarDefeated: {fileID: 0}
-  mapIconUndefeated: {fileID: 0}
-  mapIconDefeated: {fileID: 0}
-  enemyInfo: 
+  enemyName: FOX
+  enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
+  enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
+  mapIconUndefeated: {fileID: 21300000, guid: e8e214ae3956a7b478403ccb7e78b922, type: 3}
+  mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
+  enemyInfo: "\u72D0\uFF01"
   enemyFans: 10000
   enemyTitleUncleared: "\u6311\u6218\u8005"
   enemyTitleCleared: "\u5DF2\u51FB\u8D25"

@@ -11,6 +11,10 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
 
+    [Header("Debug")]
+    [Tooltip("调试用：无视粉丝和通关限制，直接解锁所有关卡")]
+    public bool unlockAllLevelsForDebug = false;
+
     private GameSettingsData currentSettings;
     private GameProgressData currentProgress;
 
@@ -387,10 +391,10 @@ public class SaveManager : MonoBehaviour
         public bool requirePreviousChapterCleared;  // 是否需要通关前一章主线
     }
 
-    /// <summary>
     /// 章节解锁配置表（集中管理所有章节的解锁条件）
     /// </summary>
-    private static readonly ChapterUnlockConfig[] chapterUnlockConfigs = new ChapterUnlockConfig[]
+    [Header("Chapter Unlock Configs")]
+    public ChapterUnlockConfig[] chapterUnlockConfigs = new ChapterUnlockConfig[]
     {
         new ChapterUnlockConfig { chapterIndex = 1, requiredFans = 0, requirePreviousChapterCleared = false },
         new ChapterUnlockConfig { chapterIndex = 2, requiredFans = 1000000, requirePreviousChapterCleared = true },      // 100万 + 通关第1章
@@ -418,8 +422,11 @@ public class SaveManager : MonoBehaviour
     /// <returns>是否解锁</returns>
     public bool IsChapterUnlocked(int chapterIndex)
     {
+        if (unlockAllLevelsForDebug)
+            return true;
+
         // 第 1 章默认解锁
-        if (chapterIndex == 1)
+        if (chapterIndex <= 1)
             return true;
 
         // 获取配置

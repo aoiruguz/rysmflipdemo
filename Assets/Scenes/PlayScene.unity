@@ -317,8 +317,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4991,11 +4991,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 10062dd6ed06f424da370b91bc555b90, type: 3}
   rankIconObject: {fileID: 569074009}
   rankSprites:
-  - {fileID: 21300000, guid: 25ba2309d883db649bbefe2a2f8e3b82, type: 3}
-  - {fileID: 21300000, guid: e8ff59943a42e40418966b9c3f2bb1c5, type: 3}
-  - {fileID: 21300000, guid: e8ff59943a42e40418966b9c3f2bb1c5, type: 3}
-  - {fileID: 21300000, guid: e8ff59943a42e40418966b9c3f2bb1c5, type: 3}
-  - {fileID: 21300000, guid: e8ff59943a42e40418966b9c3f2bb1c5, type: 3}
+  - {fileID: 21300000, guid: 49ef5ec35543d0b4bbf21c1cc9e25c60, type: 3}
+  - {fileID: 21300000, guid: c5262bb5043cd504cba8176d90df668d, type: 3}
+  - {fileID: 21300000, guid: dfdb5a573bc2fde4193883e9282cea60, type: 3}
+  - {fileID: 21300000, guid: f8528ea12c681da4390dc0645800248e, type: 3}
+  - {fileID: 21300000, guid: 9fa789627b9fadd4dabc3974e2b152bc, type: 3}
   rankBackgroundObject: {fileID: 1080587384}
   rankBackgroundSprites:
   - {fileID: 21300000, guid: cd371ba5c6da2194aa703fbea09d6aa0, type: 3}
@@ -5003,6 +5003,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cd371ba5c6da2194aa703fbea09d6aa0, type: 3}
   - {fileID: 21300000, guid: cd371ba5c6da2194aa703fbea09d6aa0, type: 3}
   - {fileID: 21300000, guid: cd371ba5c6da2194aa703fbea09d6aa0, type: 3}
+  rankSpriteS: {fileID: 21300000, guid: 49ef5ec35543d0b4bbf21c1cc9e25c60, type: 3}
+  rankSpriteA: {fileID: 21300000, guid: c5262bb5043cd504cba8176d90df668d, type: 3}
+  rankSpriteB: {fileID: 21300000, guid: dfdb5a573bc2fde4193883e9282cea60, type: 3}
+  rankSpriteC: {fileID: 21300000, guid: f8528ea12c681da4390dc0645800248e, type: 3}
+  rankSpriteF: {fileID: 21300000, guid: 9fa789627b9fadd4dabc3974e2b152bc, type: 3}
+  inactiveAlpha: 0.3
   levelIconObject: {fileID: 1354447413}
   levelSprites:
   - {fileID: 21300000, guid: 7780cfd36442315409b81996d38df4a9, type: 3}
@@ -10870,6 +10876,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55e9757e1a7cec408a38b799ea9bd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayDataCollector
+  rankThresholds:
+    sRankThreshold: 95
+    aRankThreshold: 92
+    bRankThreshold: 85
+    cRankThreshold: 78
   playCountText: {fileID: 11791096}
   scoreTweenDuration: 0.3
 --- !u!1 &1816098614

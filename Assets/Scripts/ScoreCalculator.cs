@@ -15,11 +15,7 @@ public class ScoreCalculator
     private const int NORMAL_GOOD = 100;
     private const int NORMAL_MISS_CH3 = -300; // 第3章Miss扣分
 
-    // Boss关卡判定得分
-    private const int BOSS_PERFECT = 100;
-    private const int BOSS_GREAT = -300;
-    private const int BOSS_GOOD = -600;
-    private const int BOSS_MISS = -600;
+
 
     // 连击系统
     private const int COMBO_BASE_SCORE = 100; // 每个Combo基础分
@@ -42,13 +38,11 @@ public class ScoreCalculator
     /// <returns>播放量（long类型，可达亿级）</returns>
     public static long CalculatePlayCount(
         int chapterIndex,
-        bool isBossStage,
         int perfectCount,
         int greatCount,
         int goodCount,
         int missCount,
-        int maxCombo,
-        bool isReplay = false)
+        int maxCombo)
     {
         // 验证章节索引
         if (chapterIndex < 0 || chapterIndex >= ChapterMultipliers.Length)
@@ -62,7 +56,6 @@ public class ScoreCalculator
         // 计算基础分
         long baseScore = CalculateBaseScore(
             chapterIndex,
-            isBossStage,
             perfectCount,
             greatCount,
             goodCount,
@@ -81,12 +74,6 @@ public class ScoreCalculator
             totalPlayCount = 0;
         }
 
-        // 重复挑战惩罚：只获得10%
-        if (isReplay)
-        {
-            totalPlayCount = totalPlayCount / 10;
-        }
-
         return totalPlayCount;
     }
 
@@ -95,7 +82,6 @@ public class ScoreCalculator
     /// </summary>
     private static long CalculateBaseScore(
         int chapterIndex,
-        bool isBossStage,
         int perfectCount,
         int greatCount,
         int goodCount,
@@ -104,28 +90,17 @@ public class ScoreCalculator
     {
         long score = 0;
 
-        if (isBossStage)
-        {
-            // Boss关卡
-            score += perfectCount * BOSS_PERFECT * multiplier;
-            score += greatCount * BOSS_GREAT * multiplier;
-            score += goodCount * BOSS_GOOD * multiplier;
-            score += missCount * BOSS_MISS * multiplier;
-        }
-        else
-        {
-            // 普通关卡
-            score += perfectCount * NORMAL_PERFECT * multiplier;
-            score += greatCount * NORMAL_GREAT * multiplier;
-            score += goodCount * NORMAL_GOOD * multiplier;
+        // 普通关卡
+        score += perfectCount * NORMAL_PERFECT * multiplier;
+        score += greatCount * NORMAL_GREAT * multiplier;
+        score += goodCount * NORMAL_GOOD * multiplier;
 
-            // 第3章Miss扣分
-            if (chapterIndex >= 2)
-            {
-                score += missCount * NORMAL_MISS_CH3 * multiplier;
-            }
-            // 第1-2章Miss不扣分
+        // 第3章Miss扣分
+        if (chapterIndex >= 2)
+        {
+            score += missCount * NORMAL_MISS_CH3 * multiplier;
         }
+        // 第1-2章Miss不扣分
 
         return score;
     }
@@ -135,7 +110,7 @@ public class ScoreCalculator
     /// 公式：每个Combo额外+100×章节倍数
     /// 连击倍数：Min(1.1 + (Combo / 5) * 0.1, 2.0)
     /// </summary>
-    private static long CalculateComboBonus(int maxCombo, long multiplier)
+    public static long CalculateComboBonus(int maxCombo, long multiplier)
     {
         if (maxCombo <= 0)
         {
@@ -175,8 +150,11 @@ public class ScoreCalculator
     {
         long fansGain = playCount / 10;
 
-        // 重复挑战惩罚已在播放量计算中应用，这里不需要再次应用
-        // 因为传入的playCount已经是惩罚后的值
+        // 重复挑战惩罚（仅限粉丝）：获得50%
+        if (isReplay)
+        {
+            fansGain = fansGain / 2;
+        }
 
         return fansGain;
     }

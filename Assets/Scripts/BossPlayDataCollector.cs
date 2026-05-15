@@ -80,7 +80,16 @@ public class BossPlayDataCollector : MonoBehaviour
             CurrentPlayData.totalNotes = chart.notes.Count;
 
             // 设置章节信息
-            CurrentPlayData.chapterIndex = chart.chapterIndex;
+            LevelData levelData = LevelUIManager.GetCurrentLevelData();
+            if (levelData != null)
+            {
+                CurrentPlayData.chapterIndex = levelData.chapterGroup - 1; // 1-based to 0-based
+            }
+            else
+            {
+                CurrentPlayData.chapterIndex = 0; // fallback
+            }
+            
             CurrentPlayData.isBossStage = true; // Boss战标记
 
             // Boss战不检查是否为重复挑战
@@ -142,15 +151,7 @@ public class BossPlayDataCollector : MonoBehaviour
         CurrentPlayData.playTime = Time.time;
 
         // 计算播放量（仅用于显示，不转化粉丝）
-        long playCount = ScoreCalculator.CalculatePlayCount(
-            CurrentPlayData.chapterIndex,
-            CurrentPlayData.isBossStage,
-            CurrentPlayData.perfectCount,
-            CurrentPlayData.greatCount,
-            CurrentPlayData.goodCount,
-            CurrentPlayData.missCount,
-            CurrentPlayData.maxCombo,
-            CurrentPlayData.isReplay);
+        long playCount = CalculateBossPlayCount(CurrentPlayData);
 
         // Boss战不转化粉丝
         // FansDataManager.AddFans(newFans); // 不调用
@@ -208,15 +209,7 @@ public class BossPlayDataCollector : MonoBehaviour
         GetCurrentData();
 
         // Calculate target play count
-        long targetPlayCount = ScoreCalculator.CalculatePlayCount(
-            CurrentPlayData.chapterIndex,
-            CurrentPlayData.isBossStage,
-            CurrentPlayData.perfectCount,
-            CurrentPlayData.greatCount,
-            CurrentPlayData.goodCount,
-            CurrentPlayData.missCount,
-            CurrentPlayData.maxCombo,
-            CurrentPlayData.isReplay);
+        long targetPlayCount = CalculateBossPlayCount(CurrentPlayData);
 
         // 只有当目标分数发生变化时才启动/更新动画
         if (targetPlayCount != lastTargetPlayCount)
@@ -247,5 +240,32 @@ public class BossPlayDataCollector : MonoBehaviour
             Destroy(Instance.gameObject);
             Instance = null;
         }
+    }
+
+    /// <summary>
+    /// 计算Boss战专属播放量（分数）
+    /// </summary>
+    private long CalculateBossPlayCount(PlayData data)
+    {
+        long multiplier = ScoreCalculator.GetChapterMultiplier(data.chapterIndex);
+        long score = 0;
+
+        // Boss战判定得分规则
+        score += data.perfectCount * 100 * multiplier;
+        score += data.greatCount * -300 * multiplier;
+        score += data.goodCount * -600 * multiplier;
+        score += data.missCount * -600 * multiplier;
+
+        // 连击加成
+        long comboBonus = ScoreCalculator.CalculateComboBonus(data.maxCombo, multiplier);
+
+        long totalPlayCount = score + comboBonus;
+
+        if (totalPlayCount < 0)
+        {
+            totalPlayCount = 0;
+        }
+
+        return totalPlayCount;
     }
 }

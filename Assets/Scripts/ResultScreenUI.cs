@@ -19,7 +19,17 @@ public class ResultScreenUI : MonoBehaviour
     public Sprite[] rankSprites;      // 所有的评级图片数组
     public GameObject rankBackgroundObject; // 评级背景物体
     [Tooltip("按顺序放入图片: 0:S, 1:A, 2:B, 3:C, 4:F")]
-    public Sprite[] rankBackgroundSprites; // 评级背景图片数组
+    public Sprite[] rankBackgroundSprites; // 评级背级图片数组
+
+    [Header("Individual Rank Icon Sprites")]
+    [Tooltip("单独的评级图标精灵槽位")]
+    public Sprite rankSpriteS; // S评级图标精灵
+    public Sprite rankSpriteA; // A评级图标精灵
+    public Sprite rankSpriteB; // B评级图标精灵
+    public Sprite rankSpriteC; // C评级图标精灵
+    public Sprite rankSpriteF; // F评级图标精灵
+    [Tooltip("未达到评级时的透明度")]
+    public float inactiveAlpha = 0.3f;
 
     [Header("Level (Rating) Display")]
     public GameObject levelIconObject;
@@ -103,7 +113,11 @@ public class ResultScreenUI : MonoBehaviour
         DisplayDifficultyIcon(playData.difficulty);
 
         // Rank Icon
-        DisplayRankIcon(playData.GetRank());
+        string currentRank = playData.GetRank();
+        DisplayRankIcon(currentRank);
+
+        // Individual Rank Icons (显示各个评级槽位)
+        DisplayIndividualRankIcons(currentRank);
 
         // Level Icon (Rating LV.1 - LV.10)
         DisplayLevelIcon();
@@ -151,13 +165,11 @@ public class ResultScreenUI : MonoBehaviour
         // 计算播放量
         long playCount = ScoreCalculator.CalculatePlayCount(
             playData.chapterIndex,
-            playData.isBossStage,
             playData.perfectCount,
             playData.greatCount,
             playData.goodCount,
             playData.missCount,
-            playData.maxCombo,
-            playData.isReplay);
+            playData.maxCombo);
 
         // 计算本局获得粉丝
         long newFans = ScoreCalculator.CalculateFansGain(playCount, playData.isReplay);
@@ -266,6 +278,30 @@ public class ResultScreenUI : MonoBehaviour
         {
             Debug.LogWarning($"[ResultScreenUI] Difficulty sprite for '{difficulty}' at index {index} not assigned!");
         }
+    }
+
+    /// <summary>
+    /// 显示单独的评级图标槽位（高亮当前达到的评级）
+    /// 注意：这个方法只是验证精灵槽位是否已设置，实际显示需要在Unity编辑器中手动连接Image组件
+    /// </summary>
+    private void DisplayIndividualRankIcons(string currentRank)
+    {
+        // 验证所有精灵槽位是否已设置
+        bool allSpritesSet = rankSpriteS != null && rankSpriteA != null &&
+                             rankSpriteB != null && rankSpriteC != null &&
+                             rankSpriteF != null;
+
+        if (!allSpritesSet)
+        {
+            Debug.LogWarning("[ResultScreenUI] 部分评级精灵槽位未设置！请在Inspector中设置所有评级精灵。");
+        }
+        else
+        {
+            Debug.Log($"[ResultScreenUI] 所有评级精灵槽位已设置，当前评级: {currentRank}");
+        }
+
+        // 如果需要在代码中动态设置Image组件的精灵，可以在这里添加逻辑
+        // 例如：通过GameObject.Find或者添加Image字段引用来设置
     }
 
     /// <summary>

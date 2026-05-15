@@ -15,7 +15,6 @@ public class ChartDataJson
     public float offset;
     public List<NoteDataJson> notes = new List<NoteDataJson>();
     public string audioFileName; // 音频文件名（相对路径）
-    public int chapterIndex = 0;
     public bool isBossStage = false;
 
     /// <summary>
@@ -29,7 +28,6 @@ public class ChartDataJson
             difficulty = chartData.difficulty.ToString(),
             bpm = chartData.bpm,
             offset = chartData.offset,
-            chapterIndex = chartData.chapterIndex,
             isBossStage = chartData.isBossStage,
             audioFileName = chartData.audioClip != null ? chartData.audioClip.name : ""
         };
@@ -58,7 +56,6 @@ public class ChartDataJson
 
         chartData.bpm = bpm;
         chartData.offset = offset;
-        chartData.chapterIndex = chapterIndex;
         chartData.isBossStage = isBossStage;
 
         foreach (var noteJson in notes)

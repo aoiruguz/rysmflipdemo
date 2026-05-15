@@ -14,6 +14,10 @@ public class PlayDataCollector : MonoBehaviour
     [Header("Play Data")]
     public PlayData CurrentPlayData { get; private set; }
 
+    [Header("Rank Thresholds")]
+    [Tooltip("评级阈值配置")]
+    public RankThresholds rankThresholds = new RankThresholds();
+
     [Header("UI")]
     public TextMeshProUGUI playCountText; // 改为显示播放量而不是达成率
     public float scoreTweenDuration = 0.3f; // 跑分动画持续时间
@@ -87,24 +91,27 @@ public class PlayDataCollector : MonoBehaviour
             CurrentPlayData.difficulty = chart.difficulty;
             CurrentPlayData.totalNotes = chart.notes.Count;
 
-            // 设置章节信息
-            CurrentPlayData.chapterIndex = chart.chapterIndex;
-            CurrentPlayData.isBossStage = chart.isBossStage;
-
-            // 判断是否为重复挑战（使用 SaveManager 而不是 ClearDataManager）
+            // 判断是否为重复挑战并获取章节信息
             LevelData levelData = LevelUIManager.GetCurrentLevelData();
-            if (levelData != null && SaveManager.Instance != null)
+            if (levelData != null)
             {
-                CurrentPlayData.isReplay = SaveManager.Instance.IsLevelCleared(
-                    levelData.levelName,
-                    chart.songName,
-                    chart.difficulty
-                );
+                CurrentPlayData.chapterIndex = levelData.chapterGroup - 1; // 1-based to 0-based
+                
+                if (SaveManager.Instance != null)
+                {
+                    CurrentPlayData.isReplay = SaveManager.Instance.IsLevelCleared(
+                        levelData.levelName,
+                        chart.songName,
+                        chart.difficulty
+                    );
+                }
             }
             else
             {
-                CurrentPlayData.isReplay = false;
+                CurrentPlayData.chapterIndex = 0; // fallback
             }
+
+            CurrentPlayData.isBossStage = chart.isBossStage;
         }
 
         Debug.Log("[PlayDataCollector] Initialized for PlayScene");
@@ -165,13 +172,11 @@ public class PlayDataCollector : MonoBehaviour
         // 计算播放量和粉丝数
         long playCount = ScoreCalculator.CalculatePlayCount(
             CurrentPlayData.chapterIndex,
-            CurrentPlayData.isBossStage,
             CurrentPlayData.perfectCount,
             CurrentPlayData.greatCount,
             CurrentPlayData.goodCount,
             CurrentPlayData.missCount,
-            CurrentPlayData.maxCombo,
-            CurrentPlayData.isReplay);
+            CurrentPlayData.maxCombo);
 
         long newFans = ScoreCalculator.CalculateFansGain(playCount, CurrentPlayData.isReplay);
 
@@ -244,13 +249,11 @@ public class PlayDataCollector : MonoBehaviour
         // Calculate target play count
         long targetPlayCount = ScoreCalculator.CalculatePlayCount(
             CurrentPlayData.chapterIndex,
-            CurrentPlayData.isBossStage,
             CurrentPlayData.perfectCount,
             CurrentPlayData.greatCount,
             CurrentPlayData.goodCount,
             CurrentPlayData.missCount,
-            CurrentPlayData.maxCombo,
-            CurrentPlayData.isReplay);
+            CurrentPlayData.maxCombo);
 
         // 只有当目标分数发生变化时才启动/更新动画
         if (targetPlayCount != lastTargetPlayCount)
@@ -343,6 +346,59 @@ public class PlayDataCollector : MonoBehaviour
 }
 
 /// <summary>
+/// 评级阈值配置（可在Inspector中调整）
+/// </summary>
+[System.Serializable]
+public class RankThresholds
+{
+    [Header("评级阈值设置（达成率百分比）")]
+    [Tooltip("S评级所需达成率")]
+    [Range(0f, 100f)]
+    public float sRankThreshold = 95f;
+
+    [Tooltip("A评级所需达成率")]
+    [Range(0f, 100f)]
+    public float aRankThreshold = 92f;
+
+    [Tooltip("B评级所需达成率")]
+    [Range(0f, 100f)]
+    public float bRankThreshold = 85f;
+
+    [Tooltip("C评级所需达成率")]
+    [Range(0f, 100f)]
+    public float cRankThreshold = 78f;
+
+    // F评级：低于C评级阈值
+
+    /// <summary>
+    /// 根据达成率获取评级
+    /// </summary>
+    public string GetRankByAchievementRate(float achievementRate)
+    {
+        if (achievementRate >= sRankThreshold) return "S";
+        if (achievementRate >= aRankThreshold) return "A";
+        if (achievementRate >= bRankThreshold) return "B";
+        if (achievementRate >= cRankThreshold) return "C";
+        return "F";
+    }
+
+    /// <summary>
+    /// 获取所有评级和对应的阈值
+    /// </summary>
+    public (string rank, float threshold)[] GetAllRankThresholds()
+    {
+        return new[]
+        {
+            ("S", sRankThreshold),
+            ("A", aRankThreshold),
+            ("B", bRankThreshold),
+            ("C", cRankThreshold),
+            ("F", 0f)
+        };
+    }
+}
+
+/// <summary>
 /// 游玩数据结构
 /// </summary>
 [System.Serializable]
@@ -412,11 +468,19 @@ public class PlayData
 
     /// <summary>
     /// 获取评级（S, A, B, C, F）基于达成率
-    /// S: 95%以上, A: 92%以上, B: 85%以上, C: 78%以上, F: 78%以下
+    /// 使用 PlayDataCollector 中配置的阈值
     /// </summary>
     public string GetRank()
     {
         float achievementRate = GetAchievementRate();
+
+        // 如果 PlayDataCollector 实例存在，使用其配置的阈值
+        if (PlayDataCollector.Instance != null && PlayDataCollector.Instance.rankThresholds != null)
+        {
+            return PlayDataCollector.Instance.rankThresholds.GetRankByAchievementRate(achievementRate);
+        }
+
+        // 否则使用默认值
         if (achievementRate >= 95f) return "S";
         if (achievementRate >= 92f) return "A";
         if (achievementRate >= 85f) return "B";

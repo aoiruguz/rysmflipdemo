@@ -31,8 +31,6 @@ public class ChartData : ScriptableObject
     public AudioClip audioClip;
 
     [Header("Chapter System")]
-    [Tooltip("章节索引: 0=第1章, 1=第2章, 2=第3章")]
-    public int chapterIndex = 0;
 
     [Tooltip("是否为Boss关卡（高风险高回报）")]
     public bool isBossStage = false;

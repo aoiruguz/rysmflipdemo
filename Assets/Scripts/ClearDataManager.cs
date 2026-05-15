@@ -72,9 +72,9 @@ public static class ClearDataManager
     /// </summary>
     private static string GetChartKey(ChartData chart)
     {
-        // 使用歌曲名、难度、章节、是否Boss来生成唯一key
+        // 使用歌曲名、难度、是否Boss来生成唯一key
         string songNameSafe = chart.songName.Replace(" ", "_");
-        return $"{CLEAR_DATA_PREFIX}{songNameSafe}_{chart.difficulty}_{chart.chapterIndex}_{chart.isBossStage}";
+        return $"{CLEAR_DATA_PREFIX}{songNameSafe}_{chart.difficulty}_{chart.isBossStage}";
     }
 
     /// <summary>
