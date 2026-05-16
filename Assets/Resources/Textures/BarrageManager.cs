@@ -25,6 +25,19 @@ public class BarrageManager : MonoBehaviour
     [Header("数据源")]
     public TextAsset textData;           // 预设档案 (TXT)
     private string[] presetMessages;
+    public TextAsset namesData;          // 名字档案 (TXT)
+    private string[] namesList;
+
+    [Header("Spatial 特殊效果配置")]
+    [Tooltip("是否启用 Spatial 特殊效果（送礼/打钱）")]
+    public bool enableSpatial = false;
+    [Tooltip("每次触发弹幕时成为特殊弹幕的概率 (0~1)")]
+    [Range(0f, 1f)]
+    public float spatialProbability = 0.2f;
+    [Tooltip("礼物贴图（5张）")]
+    public Sprite[] giftSprites;
+    [Tooltip("数字贴图（0~9，10张）")]
+    public Sprite[] numberSprites;
 
     [Header("自动触发设置")]
     [Tooltip("普通弹幕触发按钮（把触发评论的按钮拖到这里）")]
@@ -48,6 +61,12 @@ public class BarrageManager : MonoBehaviour
         if (textData != null)
         {
             presetMessages = textData.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        // 2. 解析名字文档
+        if (namesData != null)
+        {
+            namesList = namesData.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
         }
     }
 
@@ -102,6 +121,40 @@ public class BarrageManager : MonoBehaviour
         // 3. 从对象池获取新弹幕，插入起始端
         BarrageItem newItem = GetItemFromPool();
         newItem.msgText.text = msg;
+        
+        // 随机分配名字
+        if (namesList != null && namesList.Length > 0 && newItem.nameText != null)
+        {
+            newItem.nameText.text = namesList[Random.Range(0, namesList.Length)];
+        }
+
+        // Spatial 特殊效果逻辑
+        if (enableSpatial && Random.value < spatialProbability)
+        {
+            int effectType = Random.Range(0, 2); // 0: 礼物, 1: 打钱
+            if (effectType == 0 && giftSprites != null && giftSprites.Length > 0 && numberSprites != null && numberSprites.Length >= 10)
+            {
+                Sprite randomGift = giftSprites[Random.Range(0, giftSprites.Length)];
+                Sprite d1 = numberSprites[Random.Range(0, 10)];
+                Sprite d2 = numberSprites[Random.Range(0, 10)];
+                newItem.SetAsGift(randomGift, d1, d2);
+                newItem.msgText.text = "送出礼物";
+            }
+            else if (effectType == 1 && numberSprites != null && numberSprites.Length >= 10)
+            {
+                Sprite d1 = numberSprites[Random.Range(0, 10)];
+                Sprite d2 = numberSprites[Random.Range(0, 10)];
+                newItem.SetAsMoney(d1, d2);
+            }
+            else
+            {
+                newItem.SetAsNormal();
+            }
+        }
+        else
+        {
+            newItem.SetAsNormal();
+        }
 
         // 动态根据方向调整锚点和中心点，这样就不用手动去改 prefab 了
         float anchorY = scrollDirection == ScrollDirection.BottomToTop ? 0f : 1f;
