@@ -94,7 +94,6 @@ public class PlayerController : MonoBehaviour
     public Image hitFeedback;
 
     private Tween overlayTween;
-    private Tween feedbackTween;
 
     public int CurrentLane { get; private set; } = 3;
     public GameColor CurrentPresetColor { get; private set; } = GameColor.J_Color0_Red;
@@ -583,7 +582,8 @@ public class PlayerController : MonoBehaviour
             }
 
             Debug.Log($"[Effect] Spawning at angle: {angle}°");
-            effect.Initialize(pos, angle, effectSpeed, hitSprite, labelText);
+            effect.Initialize(pos, angle, effectSpeed, hitSprite, labelText, 
+                             hitFeedback, overlayFadeInTime, overlayStayTime, overlayFadeOutTime);
         }
     }
 
@@ -764,15 +764,5 @@ public class PlayerController : MonoBehaviour
             .Append(hitOverlayImage.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
             .AppendInterval(overlayStayTime)
             .Append(hitOverlayImage.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
-
-        // 额外的 hitFeedback 控制
-        if (hitFeedback != null)
-        {
-            feedbackTween?.Kill();
-            feedbackTween = DOTween.Sequence()
-                .Append(hitFeedback.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
-                .AppendInterval(overlayStayTime)
-                .Append(hitFeedback.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
-        }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class CatchEffect : MonoBehaviour
 {
@@ -12,6 +13,11 @@ public class CatchEffect : MonoBehaviour
     private Image image;
     private TextMeshProUGUI label;
 
+    // Feedback parameters
+    private Image feedbackImage;
+    private float fIn, fStay, fOut;
+    private static Tween feedbackTween;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -22,9 +28,15 @@ public class CatchEffect : MonoBehaviour
 
     /// <param name="hitSprite">根据击中Note颜色对应的替换图片，传入null则保留Prefab原图</param>
     /// <param name="labelText">显示在TMP子物体上的文字，传入null或空字符串则不修改</param>
-    public void Initialize(Vector3 startPos, float angle, float speed, Sprite hitSprite = null, string labelText = null)
+    public void Initialize(Vector3 startPos, float angle, float speed, Sprite hitSprite = null, string labelText = null, 
+                         Image feedbackImg = null, float fadeIn = 0.05f, float stay = 0.05f, float fadeOut = 0.2f)
     {
         transform.position = startPos;
+        
+        this.feedbackImage = feedbackImg;
+        this.fIn = fadeIn;
+        this.fStay = stay;
+        this.fOut = fadeOut;
         
         // Convert angle to direction vector
         float rad = angle * Mathf.Deg2Rad;
@@ -90,7 +102,19 @@ public class CatchEffect : MonoBehaviour
         // 碰到上边界销毁
         if (transform.position.y >= currentMaxY)
         {
+            TriggerFeedback();
             Destroy(gameObject);
         }
+    }
+
+    private void TriggerFeedback()
+    {
+        if (feedbackImage == null) return;
+
+        feedbackTween?.Kill();
+        feedbackTween = DOTween.Sequence()
+            .Append(feedbackImage.DOFade(1f, fIn).SetEase(Ease.OutQuad))
+            .AppendInterval(fStay)
+            .Append(feedbackImage.DOFade(0f, fOut).SetEase(Ease.InQuad));
     }
 }
