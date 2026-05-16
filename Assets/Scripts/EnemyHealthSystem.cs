@@ -40,9 +40,19 @@ public class EnemyHealthSystem : MonoBehaviour
     [Tooltip("心变化时是否播放缩放动画")]
     public bool playScaleAnimation = true;
 
+    [Tooltip("敌人头像的 Animator 组件（用于触发受伤和死亡动画）")]
+    public Animator enemyAnimator;
+
+    [Tooltip("受伤时触发的 Trigger 名称")]
+    public string hurtTriggerName = "Ehurt";
+
+    [Tooltip("死亡时触发的 Trigger 名称")]
+    public string dieTriggerName = "Edie";
+
     private SongCompletionDetector detector;
     private int currentHealth; // 当前血量节点数
     private int currentDamageIndex = 0; // 当前已触发的伤害阈值索引
+    private bool isDead = false; // 是否已死亡
 
     void Start()
     {
@@ -110,7 +120,39 @@ public class EnemyHealthSystem : MonoBehaviour
 
         Debug.Log($"[EnemyHealthSystem] Took {segments} damage. Current health: {currentHealth}/{totalSegments}");
 
+        // 触发受伤动画
+        if (enemyAnimator != null && !isDead && !string.IsNullOrEmpty(hurtTriggerName))
+        {
+            enemyAnimator.SetTrigger(hurtTriggerName);
+            Debug.Log($"[EnemyHealthSystem] Triggered hurt animation: {hurtTriggerName}");
+        }
+
+        // 检查是否死亡
+        if (currentHealth <= 0 && !isDead)
+        {
+            OnEnemyDeath();
+        }
+
         UpdateAllHearts();
+    }
+
+    /// <summary>
+    /// 敌人死亡时调用
+    /// </summary>
+    private void OnEnemyDeath()
+    {
+        isDead = true;
+
+        // 触发死亡动画
+        if (enemyAnimator != null && !string.IsNullOrEmpty(dieTriggerName))
+        {
+            enemyAnimator.SetTrigger(dieTriggerName);
+            Debug.Log($"[EnemyHealthSystem] Enemy died! Triggered death animation: {dieTriggerName}");
+        }
+        else
+        {
+            Debug.Log("[EnemyHealthSystem] Enemy died!");
+        }
     }
 
     /// <summary>
@@ -209,6 +251,7 @@ public class EnemyHealthSystem : MonoBehaviour
     {
         currentHealth = totalSegments;
         currentDamageIndex = 0;
+        isDead = false;
         UpdateAllHearts();
         Debug.Log("[EnemyHealthSystem] Health reset to full");
     }

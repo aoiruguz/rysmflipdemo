@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: pixels
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: "\u50CF\u7D20\u5192\u9669\u7269\u8BED"
-  composer: ai
+  levelName: "\u50CF\u7D20\u5192\u9669\u4E4B\u65C5"
+  composer: "\u53CB\u5B50"
   displayBPM: 160
   previewMusic: {fileID: 8300000, guid: 0a2790d233631a849a754a750e9a143e, type: 3}
   enemyName: "\u5BF9\u624B"
   enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
+  enemyAvatarAnimator: {fileID: 9100000, guid: 8efbdfb9309c110459259092df336713, type: 2}
   mapIconUndefeated: {fileID: 21300000, guid: e8e214ae3956a7b478403ccb7e78b922, type: 3}
   mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
   enemyInfo: "\u50CF\u7D20\u5192\u9669"
@@ -39,7 +40,7 @@ MonoBehaviour:
   - difficulty: 2
     ratingLevel: 10
     mapper: 
-    chartAsset: {fileID: 11400000, guid: b63d1bb56d6fc11498f5ca65e64208de, type: 2}
+    chartAsset: {fileID: 11400000, guid: 5e3a0bf39b7dc0d4eb8dff1b931be71f, type: 2}
   openingDialogues: []
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5

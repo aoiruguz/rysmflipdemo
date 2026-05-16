@@ -67,6 +67,9 @@ public class LevelData : ScriptableObject
     [Tooltip("敌人头像（击败后）- 用于详情面板")]
     public Sprite enemyAvatarDefeated;
 
+    [Tooltip("敌人头像动画控制器（用于 PlayScene）")]
+    public RuntimeAnimatorController enemyAvatarAnimator;
+
     [Tooltip("大地图小图标（未击败时）")]
     public Sprite mapIconUndefeated;
     [Tooltip("大地图小图标（击败后）")]

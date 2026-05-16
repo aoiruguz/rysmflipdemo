@@ -22,9 +22,9 @@ public class BossFansUI : MonoBehaviour
     void Start()
     {
         // 初始化显示
-        if (BossHealthSystem.Instance != null)
+        if (BossBattleManager.Instance != null && BossBattleManager.Instance.IsBossMode())
         {
-            UpdateFans(BossHealthSystem.Instance.CurrentFans, BossHealthSystem.Instance.MaxFans);
+            UpdateFans(BossBattleManager.Instance.GetCurrentFans(), BossBattleManager.Instance.GetMaxFans());
         }
     }
 

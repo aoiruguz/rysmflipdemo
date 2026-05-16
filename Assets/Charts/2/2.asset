@@ -25,7 +25,7 @@ MonoBehaviour:
   enemyFans: 10000
   enemyTitleUncleared: "\u5FEB\u811A\u5341\u4F73\u6574\u6D3B\u4F6C"
   enemyTitleCleared: "\u524D\u5FEB\u811A\u5341\u4F73\u6574\u6D3B\u4F6C"
-  chapterGroup: 1
+  chapterGroup: 2
   isMainStoryLevel: 1
   difficulties:
   - difficulty: 0

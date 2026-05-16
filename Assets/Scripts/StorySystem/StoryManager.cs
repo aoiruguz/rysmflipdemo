@@ -23,6 +23,11 @@ public class StoryManager : MonoBehaviour
     public TextMeshProUGUI dialogText2;
     public TextMeshProUGUI speakerName2;
 
+    [Header("对话 Panel 3 (Boss战专用)")]
+    public GameObject dialogPanel3;
+    public TextMeshProUGUI dialogText3;
+    public TextMeshProUGUI speakerName3;
+
     [Header("跳过按钮")]
     public Button skipButton;
     public GameObject skipButtonObject;
@@ -136,6 +141,10 @@ public class StoryManager : MonoBehaviour
             {
                 ShowDialogOnPanel2(dialogue);
             }
+            else if (dialogue.panelIndex == 3)
+            {
+                ShowDialogOnPanel3(dialogue);
+            }
 
             // 等待显示时长
             float elapsed = 0f;
@@ -176,6 +185,8 @@ public class StoryManager : MonoBehaviour
             dialogPanel1.SetActive(true);
         if (dialogPanel2 != null)
             dialogPanel2.SetActive(false);
+        if (dialogPanel3 != null)
+            dialogPanel3.SetActive(false);
 
         if (speakerName1 != null)
             speakerName1.text = dialogue.speakerName;
@@ -193,12 +204,33 @@ public class StoryManager : MonoBehaviour
             dialogPanel1.SetActive(false);
         if (dialogPanel2 != null)
             dialogPanel2.SetActive(true);
+        if (dialogPanel3 != null)
+            dialogPanel3.SetActive(false);
 
         if (speakerName2 != null)
             speakerName2.text = dialogue.speakerName;
 
         if (dialogText2 != null)
             dialogText2.text = dialogue.text;
+    }
+
+    /// <summary>
+    /// 在 Panel 3 显示对话 (Boss战专用)
+    /// </summary>
+    private void ShowDialogOnPanel3(DialogueData dialogue)
+    {
+        if (dialogPanel1 != null)
+            dialogPanel1.SetActive(false);
+        if (dialogPanel2 != null)
+            dialogPanel2.SetActive(false);
+        if (dialogPanel3 != null)
+            dialogPanel3.SetActive(true);
+
+        if (speakerName3 != null)
+            speakerName3.text = dialogue.speakerName;
+
+        if (dialogText3 != null)
+            dialogText3.text = dialogue.text;
     }
 
     /// <summary>
@@ -210,6 +242,8 @@ public class StoryManager : MonoBehaviour
             dialogPanel1.SetActive(false);
         if (dialogPanel2 != null)
             dialogPanel2.SetActive(false);
+        if (dialogPanel3 != null)
+            dialogPanel3.SetActive(false);
         if (skipButtonObject != null)
             skipButtonObject.SetActive(false);
     }

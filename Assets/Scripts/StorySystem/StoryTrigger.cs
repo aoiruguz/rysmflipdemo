@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// 剧情触发器组件
@@ -20,6 +21,13 @@ public class StoryTrigger : MonoBehaviour
     [Tooltip("是否允许重复播放（true=每次都播放且不记录到存档，false=正常检查存档）")]
     public bool allowRepeat = false;
 
+    [Header("剧情完成后显示按钮")]
+    [Tooltip("剧情播放完成后要显示的按钮（可选）")]
+    public Button buttonToShowOnComplete;
+
+    [Tooltip("是否在剧情播放前隐藏按钮")]
+    public bool hideButtonBeforeStory = true;
+
     [Header("回调事件")]
     [Tooltip("剧情播放完成后触发（无论是跳过还是正常结束）")]
     public UnityEvent onStoryComplete;
@@ -35,6 +43,12 @@ public class StoryTrigger : MonoBehaviour
 
     private void Start()
     {
+        // 如果设置了按钮且需要在剧情前隐藏
+        if (buttonToShowOnComplete != null && hideButtonBeforeStory)
+        {
+            buttonToShowOnComplete.gameObject.SetActive(false);
+        }
+
         if (triggerMoment == TriggerMoment.OnStart)
             Trigger();
     }
@@ -113,6 +127,34 @@ public class StoryTrigger : MonoBehaviour
 
     private void OnComplete()
     {
+        // 显示按钮
+        ShowButton();
+
+        // 触发回调事件
         onStoryComplete?.Invoke();
+    }
+
+    /// <summary>
+    /// 显示剧情完成后的按钮
+    /// </summary>
+    public void ShowButton()
+    {
+        if (buttonToShowOnComplete != null)
+        {
+            buttonToShowOnComplete.gameObject.SetActive(true);
+            Debug.Log($"[StoryTrigger] 剧情 {storyId} 播放完成，显示按钮: {buttonToShowOnComplete.name}");
+        }
+    }
+
+    /// <summary>
+    /// 隐藏按钮
+    /// </summary>
+    public void HideButton()
+    {
+        if (buttonToShowOnComplete != null)
+        {
+            buttonToShowOnComplete.gameObject.SetActive(false);
+            Debug.Log($"[StoryTrigger] 隐藏按钮: {buttonToShowOnComplete.name}");
+        }
     }
 }

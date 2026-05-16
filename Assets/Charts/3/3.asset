@@ -16,15 +16,15 @@ MonoBehaviour:
   composer: 
   displayBPM: 0
   previewMusic: {fileID: 8300000, guid: 16da3c64b4a741945bbfe1a0d455d51f, type: 3}
-  enemyName: "\u5BF9\u624B"
+  enemyName: "\u61C2\u5927\u738B"
   enemyAvatar: {fileID: 21300000, guid: 1ae0c03dacda87e48949b79f77702d60, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 4622717303eea1348889b04403ee5bd0, type: 3}
   mapIconUndefeated: {fileID: 21300000, guid: 81068ad2348b84f41ab65b8284015d4b, type: 3}
   mapIconDefeated: {fileID: 21300000, guid: f36a04d6f74673a4aadcc3d35a7d53bb, type: 3}
   enemyInfo: "\u5168\u7F51\u6700\u61C2\u4F2A\u5927\u5E08\uFF0C\u5BF9\u7EBF\u4E13\u6CBB\u5404\u79CD\u88C5\uFF01\n\u4E00\u8FB9\u662F\u6EE1\u5634\u4E13\u4E1A\u3001\u53EA\u4E3A\u5438\u6D41\u7684\u61C2\u738B\u6559\u4E3B\uFF0C\n\u4E00\u8FB9\u662F\u4E00\u9488\u89C1\u8840\u3001\u62C6\u7A7F\u865A\u5984\u7684\u8282\u594F\u88C1\u5E08\u3002\n\u8DDF\u4E0A\u65CB\u5F8B\uFF0C\u6233\u7834\u8C0E\u8A00\uFF01"
   enemyFans: 10000
-  enemyTitleUncleared: "\u6311\u6218\u8005"
-  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  enemyTitleUncleared: "\u817F\u7279\u6700\u5F3A\u5148\u77E5"
+  enemyTitleCleared: "\u524D\u817F\u7279\u6700\u5F3A\u5148\u77E5"
   chapterGroup: 3
   isMainStoryLevel: 1
   difficulties:

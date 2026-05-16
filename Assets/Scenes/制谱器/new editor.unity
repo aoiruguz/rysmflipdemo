@@ -8833,7 +8833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7520147ac1ef147a8683bc96c11edd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ChartEditorManager
-  currentChart: {fileID: 11400000, guid: 798c811734a9b004087ab6bc67c2e167, type: 2}
+  currentChart: {fileID: 11400000, guid: c795b6dccbbf4dd4bb58f2547856b425, type: 2}
   editorNotePrefab: {fileID: 7312989398368265476, guid: 6396906887769474e8a8ccb91b02722b, type: 3}
   audioSource: {fileID: 1710731946}
   editorCamera: {fileID: 995617723}
@@ -8879,9 +8879,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EditorJudgmentDetector
   manager: {fileID: 1710731947}
   hitSoundSource: {fileID: 0}
-  perfectHitSound: {fileID: 8300000, guid: 681255f80d944b049b09f12619d36ea4, type: 3}
-  greatHitSound: {fileID: 8300000, guid: 681255f80d944b049b09f12619d36ea4, type: 3}
-  goodHitSound: {fileID: 8300000, guid: 681255f80d944b049b09f12619d36ea4, type: 3}
+  perfectHitSound: {fileID: 8300000, guid: 1463dede1da64864eb26e72d2e1bd4ce, type: 3}
+  greatHitSound: {fileID: 8300000, guid: 1463dede1da64864eb26e72d2e1bd4ce, type: 3}
+  goodHitSound: {fileID: 8300000, guid: 1463dede1da64864eb26e72d2e1bd4ce, type: 3}
   judgmentLineY: -4
   judgmentWindow: 0.05
 --- !u!1 &1752451210

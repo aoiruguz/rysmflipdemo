@@ -15,57 +15,57 @@ MonoBehaviour:
   levelName: "\u5408"
   composer: 
   displayBPM: 0
-  previewMusic: {fileID: 0}
-  enemyName: "\u5BF9\u624B"
+  previewMusic: {fileID: 8300000, guid: 70d17de1cdff593498cba4d0355c8605, type: 3}
+  enemyName: "\uFF1F\uFF1F\uFF1F"
   enemyAvatar: {fileID: 21300000, guid: 03b93495dcfc7b244aec9f8dd7396cc3, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 03b93495dcfc7b244aec9f8dd7396cc3, type: 3}
   mapIconUndefeated: {fileID: 21300000, guid: 65f0f4244293db74fbe11ec03df0bd9a, type: 3}
   mapIconDefeated: {fileID: 21300000, guid: 65f0f4244293db74fbe11ec03df0bd9a, type: 3}
   enemyInfo: "\u767E\u4E07\u996D\u5708\u72C2\u70ED\u6F6E\uFF0C\u4E00\u4EBA\u72EC\u6218\u5168\u7F51\u6F6E\uFF01\n\u4E00\u8FB9\u662F\u65E0\u8111\u62A4\u4E3B\u3001\u584C\u623F\u53CD\u566C\u7684\u50F5\u5C38\u7C89\u6D77\uFF0C\n\u4E00\u8FB9\u662F\u575A\u5B88\u672C\u5FC3\u3001\u5BA1\u5224\u55A7\u56A3\u7684\u6700\u7EC8\u5F3A\u8005\u3002\n\u7EC8\u6781\u8282\u594F\u6218\uFF0C\u6289\u62E9\u4F60\u7684\u7ED3\u5C40\uFF01"
   enemyFans: 999999
-  enemyTitleUncleared: "\u6311\u6218\u8005"
-  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  enemyTitleUncleared: "\u56DE\u58F0"
+  enemyTitleCleared: "\u56DE\u58F0"
   chapterGroup: 4
   isMainStoryLevel: 1
   difficulties:
   - difficulty: 0
-    ratingLevel: 0
+    ratingLevel: 5
     mapper: 
-    chartAsset: {fileID: 0}
-  - difficulty: 0
-    ratingLevel: 0
+    chartAsset: {fileID: 11400000, guid: f3535e368d779ce4282665245ebc969c, type: 2}
+  - difficulty: 1
+    ratingLevel: 7
     mapper: 
-    chartAsset: {fileID: 0}
-  - difficulty: 0
-    ratingLevel: 0
+    chartAsset: {fileID: 11400000, guid: 869ab7f5201053542b2ccb61c08f2335, type: 2}
+  - difficulty: 2
+    ratingLevel: 10
     mapper: 
-    chartAsset: {fileID: 0}
+    chartAsset: {fileID: 11400000, guid: 7307b82cf3892b144be388a3f54de325, type: 2}
   openingDialogues:
   - panelIndex: 1
     speakerName: 
     text: "\u4F60\u4EEC\u5E72\u4EC0\u4E48\uFF1F\u4E0D\u662F\u8BF4\u597D\u4E00\u751F\u63A8\u5417\uFF1F"
-  - panelIndex: 2
+  - panelIndex: 3
     speakerName: 
     text: "\u4F60\u592A\u8BA9\u6211\u4EEC\u5931\u671B\u4E86\u2026\u2026\u584C\u623F...\u623F..."
   - panelIndex: 1
     speakerName: 
     text: "\u5BB6\u4EBA\u4EEC\u966A\u6211\u4E00\u8DEF\u8D70\u6765\uFF0C\u90FD\u5FD8\u4E86\u5417\uFF1F"
-  - panelIndex: 2
+  - panelIndex: 3
     speakerName: 
     text: "\u4F60...\u53D8...\u4E86...\u4E0D\u662F\u5F53\u521D\u6211\u4EEC\u559C\u6B22\u7684\u6837\u5B50..."
   - panelIndex: 1
     speakerName: 
     text: "\u4F60\u4EEC\u60F3\u600E\u4E48\u6837\uFF1F"
-  - panelIndex: 2
+  - panelIndex: 3
     speakerName: 
     text: "\u4F60\u5C31\u8BE5\u542C\u6211\u4EEC\u7684\uFF0C\u670D...\u4ECE...\u4ECE\u2026\u2026\u6309\u6211\u4EEC\u7684\u60F3\u6CD5\u6765\uFF01"
   - panelIndex: 1
     speakerName: 
     text: "\u767D\u65E5\u505A\u68A6\uFF01\u4F60\u4EEC\u8FD9\u7FA4\u53DB\u5F92\uFF01"
-  - panelIndex: 2
+  - panelIndex: 3
     speakerName: 
     text: "\u4E0D\u542C\u7C89\u4E1D\u7684\u662F\u5427\uFF1F"
-  - panelIndex: 2
+  - panelIndex: 3
     speakerName: 
     text: "\u8131\u7C89\u56DE\u8E29\uFF0C\u6BC1\u6389\u4F60\uFF01"
   dialogDisplayDuration: 3

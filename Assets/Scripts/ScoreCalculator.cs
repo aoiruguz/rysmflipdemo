@@ -7,7 +7,8 @@ using UnityEngine;
 public class ScoreCalculator
 {
     // 章节倍数：10^ChapterIndex
-    private static readonly long[] ChapterMultipliers = { 10, 100, 1000 };
+    // 索引 0=第1章(×10), 1=第2章(×100), 2=第3章(×1000), 3=第4章Boss战(×1000)
+    private static readonly long[] ChapterMultipliers = { 10, 100, 1000, 1000 };
 
     // 普通关卡判定得分
     private const int NORMAL_PERFECT = 600;

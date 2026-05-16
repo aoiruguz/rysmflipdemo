@@ -38,6 +38,18 @@ public class SaveManager : MonoBehaviour
         settingsFilePath = Path.Combine(Application.persistentDataPath, SETTINGS_FILE_NAME);
         progressFilePath = Path.Combine(Application.persistentDataPath, PROGRESS_FILE_NAME);
 
+        // 如果Inspector中没有配置，使用默认值
+        if (chapterUnlockConfigs == null || chapterUnlockConfigs.Length == 0)
+        {
+            chapterUnlockConfigs = new ChapterUnlockConfig[]
+            {
+                new ChapterUnlockConfig { chapterIndex = 1, requiredFans = 0, requirePreviousChapterCleared = false },
+                new ChapterUnlockConfig { chapterIndex = 2, requiredFans = 1000000, requirePreviousChapterCleared = true },
+                new ChapterUnlockConfig { chapterIndex = 3, requiredFans = 10000000, requirePreviousChapterCleared = true },
+                new ChapterUnlockConfig { chapterIndex = 4, requiredFans = 100000000, requirePreviousChapterCleared = true },
+            };
+        }
+
         LoadGame();
     }
 
@@ -394,13 +406,7 @@ public class SaveManager : MonoBehaviour
     /// 章节解锁配置表（集中管理所有章节的解锁条件）
     /// </summary>
     [Header("Chapter Unlock Configs")]
-    public ChapterUnlockConfig[] chapterUnlockConfigs = new ChapterUnlockConfig[]
-    {
-        new ChapterUnlockConfig { chapterIndex = 1, requiredFans = 0, requirePreviousChapterCleared = false },
-        new ChapterUnlockConfig { chapterIndex = 2, requiredFans = 1000000, requirePreviousChapterCleared = true },      // 100万 + 通关第1章
-        new ChapterUnlockConfig { chapterIndex = 3, requiredFans = 10000000, requirePreviousChapterCleared = true },     // 1000万 + 通关第2章
-        new ChapterUnlockConfig { chapterIndex = 4, requiredFans = 100000000, requirePreviousChapterCleared = true },    // 1亿 + 通关第3章
-    };
+    public ChapterUnlockConfig[] chapterUnlockConfigs;
 
     /// <summary>
     /// 获取章节解锁配置

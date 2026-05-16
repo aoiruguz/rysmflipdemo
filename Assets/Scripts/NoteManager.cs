@@ -31,12 +31,21 @@ public class NoteManager : MonoBehaviour
 
     [Header("Flow Control")]
     /// <summary>
+    /// 自动开始游戏（跳过剧情等待）
+    /// 启用时：谱面会在Start时自动加载，无需等待剧情播放完成
+    /// 禁用时：需要等待 AllowGameStart() 被调用（通常由剧情系统触发）
+    /// 用途：在音准调节界面等无剧情场景中启用此选项
+    /// </summary>
+    [Tooltip("启用后谱面会自动开始，无需等待剧情播放完成（用于音准调节界面等场景）")]
+    public bool autoStartGame = false;
+
+    /// <summary>
     /// Note从生成点到判定区域的飞行时间（秒）
     /// 决定了Note在屏幕上的运动速度
  /// 默认值为2.0秒，会被GameSettings中的设置覆盖
     /// </summary>
   public float noteTravelTime = 2.0f;
-    
+
     /// <summary>游戏开始前的延迟时间（秒），用于显示歌曲标题等</summary>
     public float prePlayDelay = 2.0f;
     
@@ -174,6 +183,13 @@ private int totalNotes = 0;
 
         // 设置音乐片段
      audioSource.clip = currentChart.audioClip;
+
+        // 如果启用了自动开始，直接允许游戏开始（跳过剧情等待）
+        if (autoStartGame)
+        {
+            canStartGame = true;
+            Debug.Log("[NoteManager] Auto-start enabled, game will start immediately");
+        }
 
         StartCoroutine(PlayRoutine());
     }
@@ -340,11 +356,19 @@ private int totalNotes = 0;
         processedNotes++;
         Debug.Log($"[NoteManager] Note processed: {processedNotes}/{totalNotes}");
 
-        // 通知 SongCompletionDetector（如果场景中有的话）
-        SongCompletionDetector detector = FindFirstObjectByType<SongCompletionDetector>();
-        if (detector != null)
+        // Boss战模式：通知 BossBattleManager
+        if (BossBattleManager.Instance != null && BossBattleManager.Instance.IsBossMode())
         {
-            detector.OnNoteProcessed();
+            BossBattleManager.Instance.OnNoteProcessed();
+        }
+        else
+        {
+            // 普通模式：通知 SongCompletionDetector
+            SongCompletionDetector detector = FindFirstObjectByType<SongCompletionDetector>();
+            if (detector != null)
+            {
+                detector.OnNoteProcessed();
+            }
         }
     }
 

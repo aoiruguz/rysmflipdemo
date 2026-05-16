@@ -6,13 +6,21 @@ using UnityEngine;
 /// </summary>
 public class GameBootstrap : MonoBehaviour
 {
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void Initialize()
     {
-        // 创建 SaveManager
-        GameObject saveManagerObj = new GameObject("SaveManager");
-        saveManagerObj.AddComponent<SaveManager>();
+        // 检查场景中是否已有 SaveManager
+        if (SaveManager.Instance == null)
+        {
+            // 创建 SaveManager
+            GameObject saveManagerObj = new GameObject("SaveManager");
+            saveManagerObj.AddComponent<SaveManager>();
 
-        Debug.Log("[GameBootstrap] SaveManager initialized");
+            Debug.Log("[GameBootstrap] SaveManager initialized via code");
+        }
+        else
+        {
+            Debug.Log("[GameBootstrap] SaveManager already exists in scene");
+        }
     }
 }

@@ -97,10 +97,9 @@ public class ScoreManager : MonoBehaviour
         }
 
         // Boss战模式：根据判定改变粉丝数
-        BossHealthSystem bossHealth = FindFirstObjectByType<BossHealthSystem>();
-        if (bossHealth != null)
+        if (BossBattleManager.Instance != null && BossBattleManager.Instance.IsBossMode())
         {
-            bossHealth.OnJudgment(judgment);
+            BossBattleManager.Instance.OnJudgment(judgment);
         }
 
         // 检测Combo触发特殊弹幕
@@ -138,10 +137,9 @@ public class ScoreManager : MonoBehaviour
         HealthSystem.Instance?.ResetComboTracking();
 
         // Boss战模式：根据判定改变粉丝数
-        BossHealthSystem bossHealth = FindFirstObjectByType<BossHealthSystem>();
-        if (bossHealth != null)
+        if (BossBattleManager.Instance != null && BossBattleManager.Instance.IsBossMode())
         {
-            bossHealth.OnJudgment("MISS");
+            BossBattleManager.Instance.OnJudgment("MISS");
         }
 
         MissEffectManager.Instance?.PlayMissEffects();

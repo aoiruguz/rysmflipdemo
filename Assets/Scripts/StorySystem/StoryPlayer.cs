@@ -15,6 +15,18 @@ public class StoryPlayer : MonoBehaviour
     [Header("主面板")]
     public GameObject storyPanel;
 
+    [Header("点击阻挡层")]
+    [Tooltip("全屏透明Image，用于阻挡点击穿透到后面的UI元素")]
+    public Image clickBlocker;
+
+    [Header("需要隐藏的UI元素")]
+    [Tooltip("剧情播放时需要隐藏的GameObject列表")]
+    public List<GameObject> uiElementsToHide = new List<GameObject>();
+
+    [Header("Collider 控制")]
+    [Tooltip("剧情播放时是否禁用所有场景中的 Collider（防止点击穿透到 Sprite）")]
+    public bool disableAllCollidersOnPlay = true;
+
     [Header("背景")]
     public Image backgroundImage;
 
@@ -24,6 +36,7 @@ public class StoryPlayer : MonoBehaviour
 
     [Header("对话框")]
     public GameObject dialogueBox;
+    public GameObject characterBox;  // 角色名框，和对话框一起显示/隐藏
     public TextMeshProUGUI characterNameText;
     public TextMeshProUGUI dialogueText;
 
@@ -55,6 +68,11 @@ public class StoryPlayer : MonoBehaviour
     private Coroutine _typewriterCoroutine;
     private bool _isTyping = false;
     private bool _isInitialized = false;
+    private List<GameObject> _hiddenUIElements = new List<GameObject>(); // 记录被隐藏的UI元素
+
+    // Collider 状态记录
+    private List<Collider2D> _disabledColliders2D = new List<Collider2D>();
+    private List<Collider> _disabledColliders3D = new List<Collider>();
 
     private void Awake()
     {
@@ -92,10 +110,16 @@ public class StoryPlayer : MonoBehaviour
             rightCharacterImage.gameObject.SetActive(false);
         if (dialogueBox != null)
             dialogueBox.SetActive(false);
+        if (characterBox != null)
+            characterBox.SetActive(false);
         if (nextButton != null)
             nextButton.gameObject.SetActive(false);
         if (skipButton != null)
             skipButton.gameObject.SetActive(false);
+
+        // 隐藏点击阻挡层
+        if (clickBlocker != null)
+            clickBlocker.gameObject.SetActive(false);
 
         Debug.Log("[StoryPlayer] Hidden all UI elements");
     }
@@ -104,17 +128,134 @@ public class StoryPlayer : MonoBehaviour
     {
         // 不需要激活 storyPanel 本身，只激活子元素
 
+        // 显示点击阻挡层（最先显示，确保在最底层）
+        if (clickBlocker != null)
+            clickBlocker.gameObject.SetActive(true);
+
         if (backgroundImage != null)
             backgroundImage.gameObject.SetActive(true);
         // 立绘会在 ShowDialogue 中根据数据动态显示
         if (dialogueBox != null)
             dialogueBox.SetActive(true);
+        if (characterBox != null)
+            characterBox.SetActive(true);
         if (nextButton != null)
             nextButton.gameObject.SetActive(true);
         if (skipButton != null)
             skipButton.gameObject.SetActive(true);
 
         Debug.Log("[StoryPlayer] Shown all UI elements");
+    }
+
+    /// <summary>
+    /// 隐藏指定的UI元素列表
+    /// </summary>
+    private void HideUIElements()
+    {
+        _hiddenUIElements.Clear();
+
+        foreach (var uiElement in uiElementsToHide)
+        {
+            if (uiElement != null && uiElement.activeSelf)
+            {
+                uiElement.SetActive(false);
+                _hiddenUIElements.Add(uiElement);
+            }
+        }
+
+        if (_hiddenUIElements.Count > 0)
+        {
+            Debug.Log($"[StoryPlayer] Hidden {_hiddenUIElements.Count} UI elements");
+        }
+    }
+
+    /// <summary>
+    /// 恢复之前隐藏的UI元素
+    /// </summary>
+    private void RestoreUIElements()
+    {
+        foreach (var uiElement in _hiddenUIElements)
+        {
+            if (uiElement != null)
+            {
+                uiElement.SetActive(true);
+            }
+        }
+
+        if (_hiddenUIElements.Count > 0)
+        {
+            Debug.Log($"[StoryPlayer] Restored {_hiddenUIElements.Count} UI elements");
+        }
+
+        _hiddenUIElements.Clear();
+    }
+
+    /// <summary>
+    /// 禁用场景中所有的 Collider（2D 和 3D）
+    /// </summary>
+    private void DisableAllColliders()
+    {
+        if (!disableAllCollidersOnPlay)
+            return;
+
+        _disabledColliders2D.Clear();
+        _disabledColliders3D.Clear();
+
+        // 禁用所有 2D Colliders
+        Collider2D[] colliders2D = FindObjectsOfType<Collider2D>();
+        foreach (var col in colliders2D)
+        {
+            if (col != null && col.enabled)
+            {
+                col.enabled = false;
+                _disabledColliders2D.Add(col);
+            }
+        }
+
+        // 禁用所有 3D Colliders
+        Collider[] colliders3D = FindObjectsOfType<Collider>();
+        foreach (var col in colliders3D)
+        {
+            if (col != null && col.enabled)
+            {
+                col.enabled = false;
+                _disabledColliders3D.Add(col);
+            }
+        }
+
+        Debug.Log($"[StoryPlayer] Disabled {_disabledColliders2D.Count} Collider2D and {_disabledColliders3D.Count} Collider");
+    }
+
+    /// <summary>
+    /// 恢复之前禁用的所有 Collider
+    /// </summary>
+    private void RestoreAllColliders()
+    {
+        if (!disableAllCollidersOnPlay)
+            return;
+
+        // 恢复所有 2D Colliders
+        foreach (var col in _disabledColliders2D)
+        {
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+        }
+
+        // 恢复所有 3D Colliders
+        foreach (var col in _disabledColliders3D)
+        {
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+        }
+
+        Debug.Log($"[StoryPlayer] Restored {_disabledColliders2D.Count} Collider2D and {_disabledColliders3D.Count} Collider");
+
+        _disabledColliders2D.Clear();
+        _disabledColliders3D.Clear();
     }
 
     // ===================== 公共接口 =====================
@@ -135,6 +276,12 @@ public class StoryPlayer : MonoBehaviour
             EndStory();
             return;
         }
+
+        // 禁用所有 Collider（防止点击穿透到 Sprite）
+        DisableAllColliders();
+
+        // 隐藏指定的UI元素
+        HideUIElements();
 
         // 显示所有UI元素
         ShowAllElements();
@@ -327,6 +474,12 @@ public class StoryPlayer : MonoBehaviour
     {
         // 隐藏所有UI元素而不是整个面板
         HideAllElements();
+
+        // 恢复所有 Collider（重要：必须在恢复UI元素之前）
+        RestoreAllColliders();
+
+        // 恢复之前隐藏的UI元素
+        RestoreUIElements();
 
         _currentStory = null;
         _dialogues = null;

@@ -2563,6 +2563,7 @@ MonoBehaviour:
   noteTextData: {fileID: 4900000, guid: 41c3acf5d2e38954dacd9f8593a2b4d2, type: 3}
   currentChart: {fileID: 11400000, guid: ecfba435c690aca47bf83bb0b3cafbb6, type: 2}
   audioSource: {fileID: 610100206}
+  autoStartGame: 1
   noteTravelTime: 1
   prePlayDelay: 2
   rectSpawnPoint: {fileID: 233591665}
@@ -6704,6 +6705,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e55e9757e1a7cec408a38b799ea9bd83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayDataCollector
+  rankThresholds:
+    sRankThreshold: 95
+    aRankThreshold: 92
+    bRankThreshold: 85
+    cRankThreshold: 78
   playCountText: {fileID: 0}
   scoreTweenDuration: 0.3
 --- !u!1 &1816098614
