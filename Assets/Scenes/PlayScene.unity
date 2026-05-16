@@ -230,11 +230,6 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
-  namesData: {fileID: 4900000, guid: e463c614cbdc263469b3ef131f264b6f, type: 3}
-  enableSpatial: 0
-  spatialProbability: 0.2
-  giftSprites: []
-  numberSprites: []
   normalBarrageButton: {fileID: 926322676}
   enableAutoTrigger: 1
   autoTriggerInterval: 1
@@ -5725,27 +5720,7 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
-  namesData: {fileID: 4900000, guid: e463c614cbdc263469b3ef131f264b6f, type: 3}
-  enableSpatial: 1
-  spatialProbability: 0.2
-  giftSprites:
-  - {fileID: 21300000, guid: 9f62053a8c955b44ba4712601440b92b, type: 3}
-  - {fileID: 21300000, guid: c37fcddc851c53c4688dd042e6fc39e1, type: 3}
-  - {fileID: 21300000, guid: a819a01ba7533374984ef8a084ca5cc2, type: 3}
-  - {fileID: 21300000, guid: b57f2884516ae744eb1a8a947fb08d20, type: 3}
-  - {fileID: 21300000, guid: a8dfe3c6975731444923544717e42a59, type: 3}
-  numberSprites:
-  - {fileID: 21300000, guid: 4dc72c631fe3439479f2e222242f5996, type: 3}
-  - {fileID: 21300000, guid: 31cf7afd4d807bf4f87542f2c85f2b1f, type: 3}
-  - {fileID: 21300000, guid: f68f57af0a7f6b64e9bfe424d0b9c85a, type: 3}
-  - {fileID: 21300000, guid: 2181bf79365924545b64d26508b3b9da, type: 3}
-  - {fileID: 21300000, guid: 6176acb119497474a895d55efdefa6b8, type: 3}
-  - {fileID: 21300000, guid: eeef2fdc70c131d4aa70503779ba574d, type: 3}
-  - {fileID: 21300000, guid: 26fe61facd9b2754d8a23b2b8bc407d7, type: 3}
-  - {fileID: 21300000, guid: 02dea4445860e314f8468e2556c24fc8, type: 3}
-  - {fileID: 21300000, guid: 91b1f2ed2d1e3324d8a5423722348d3c, type: 3}
-  - {fileID: 21300000, guid: 8f72a5a60538eaa4596f14c0333b92ef, type: 3}
-  normalBarrageButton: {fileID: 1121279399}
+  normalBarrageButton: {fileID: 0}
   enableAutoTrigger: 1
   autoTriggerInterval: 1
 --- !u!114 &951381186
