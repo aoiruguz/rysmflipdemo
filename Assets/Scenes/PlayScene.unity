@@ -5978,7 +5978,7 @@ MonoBehaviour:
     slideSide: 3
   - panel: {fileID: 407709347}
     slideSide: 1
-  exitObjectToDisable: {fileID: 0}
+  exitObjectToDisable: {fileID: 812086436}
   slideDuration: 0.4
   sequenceDelay: 0.4
   fadeDuration: 0.3
