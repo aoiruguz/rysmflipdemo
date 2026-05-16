@@ -30,11 +30,11 @@ MonoBehaviour:
   isMainStoryLevel: 1
   difficulties:
   - difficulty: 0
-    ratingLevel: 2
+    ratingLevel: 3
     mapper: 
     chartAsset: {fileID: 11400000, guid: cdadc0ee951f1634388db14210f00ada, type: 2}
   - difficulty: 1
-    ratingLevel: 4
+    ratingLevel: 5
     mapper: 
     chartAsset: {fileID: 11400000, guid: c780be15d38603f4d9d9c6dd3e2eff5a, type: 2}
   - difficulty: 2

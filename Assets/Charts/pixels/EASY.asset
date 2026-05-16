@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c28ff51db076d0408bc9887e2912374, type: 3}
   m_Name: EASY
   m_EditorClassIdentifier: Assembly-CSharp::ChartData
-  songName: pixel advanture story
+  songName: "\u50CF\u7D20\u5192\u9669\u4E4B\u65C5 [easy]"
   difficulty: 0
   bpm: 0
   offset: 0

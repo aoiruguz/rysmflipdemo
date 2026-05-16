@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c28ff51db076d0408bc9887e2912374, type: 3}
   m_Name: hard
   m_EditorClassIdentifier: Assembly-CSharp::ChartData
-  songName: 'RAI; Mirage_Sonata - (Mirage_Sonata Remix) (vcq) [normal]'
+  songName: "\u661F\u4E4B\u5F52\u6240 remix [hard]"
   difficulty: 2
   bpm: 0
   offset: 0

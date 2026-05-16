@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: STAR
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: "\u661F\u4E4B\u5F52\u6240"
-  composer: 
-  displayBPM: 0
+  levelName: "\u661F\u4E4B\u5F52\u6240 remix"
+  composer: RAI/Mirage_Sonata
+  displayBPM: 100
   previewMusic: {fileID: 8300000, guid: 05d8819fb453f5747888b8947d19c5d7, type: 3}
   enemyName: "\u5BF9\u624B"
   enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
@@ -30,15 +30,15 @@ MonoBehaviour:
   isMainStoryLevel: 0
   difficulties:
   - difficulty: 0
-    ratingLevel: 0
+    ratingLevel: 2
     mapper: 
     chartAsset: {fileID: 11400000, guid: 7236425a2bf7e55469aa223386be58bb, type: 2}
   - difficulty: 1
-    ratingLevel: 0
+    ratingLevel: 7
     mapper: 
     chartAsset: {fileID: 11400000, guid: 5d541074cc0ead94eb459948c31dd4ff, type: 2}
   - difficulty: 2
-    ratingLevel: 0
+    ratingLevel: 9
     mapper: 
     chartAsset: {fileID: 11400000, guid: ebb3e3d0aa7b4984ea0d8afbaffee57f, type: 2}
   openingDialogues: []

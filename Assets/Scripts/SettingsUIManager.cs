@@ -56,6 +56,9 @@ public class SettingsUIManager : MonoBehaviour
 
     private void Awake()
     {
+        // 强制窗口模式（修复全屏闪退bug）
+        ForceWindowedMode();
+
         // 设置按钮监听
         if (closeButton != null)
             closeButton.onClick.AddListener(Close);
@@ -76,9 +79,9 @@ public class SettingsUIManager : MonoBehaviour
         if (noteVolumeSlider != null)
             noteVolumeSlider.onValueChanged.AddListener(OnNoteVolumeChanged);
 
-        // 设置窗口模式 Toggle 监听
-        if (fullScreenToggle != null)
-            fullScreenToggle.onValueChanged.AddListener(OnFullScreenToggleChanged);
+        // 全屏Toggle已禁用（强制窗口模式）
+        // if (fullScreenToggle != null)
+        //     fullScreenToggle.onValueChanged.AddListener(OnFullScreenToggleChanged);
 
         // 为分辨率 Toggle 绑定监听
         InitializeResolutionToggles();
@@ -90,6 +93,22 @@ public class SettingsUIManager : MonoBehaviour
 
         // 默认隐藏
         gameObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 强制窗口模式，隐藏全屏选项
+    /// </summary>
+    private void ForceWindowedMode()
+    {
+        // 强制应用窗口模式
+        GameSettings.ApplyResolution(GameSettings.ResolutionWidth, GameSettings.ResolutionHeight, 0);
+
+        // 隐藏全屏Toggle UI元素
+        if (fullScreenToggle != null)
+        {
+            fullScreenToggle.gameObject.SetActive(false);
+            Debug.Log("[Settings] 全屏选项已隐藏，强制窗口模式");
+        }
     }
 
     public void Open()
@@ -136,12 +155,11 @@ public class SettingsUIManager : MonoBehaviour
             }
         }
 
-        // 窗口模式：选中对应窗口化，不选中对应全屏
-        if (fullScreenToggle != null)
-        {
-            // 如果模式 == 0（Windowed），设为选中
-            fullScreenToggle.SetIsOnWithoutNotify(GameSettings.FullScreenMode == 0);
-        }
+        // 窗口模式：已强制窗口化，不再加载全屏设置
+        // if (fullScreenToggle != null)
+        // {
+        //     fullScreenToggle.SetIsOnWithoutNotify(GameSettings.FullScreenMode == 0);
+        // }
 
         // 输入模式
         UpdateInputModeText();
@@ -201,6 +219,12 @@ public class SettingsUIManager : MonoBehaviour
 
         // 实时应用到场景中的音频源
         ApplyMusicVolumeToScene();
+
+        // 应用到AudioManager
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetBGMVolume(value);
+        }
     }
 
     // 音效音量改变
@@ -208,6 +232,12 @@ public class SettingsUIManager : MonoBehaviour
     {
         GameSettings.NoteVolume = value;
         UpdateNoteVolumeText(value);
+
+        // 应用到AudioManager
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetSFXVolume(value);
+        }
     }
 
     // Toggle 选中时触发的分辨率切换
@@ -220,13 +250,13 @@ public class SettingsUIManager : MonoBehaviour
         Debug.Log($"[Settings] 分辨率已更改（Toggle）: {resolution.width}x{resolution.height}");
     }
 
-    // 窗口模式切换：选中对应窗口化，未选中对应全屏
-    private void OnFullScreenToggleChanged(bool isWindowed)
-    {
-        int mode = isWindowed ? 0 : 1; // 0 为窗口，1 为全屏
-        GameSettings.ApplyResolution(GameSettings.ResolutionWidth, GameSettings.ResolutionHeight, mode);
-        Debug.Log($"[Settings] 窗口模式已更改（Toggle）: {(isWindowed ? "窗口化" : "全屏")}");
-    }
+    // 窗口模式切换：已禁用（强制窗口模式）
+    // private void OnFullScreenToggleChanged(bool isWindowed)
+    // {
+    //     int mode = isWindowed ? 0 : 1; // 0 为窗口，1 为全屏
+    //     GameSettings.ApplyResolution(GameSettings.ResolutionWidth, GameSettings.ResolutionHeight, mode);
+    //     Debug.Log($"[Settings] 窗口模式已更改（Toggle）: {(isWindowed ? "窗口化" : "全屏")}");
+    // }
 
     // 切换输入模式
     private void ToggleInputMode()

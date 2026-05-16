@@ -34,7 +34,7 @@ MonoBehaviour:
     mapper: 
     chartAsset: {fileID: 11400000, guid: 72de4d83c5875694b9ee5aa33003529f, type: 2}
   - difficulty: 1
-    ratingLevel: 5
+    ratingLevel: 6
     mapper: 
     chartAsset: {fileID: 11400000, guid: 091ef51193fa2b64f927c875f7d27628, type: 2}
   - difficulty: 2

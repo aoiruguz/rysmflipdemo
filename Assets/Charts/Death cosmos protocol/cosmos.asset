@@ -30,17 +30,17 @@ MonoBehaviour:
   isMainStoryLevel: 0
   difficulties:
   - difficulty: 0
-    ratingLevel: 0
+    ratingLevel: 2
     mapper: 
-    chartAsset: {fileID: 0}
-  - difficulty: 0
-    ratingLevel: 0
+    chartAsset: {fileID: 11400000, guid: 516da7524624fb2459ca49550fb2a975, type: 2}
+  - difficulty: 1
+    ratingLevel: 5
     mapper: 
-    chartAsset: {fileID: 0}
+    chartAsset: {fileID: 11400000, guid: a1a2ee076424c604099fb7ee51e587e4, type: 2}
   - difficulty: 2
     ratingLevel: 7
     mapper: 
-    chartAsset: {fileID: 11400000, guid: 57b5d71d76016504ea528e6deb3dc408, type: 2}
+    chartAsset: {fileID: 11400000, guid: 2f44b31ff31aa8146a52e22bb6d4b2e4, type: 2}
   openingDialogues: []
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5

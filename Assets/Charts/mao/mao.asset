@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: mao
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
   levelName: "\u732B\u7CFB\u75C5\u7684\u6700\u540E\u547D"
-  composer: 
-  displayBPM: 0
+  composer: Yinochi
+  displayBPM: 160
   previewMusic: {fileID: 8300000, guid: db8fcbd195a08724282d6f429fc1d9cf, type: 3}
   enemyName: "\u96E8\u4E8C\u59D0"
   enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
@@ -30,15 +30,15 @@ MonoBehaviour:
   isMainStoryLevel: 0
   difficulties:
   - difficulty: 0
-    ratingLevel: 0
+    ratingLevel: 3
     mapper: 
     chartAsset: {fileID: 11400000, guid: 4373f70cc8c4c6948ad776b476ba941b, type: 2}
   - difficulty: 1
-    ratingLevel: 0
+    ratingLevel: 6
     mapper: 
     chartAsset: {fileID: 11400000, guid: 1f2939f1c96e37a488d8bb2e7500f9b3, type: 2}
   - difficulty: 2
-    ratingLevel: 0
+    ratingLevel: 9
     mapper: 
     chartAsset: {fileID: 11400000, guid: 3905b7b80588cdd4ca1f4abe16006161, type: 2}
   openingDialogues: []
