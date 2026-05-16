@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class MissEffectManager : MonoBehaviour
 {
@@ -24,6 +25,14 @@ public class MissEffectManager : MonoBehaviour
     public float shakeIntensity = 0.1f;
     [Tooltip("变色的目标颜色")]
     public Color flashColor = Color.red;
+
+    [Header("Miss Feedback UI")]
+    [Tooltip("Miss 时闪烁的子物体 (Image)")]
+    public Image missFeedback;
+    public float missFadeInTime = 0.05f;
+    public float missStayTime = 0.05f;
+    public float missFadeOutTime = 0.2f;
+    private Tween missFeedbackTween;
 
     // 记录原始位置和颜色，以便恢复
     private Dictionary<Transform, Vector3> originalPositions = new Dictionary<Transform, Vector3>();
@@ -49,6 +58,13 @@ public class MissEffectManager : MonoBehaviour
         {
             if (ui != null) originalUIColors[ui] = ui.color;
         }
+
+        if (missFeedback != null)
+        {
+            Color c = missFeedback.color;
+            c.a = 0;
+            missFeedback.color = c;
+        }
     }
 
     public void PlayMissEffects()
@@ -59,6 +75,18 @@ public class MissEffectManager : MonoBehaviour
             RestoreAll(); // 如果正在播放，先强制恢复原状，避免偏移累积
         }
         activeEffectCoroutine = StartCoroutine(EffectRoutine());
+        TriggerMissFeedback();
+    }
+
+    private void TriggerMissFeedback()
+    {
+        if (missFeedback == null) return;
+
+        missFeedbackTween?.Kill();
+        missFeedbackTween = DOTween.Sequence()
+            .Append(missFeedback.DOFade(1f, missFadeInTime).SetEase(Ease.OutQuad))
+            .AppendInterval(missStayTime)
+            .Append(missFeedback.DOFade(0f, missFadeOutTime).SetEase(Ease.InQuad));
     }
 
     private IEnumerator EffectRoutine()

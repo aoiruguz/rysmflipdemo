@@ -82,7 +82,19 @@ public class PlayerController : MonoBehaviour
     public float overlayFadeInTime = 0.05f;
     public float overlayStayTime = 0.05f;
     public float overlayFadeOutTime = 0.2f;
+    
+    [Header("Hit Overlay Colors")]
+    public Color overlayColorJ = Color.red;
+    public Color overlayColorL = Color.yellow;
+    public Color overlayColorK = Color.blue;
+    public Color overlayColorA = Color.white;
+    public Color overlayColorD = Color.white;
+
+    [Tooltip("击中时闪烁的辅助反馈子物体 (Image)")]
+    public Image hitFeedback;
+
     private Tween overlayTween;
+    private Tween feedbackTween;
 
     public int CurrentLane { get; private set; } = 3;
     public GameColor CurrentPresetColor { get; private set; } = GameColor.J_Color0_Red;
@@ -120,6 +132,13 @@ public class PlayerController : MonoBehaviour
             Color c = hitOverlayImage.color;
             c.a = 0;
             hitOverlayImage.color = c;
+        }
+
+        if (hitFeedback != null)
+        {
+            Color c = hitFeedback.color;
+            c.a = 0;
+            hitFeedback.color = c;
         }
     }
 
@@ -471,7 +490,22 @@ public class PlayerController : MonoBehaviour
         }
 
         SpawnCatchEffect(note.transform.position, note);
-        TriggerHitOverlay();
+        
+        // Determine hit color for overlay
+        Color hitColor = Color.white;
+        if (note.NoteType == NoteType.Color)
+        {
+            switch (note.Color)
+            {
+                case GameColor.J_Color0_Red: hitColor = overlayColorJ; break;
+                case GameColor.L_Color1_Yellow: hitColor = overlayColorL; break;
+                case GameColor.K_Color2_Blue: hitColor = overlayColorK; break;
+            }
+        }
+        else if (note.NoteType == NoteType.DirectionalLeft) hitColor = overlayColorA;
+        else if (note.NoteType == NoteType.DirectionalRight) hitColor = overlayColorD;
+
+        TriggerHitOverlay(hitColor);
 
         if (hitAudioSource != null)
         {
@@ -707,7 +741,7 @@ public class PlayerController : MonoBehaviour
         img.color = c;
     }
 
-    private void TriggerHitOverlay()
+    private void TriggerHitOverlay(Color color)
     {
         if (hitOverlayImage == null) return;
 
@@ -715,6 +749,7 @@ public class PlayerController : MonoBehaviour
         if (hitOverlayImage.material != null)
         {
             hitOverlayImage.material.SetFloat("_StartTime", Time.time);
+            hitOverlayImage.material.SetColor("_TintColor", color);
         }
 
         overlayTween?.Kill();
@@ -724,5 +759,15 @@ public class PlayerController : MonoBehaviour
             .Append(hitOverlayImage.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
             .AppendInterval(overlayStayTime)
             .Append(hitOverlayImage.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
+
+        // 额外的 hitFeedback 控制
+        if (hitFeedback != null)
+        {
+            feedbackTween?.Kill();
+            feedbackTween = DOTween.Sequence()
+                .Append(hitFeedback.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
+                .AppendInterval(overlayStayTime)
+                .Append(hitFeedback.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
+        }
     }
 }
