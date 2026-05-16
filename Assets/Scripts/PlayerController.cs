@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -75,6 +76,14 @@ public class PlayerController : MonoBehaviour
     [Tooltip("未激活按键的默认透明度")]
     public float inactiveAlpha = 0.5f;
 
+    [Header("Hit Overlay Effect")]
+    [Tooltip("击中时闪烁的子物体Image组件")]
+    public Image hitOverlayImage;
+    public float overlayFadeInTime = 0.05f;
+    public float overlayStayTime = 0.05f;
+    public float overlayFadeOutTime = 0.2f;
+    private Tween overlayTween;
+
     public int CurrentLane { get; private set; } = 3;
     public GameColor CurrentPresetColor { get; private set; } = GameColor.J_Color0_Red;
 
@@ -104,6 +113,14 @@ public class PlayerController : MonoBehaviour
 
         UpdatePosition();
         UpdateVisual();
+
+        // Ensure hit overlay is hidden at start
+        if (hitOverlayImage != null)
+        {
+            Color c = hitOverlayImage.color;
+            c.a = 0;
+            hitOverlayImage.color = c;
+        }
     }
 
     /// <summary>
@@ -454,6 +471,7 @@ public class PlayerController : MonoBehaviour
         }
 
         SpawnCatchEffect(note.transform.position, note);
+        TriggerHitOverlay();
 
         if (hitAudioSource != null)
         {
@@ -687,5 +705,24 @@ public class PlayerController : MonoBehaviour
         Color c = img.color;
         c.a = alpha;
         img.color = c;
+    }
+
+    private void TriggerHitOverlay()
+    {
+        if (hitOverlayImage == null) return;
+
+        // 设置 Shader 的启动时间，触发一次性扩散效果
+        if (hitOverlayImage.material != null)
+        {
+            hitOverlayImage.material.SetFloat("_StartTime", Time.time);
+        }
+
+        overlayTween?.Kill();
+
+        // 虽然 Shader 内部有一位时间控制，但保留 Tween 可以确保 UI 对象本身的透明度被正确管理
+        overlayTween = DOTween.Sequence()
+            .Append(hitOverlayImage.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
+            .AppendInterval(overlayStayTime)
+            .Append(hitOverlayImage.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
     }
 }
