@@ -236,12 +236,11 @@ public class SongCompletionDetector : MonoBehaviour
         if (enemyNamePanel != null)
             enemyNamePanel.SetActive(true);
 
-        // 关闭指定的 Panel 列表
-        HidePanels();
-
         if (resultPanel != null)
         {
-            Debug.Log("[SongCompletionDetector] Showing result panel");
+            Debug.Log("[SongCompletionDetector] Showing result panel via Animator");
+            
+            // 重点：先激活面板，触发 ResultPanelEntryAnimator 的 Awake 从而记录位置并隐藏内容
             resultPanel.SetActive(true);
 
             // 通知 ResultScreenUI 更新显示
@@ -250,10 +249,23 @@ public class SongCompletionDetector : MonoBehaviour
             {
                 resultUI.DisplayResultsFromPlayData(PlayDataCollector.Instance?.CurrentPlayData);
             }
+
+            // 获取动画控制器并执行【退场 -> 禁用 -> 进场】流水线
+            ResultPanelEntryAnimator entryAnimator = resultPanel.GetComponent<ResultPanelEntryAnimator>();
+            if (entryAnimator != null)
+            {
+                entryAnimator.PlayExitThenEntryAnimation();
+            }
+            else
+            {
+                // 回退逻辑：如果没有动画控制器，依然瞬间隐藏
+                HidePanels();
+            }
         }
         else
         {
             Debug.LogWarning("[SongCompletionDetector] Result panel not assigned!");
+            HidePanels();
         }
     }
 
