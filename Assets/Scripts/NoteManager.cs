@@ -325,8 +325,6 @@ private int totalNotes = 0;
       }
 
         // --- Note 文字随机替换 ---
-        // 仿照 PlayerController.SpawnCatchEffect 的懒加载写法
-        // Note 是独立 Sprite 元素，不在 Canvas 内，直接用 GetComponentInChildren 查找 TMP 即可
         if (noteMessages == null && noteTextData != null)
         {
             noteMessages = noteTextData.text.Split(
@@ -335,10 +333,15 @@ private int totalNotes = 0;
             );
         }
 
-        if (noteMessages != null && noteMessages.Length > 0)
+        TextMeshPro tmp = noteObj.GetComponentInChildren<TextMeshPro>();
+        if (tmp != null)
         {
-            TextMeshPro tmp = noteObj.GetComponentInChildren<TextMeshPro>();
-            if (tmp != null)
+            // 对于打击属性是 ad 的键 (DirectionalLeft/Right)，直接清空文字，不进行随机采样
+            if (data.noteType == NoteType.DirectionalLeft || data.noteType == NoteType.DirectionalRight)
+            {
+                tmp.text = "";
+            }
+            else if (noteMessages != null && noteMessages.Length > 0)
             {
                 tmp.text = noteMessages[Random.Range(0, noteMessages.Length)];
             }

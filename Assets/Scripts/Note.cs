@@ -115,6 +115,15 @@ public class Note : MonoBehaviour
         {
             mainRenderer.sprite = rightSwipeSprite;
         }
+
+        // --- 新增：对于 A/D 键方向 Note，清空子物体的 TMP 文字 ---
+        if (tmpText != null)
+        {
+            if (NoteType == NoteType.DirectionalLeft || NoteType == NoteType.DirectionalRight)
+            {
+                tmpText.text = "";
+            }
+        }
     }
 
     void Update()
