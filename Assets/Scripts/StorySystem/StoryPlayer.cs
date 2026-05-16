@@ -14,6 +14,12 @@ public class StoryPlayer : MonoBehaviour
 {
     [Header("主面板")]
     public GameObject storyPanel;
+    [Tooltip("用于控制整体淡入淡出的 CanvasGroup，留空则自动添加")]
+    public CanvasGroup storyCanvasGroup;
+
+    [Header("淡出设置")]
+    [Tooltip("结束时的淡出时间（秒）")]
+    public float fadeOutDuration = 0.3f;
 
     [Header("点击阻挡层")]
     [Tooltip("全屏透明Image，用于阻挡点击穿透到后面的UI元素")]
@@ -81,6 +87,17 @@ public class StoryPlayer : MonoBehaviour
         {
             storyPanel = gameObject;
             Debug.Log($"[StoryPlayer] storyPanel 未配置，自动使用当前对象: {gameObject.name}");
+        }
+
+        // 确保有 CanvasGroup 组件
+        if (storyCanvasGroup == null)
+        {
+            storyCanvasGroup = storyPanel.GetComponent<CanvasGroup>();
+            if (storyCanvasGroup == null)
+            {
+                storyCanvasGroup = storyPanel.AddComponent<CanvasGroup>();
+                Debug.Log($"[StoryPlayer] 自动添加 CanvasGroup 到 {storyPanel.name}");
+            }
         }
 
         // 绑定按钮事件
@@ -472,8 +489,39 @@ public class StoryPlayer : MonoBehaviour
 
     private void EndStory()
     {
-        // 隐藏所有UI元素而不是整个面板
+        // 使用淡出效果而不是瞬间隐藏
+        StartCoroutine(FadeOutAndEnd());
+    }
+
+    /// <summary>
+    /// 淡出动画并结束剧情
+    /// </summary>
+    private IEnumerator FadeOutAndEnd()
+    {
+        // 淡出动画
+        if (storyCanvasGroup != null && fadeOutDuration > 0)
+        {
+            float elapsed = 0f;
+            float startAlpha = storyCanvasGroup.alpha;
+
+            while (elapsed < fadeOutDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                storyCanvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / fadeOutDuration);
+                yield return null;
+            }
+
+            storyCanvasGroup.alpha = 0f;
+        }
+
+        // 隐藏所有UI元素
         HideAllElements();
+
+        // 恢复 CanvasGroup 透明度为1，为下次播放做准备
+        if (storyCanvasGroup != null)
+        {
+            storyCanvasGroup.alpha = 1f;
+        }
 
         // 恢复所有 Collider（重要：必须在恢复UI元素之前）
         RestoreAllColliders();

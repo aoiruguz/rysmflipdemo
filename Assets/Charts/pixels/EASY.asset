@@ -1356,5 +1356,4 @@ MonoBehaviour:
     color: 0
     noteType: 0
   audioClip: {fileID: 8300000, guid: 0a2790d233631a849a754a750e9a143e, type: 3}
-  chapterIndex: 0
   isBossStage: 0

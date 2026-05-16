@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 
 public class DisclaimerManager : MonoBehaviour
 {
@@ -24,6 +25,11 @@ public class DisclaimerManager : MonoBehaviour
         new Color(1f, 1f, 0f, 1f)       // 黄色
     };
 
+    [Header("需要修改颜色的物体")]
+    public TMP_Text tmpText1;
+    public TMP_Text tmpText2;
+    public Image image;
+
     void Start()
     {
         // 自动获取组件
@@ -35,14 +41,23 @@ public class DisclaimerManager : MonoBehaviour
             canvasGroup.alpha = 0;
         }
 
-        // 随机背景颜色 (直接修改相机的背景色)
+        // 随机颜色并应用到指定的UI物体
         if (randomizeColor)
         {
-            Camera mainCam = Camera.main;
-            if (mainCam != null)
+            Color randomColor = colorOptions[Random.Range(0, colorOptions.Length)];
+
+            // 修改指定的UI物体颜色
+            if (tmpText1 != null)
             {
-                Color randomColor = colorOptions[Random.Range(0, colorOptions.Length)];
-                mainCam.backgroundColor = randomColor;
+                tmpText1.color = randomColor;
+            }
+            if (tmpText2 != null)
+            {
+                tmpText2.color = randomColor;
+            }
+            if (image != null)
+            {
+                image.color = randomColor;
             }
         }
 

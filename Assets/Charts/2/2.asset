@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: TURN
+  levelName: "\u627F"
   composer: "\u5728\u6708\u7403\u770B\u65E5\u51FA"
   displayBPM: 129
   previewMusic: {fileID: 8300000, guid: 76d378ee353e9e74c8bf0ac04c97170b, type: 3}
   enemyName: "\u7CAE\u7838"
   enemyAvatar: {fileID: 21300000, guid: 635efbf4671c8d6478ea18a6eb61226c, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 2890e6f5ca0cdd2479febde3b4982457, type: 3}
+  enemyAvatarAnimator: {fileID: 9100000, guid: fac3773fd6ac3274f9fcbfcf267026ed, type: 2}
   mapIconUndefeated: {fileID: 21300000, guid: e358ece517a3ffa4b9fecbec77719217, type: 3}
   mapIconDefeated: {fileID: 21300000, guid: da9b6086f64e42942887fe4afb5baf6d, type: 3}
   enemyInfo: "\u5927\u80C3\u888B\u72C2\u70AB\u6D41\u91CF\uFF0C\u6B63\u4E49\u5E08\u6233\u7834\u8D2A\u5A6A\uFF01\n\u4E00\u8FB9\u662F\u5634\u4E0A\u4F5B\u7CFB\u3001\u5FC3\u91CC\u8D2A\u6EE1\u7684\u5403\u64AD\u4E00\u54E5\uFF0C\n\u4E00\u8FB9\u662F\u770B\u7834\u5957\u8DEF\u3001\u6574\u987F\u4E71\u8C61\u7684\u8282\u594F\u5E26\u5E08\u3002\n\u6309\u51C6\u8282\u62CD\uFF0C\u51FB\u788E\u865A\u4F2A\uFF01"
@@ -31,7 +32,7 @@ MonoBehaviour:
   - difficulty: 0
     ratingLevel: 2
     mapper: 
-    chartAsset: {fileID: 11400000, guid: 09f9d03e1b2ea744894008b772a21001, type: 2}
+    chartAsset: {fileID: 11400000, guid: 72de4d83c5875694b9ee5aa33003529f, type: 2}
   - difficulty: 1
     ratingLevel: 5
     mapper: 
@@ -39,7 +40,7 @@ MonoBehaviour:
   - difficulty: 2
     ratingLevel: 9
     mapper: 
-    chartAsset: {fileID: 11400000, guid: 26bb241234f4ef34a8fe19837d2759ab, type: 2}
+    chartAsset: {fileID: 11400000, guid: 1301ef2ec26f5e3418d2c59b518ad1c1, type: 2}
   openingDialogues:
   - panelIndex: 2
     speakerName: BOSS
@@ -74,7 +75,13 @@ MonoBehaviour:
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: MainStory_Chapter2_Stage1_Clear
-  interferenceTriggers: []
+  interferenceTriggers:
+  - triggerProgress: 0.25
+    skillType: 2
+  - triggerProgress: 0.5
+    skillType: 2
+  - triggerProgress: 0.75
+    skillType: 2
   interferenceTextConfig: {fileID: 0}
   backgroundMaterial:
     wobbleSpeed: 5.15

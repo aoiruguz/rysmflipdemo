@@ -38,9 +38,9 @@ MonoBehaviour:
   - spawnTime: 624
     hitTime: 2624
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 999
     hitTime: 2999
     duration: 0
@@ -56,9 +56,9 @@ MonoBehaviour:
   - spawnTime: 1562
     hitTime: 3562
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 1937
     hitTime: 3937
     duration: 0
@@ -74,9 +74,9 @@ MonoBehaviour:
   - spawnTime: 2687
     hitTime: 4687
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 3062
     hitTime: 5062
     duration: 0
@@ -122,9 +122,9 @@ MonoBehaviour:
   - spawnTime: 5687
     hitTime: 7687
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 6062
     hitTime: 8062
     duration: 0
@@ -140,9 +140,9 @@ MonoBehaviour:
   - spawnTime: 6812
     hitTime: 8812
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 7187
     hitTime: 9187
     duration: 0
@@ -170,9 +170,9 @@ MonoBehaviour:
   - spawnTime: 8687
     hitTime: 10687
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 9062
     hitTime: 11062
     duration: 0
@@ -194,9 +194,9 @@ MonoBehaviour:
   - spawnTime: 10187
     hitTime: 12187
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 10562
     hitTime: 12562
     duration: 0
@@ -230,33 +230,33 @@ MonoBehaviour:
   - spawnTime: 16187
     hitTime: 18187
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 16562
     hitTime: 18562
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 16937
     hitTime: 18937
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 17312
     hitTime: 19312
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 17687
     hitTime: 19687
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 19187
     hitTime: 21187
     duration: 0
@@ -296,9 +296,9 @@ MonoBehaviour:
   - spawnTime: 23312
     hitTime: 25312
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 23687
     hitTime: 25687
     duration: 0
@@ -320,9 +320,9 @@ MonoBehaviour:
   - spawnTime: 25749
     hitTime: 27749
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 26312
     hitTime: 28312
     duration: 0
@@ -350,33 +350,33 @@ MonoBehaviour:
   - spawnTime: 28749
     hitTime: 30749
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 29312
     hitTime: 31312
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 30437
     hitTime: 32437
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 30812
     hitTime: 32812
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 31187
     hitTime: 33187
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 31937
     hitTime: 33937
     duration: 0
@@ -416,9 +416,9 @@ MonoBehaviour:
   - spawnTime: 35312
     hitTime: 37312
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 35687
     hitTime: 37687
     duration: 0
@@ -458,9 +458,9 @@ MonoBehaviour:
   - spawnTime: 38687
     hitTime: 40687
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 39062
     hitTime: 41062
     duration: 0
@@ -500,9 +500,9 @@ MonoBehaviour:
   - spawnTime: 41312
     hitTime: 43312
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 41687
     hitTime: 43687
     duration: 0
@@ -542,9 +542,9 @@ MonoBehaviour:
   - spawnTime: 44312
     hitTime: 46312
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 44687
     hitTime: 46687
     duration: 0
@@ -566,9 +566,9 @@ MonoBehaviour:
   - spawnTime: 46749
     hitTime: 48749
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 47312
     hitTime: 49312
     duration: 0
@@ -584,9 +584,9 @@ MonoBehaviour:
   - spawnTime: 48812
     hitTime: 50812
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 49187
     hitTime: 51187
     duration: 0
@@ -650,51 +650,51 @@ MonoBehaviour:
   - spawnTime: 53687
     hitTime: 55687
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 54249
     hitTime: 56249
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 54812
     hitTime: 56812
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 55374
     hitTime: 57374
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 56124
     hitTime: 58124
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 56687
     hitTime: 58687
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 57249
     hitTime: 59249
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 57812
     hitTime: 59812
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 58187
     hitTime: 60187
     duration: 0
@@ -734,9 +734,9 @@ MonoBehaviour:
   - spawnTime: 61937
     hitTime: 63937
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 62312
     hitTime: 64312
     duration: 0
@@ -776,9 +776,9 @@ MonoBehaviour:
   - spawnTime: 65312
     hitTime: 67312
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 66062
     hitTime: 68062
     duration: 0
@@ -806,9 +806,9 @@ MonoBehaviour:
   - spawnTime: 67374
     hitTime: 69374
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 67749
     hitTime: 69749
     duration: 0
@@ -866,9 +866,9 @@ MonoBehaviour:
   - spawnTime: 70562
     hitTime: 72562
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 70937
     hitTime: 72937
     duration: 0
@@ -884,9 +884,9 @@ MonoBehaviour:
   - spawnTime: 71687
     hitTime: 73687
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 72062
     hitTime: 74062
     duration: 0
@@ -914,9 +914,9 @@ MonoBehaviour:
   - spawnTime: 73374
     hitTime: 75374
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 73749
     hitTime: 75749
     duration: 0
@@ -962,9 +962,9 @@ MonoBehaviour:
   - spawnTime: 76937
     hitTime: 78937
     duration: 0
-    lane: 0
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 77312
     hitTime: 79312
     duration: 0
@@ -1004,9 +1004,9 @@ MonoBehaviour:
   - spawnTime: 85187
     hitTime: 87187
     duration: 0
-    lane: 1
+    lane: 0
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 86687
     hitTime: 88687
     duration: 0
@@ -1040,9 +1040,9 @@ MonoBehaviour:
   - spawnTime: 89781
     hitTime: 91781
     duration: 0
-    lane: 2
+    lane: 1
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 91187
     hitTime: 93187
     duration: 0
@@ -1112,9 +1112,9 @@ MonoBehaviour:
   - spawnTime: 101687
     hitTime: 103687
     duration: 0
-    lane: 3
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 2
   - spawnTime: 103187
     hitTime: 105187
     duration: 0
@@ -1160,9 +1160,9 @@ MonoBehaviour:
   - spawnTime: 109562
     hitTime: 111562
     duration: 0
-    lane: 2
+    lane: 3
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 110312
     hitTime: 112312
     duration: 0
@@ -1202,9 +1202,9 @@ MonoBehaviour:
   - spawnTime: 113312
     hitTime: 115312
     duration: 0
-    lane: 1
+    lane: 2
     color: 0
-    noteType: 0
+    noteType: 1
   - spawnTime: 114437
     hitTime: 116437
     duration: 0
@@ -1272,5 +1272,4 @@ MonoBehaviour:
     color: 0
     noteType: 0
   audioClip: {fileID: 8300000, guid: db8fcbd195a08724282d6f429fc1d9cf, type: 3}
-  chapterIndex: 0
   isBossStage: 0

@@ -40,12 +40,18 @@ MonoBehaviour:
   - difficulty: 2
     ratingLevel: 10
     mapper: 
-    chartAsset: {fileID: 11400000, guid: 5e3a0bf39b7dc0d4eb8dff1b931be71f, type: 2}
+    chartAsset: {fileID: 11400000, guid: 4280a7385011b774f8ee37cb2d92692d, type: 2}
   openingDialogues: []
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: 
-  interferenceTriggers: []
+  interferenceTriggers:
+  - triggerProgress: 0.25
+    skillType: 2
+  - triggerProgress: 0.5
+    skillType: 2
+  - triggerProgress: 0.75
+    skillType: 2
   interferenceTextConfig: {fileID: 0}
   backgroundMaterial:
     wobbleSpeed: 5.15

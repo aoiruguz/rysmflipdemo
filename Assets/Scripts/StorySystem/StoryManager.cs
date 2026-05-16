@@ -31,6 +31,8 @@ public class StoryManager : MonoBehaviour
     [Header("跳过按钮")]
     public Button skipButton;
     public GameObject skipButtonObject;
+    [Tooltip("开启后，跳过按钮将始终显示，无视 showSkipButton 参数")]
+    public bool alwaysShowSkipButton = false;
 
     [Header("默认设置")]
     public float defaultDialogDisplayDuration = 3f;
@@ -62,10 +64,27 @@ public class StoryManager : MonoBehaviour
             skipButton.onClick.AddListener(OnSkipButtonClicked);
     }
 
+    private void Update()
+    {
+        // 当跳过按钮显示时，按 Space 键可以跳过
+        if (skipButtonObject != null && skipButtonObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                OnSkipButtonClicked();
+            }
+        }
+    }
+
     /// <summary>
     /// 显示单句对话（简单版本）
     /// </summary>
-    public void ShowDialogue(int panelIndex, string speakerName, string text, float duration = -1)
+    /// <param name="panelIndex">面板索引</param>
+    /// <param name="speakerName">说话者名称</param>
+    /// <param name="text">对话文本</param>
+    /// <param name="duration">显示时长</param>
+    /// <param name="showSkipButton">是否显示跳过按钮（默认false）</param>
+    public void ShowDialogue(int panelIndex, string speakerName, string text, float duration = -1, bool showSkipButton = false)
     {
         if (duration < 0)
             duration = defaultDialogDisplayDuration;
@@ -77,7 +96,7 @@ public class StoryManager : MonoBehaviour
             text = text
         };
 
-        ShowDialogues(new DialogueData[] { dialogue }, false, duration, 0f);
+        ShowDialogues(new DialogueData[] { dialogue }, showSkipButton, duration, 0f);
     }
 
     /// <summary>
@@ -109,7 +128,11 @@ public class StoryManager : MonoBehaviour
 
         // 显示跳过按钮
         if (skipButtonObject != null)
-            skipButtonObject.SetActive(showSkipButton);
+        {
+            // 如果开启了 alwaysShowSkipButton，则始终显示
+            bool shouldShow = alwaysShowSkipButton || showSkipButton;
+            skipButtonObject.SetActive(shouldShow);
+        }
 
         currentDialogueCoroutine = StartCoroutine(PlayDialogueSequence(dialogues, displayDuration, transitionDelay, onComplete));
     }

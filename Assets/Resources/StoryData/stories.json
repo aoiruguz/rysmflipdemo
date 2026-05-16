@@ -14,42 +14,33 @@
       "triggerCondition": "Big Map",
       "dialogues": [
         {
-          "characterName": "经纪人",
-          "dialogueText": "欢迎来到这里！这是你第一次踏上这片舞台。",
+          "characterName": "玩法",
+          "dialogueText": "按A、D左右灵活走位，接住对话别落地上，抬手按J、K、L精准反打，直接秀操作就完事了！",
           "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
+          "leftCharacter": null,
           "rightCharacter": null,
-          "backgroundSpritePath": "",
+          "backgroundSpritePath": "Textures/intro/新手引导1",
           "audioClipPath": ""
         },
         {
-          "characterName": "经纪人",
-          "dialogueText": "前方的路还很长，但我相信你一定能成为最耀眼的明星！",
+          "characterName": "机制",
+          "dialogueText": "MISS 空拍触发破防 emo掉心情，三颗心归零直接寄！PK双方谁扛不住都会破防，谁先破防谁就输掉PK！",
           "speakerPosition": "left",
-          "leftCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
+          "leftCharacter": null,
           "rightCharacter": null,
-          "backgroundSpritePath": "",
+          "backgroundSpritePath": "Textures/intro/新手引导2",
           "audioClipPath": ""
         },
         {
-          "characterName": "主角",
-          "dialogueText": "谢谢！我会努力的！",
+          "characterName": "目标",
+          "dialogueText": "你的每一次亮眼发挥都能拉高播放热度，人气粉丝蹭蹭狂飙！迎战各路顶流大网红，猛猛冲流量刷播放量，收获海量粉丝直接起飞！",
           "speakerPosition": "right",
-          "leftCharacter": {
-            "spritePath": "",
-            "scale": 1.0
-          },
+          "leftCharacter": null,
           "rightCharacter": {
             "spritePath": "",
             "scale": 1.0
           },
-          "backgroundSpritePath": "",
+          "backgroundSpritePath": "Textures/intro/新手引导3",
           "audioClipPath": ""
         }
       ]

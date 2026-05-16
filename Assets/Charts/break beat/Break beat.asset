@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
+  m_Name: Break beat
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  levelName: Break Beat
+  composer: 
+  displayBPM: 0
+  previewMusic: {fileID: 8300000, guid: ff7d977b201213a4fab36e83df83cf35, type: 3}
+  enemyName: "\u5BF9\u624B"
+  enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
+  enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
+  enemyAvatarAnimator: {fileID: 0}
+  mapIconUndefeated: {fileID: 21300000, guid: e8e214ae3956a7b478403ccb7e78b922, type: 3}
+  mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
+  enemyInfo: 
+  enemyFans: 10000
+  enemyTitleUncleared: "\u6311\u6218\u8005"
+  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  chapterGroup: 2
+  isMainStoryLevel: 0
+  difficulties:
+  - difficulty: 0
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 60cf6863c89d41a4e909001aba072d14, type: 2}
+  - difficulty: 1
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 12cfecfe6ecb30c4a8903297600be297, type: 2}
+  - difficulty: 2
+    ratingLevel: 0
+    mapper: 
+    chartAsset: {fileID: 11400000, guid: 6eaa4bc1fe2c85e4bb2bc067e5a371b5, type: 2}
+  openingDialogues: []
+  dialogDisplayDuration: 3
+  dialogTransitionDelay: 0.5
+  clearStoryId: 
+  interferenceTriggers:
+  - triggerProgress: 0.25
+    skillType: 2
+  - triggerProgress: 0.5
+    skillType: 2
+  - triggerProgress: 0.75
+    skillType: 2
+  interferenceTextConfig: {fileID: 0}
+  backgroundMaterial:
+    wobbleSpeed: 5.15
+    wobbleAmount: 0.04
+    expansionSpeed: 1.75
+    ringDensity: 15.32
+    color1: {r: 0.965, g: 0.765, b: 0.969, a: 1}
+    color2: {r: 0.918, g: 0.604, b: 0.941, a: 1}
+    color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
+    color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
+    color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+  interferenceCount: 0

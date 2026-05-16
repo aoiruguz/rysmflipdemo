@@ -41,6 +41,18 @@ public class SettingsUIManager : MonoBehaviour
     [Header("关闭按钮")]
     public Button closeButton;
 
+    [Header("Collider 控制")]
+    [Tooltip("展开设置面板的按钮（用于绑定屏蔽 Collider 的事件）")]
+    public Button openSettingsButton;
+    [Tooltip("关闭设置面板的按钮（用于绑定恢复 Collider 的事件）")]
+    public Button closeSettingsButton;
+    [Tooltip("打开设置面板时是否禁用所有场景中的 Collider（防止点击穿透）")]
+    public bool disableCollidersOnOpen = true;
+
+    // Collider 状态记录
+    private List<Collider2D> _disabledColliders2D = new List<Collider2D>();
+    private List<Collider> _disabledColliders3D = new List<Collider>();
+
 
     private void Awake()
     {
@@ -51,6 +63,12 @@ public class SettingsUIManager : MonoBehaviour
             inputModeButton.onClick.AddListener(ToggleInputMode);
         if (offsetSpeedButton != null)
             offsetSpeedButton.onClick.AddListener(OpenOffsetSpeedScene);
+
+        // 绑定 Collider 控制按钮
+        if (openSettingsButton != null)
+            openSettingsButton.onClick.AddListener(DisableAllColliders);
+        if (closeSettingsButton != null)
+            closeSettingsButton.onClick.AddListener(RestoreAllColliders);
 
         // 设置滑块监听
         if (musicVolumeSlider != null)
@@ -277,5 +295,75 @@ public class SettingsUIManager : MonoBehaviour
         {
             LevelUIManager.Instance.previewAudioSource.volume = GameSettings.MusicVolume;
         }
+    }
+
+    // ===================== Collider 控制 =====================
+
+    /// <summary>
+    /// 禁用场景中所有的 Collider（2D 和 3D）
+    /// </summary>
+    private void DisableAllColliders()
+    {
+        if (!disableCollidersOnOpen)
+            return;
+
+        _disabledColliders2D.Clear();
+        _disabledColliders3D.Clear();
+
+        // 禁用所有 2D Colliders
+        Collider2D[] colliders2D = FindObjectsOfType<Collider2D>();
+        foreach (var col in colliders2D)
+        {
+            if (col != null && col.enabled)
+            {
+                col.enabled = false;
+                _disabledColliders2D.Add(col);
+            }
+        }
+
+        // 禁用所有 3D Colliders
+        Collider[] colliders3D = FindObjectsOfType<Collider>();
+        foreach (var col in colliders3D)
+        {
+            if (col != null && col.enabled)
+            {
+                col.enabled = false;
+                _disabledColliders3D.Add(col);
+            }
+        }
+
+        Debug.Log($"[SettingsUIManager] Disabled {_disabledColliders2D.Count} Collider2D and {_disabledColliders3D.Count} Collider");
+    }
+
+    /// <summary>
+    /// 恢复之前禁用的所有 Collider
+    /// </summary>
+    private void RestoreAllColliders()
+    {
+        if (!disableCollidersOnOpen)
+            return;
+
+        // 恢复所有 2D Colliders
+        foreach (var col in _disabledColliders2D)
+        {
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+        }
+
+        // 恢复所有 3D Colliders
+        foreach (var col in _disabledColliders3D)
+        {
+            if (col != null)
+            {
+                col.enabled = true;
+            }
+        }
+
+        Debug.Log($"[SettingsUIManager] Restored {_disabledColliders2D.Count} Collider2D and {_disabledColliders3D.Count} Collider");
+
+        _disabledColliders2D.Clear();
+        _disabledColliders3D.Clear();
     }
 }
