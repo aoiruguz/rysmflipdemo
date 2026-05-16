@@ -34,7 +34,9 @@ Shader "Custom/UI_BG_Normal"
         _Color6             ("Color 6",             Color)      = (1.00, 1.00, 1.00, 1)
 
         // --- Floating Effects ---
-        _EffectTex          ("Effect Texture (132x66)", 2D) = "white" {}
+        _EffectTex          ("Effect Texture",      2D)         = "white" {}
+        _EffectFrameCount   ("Effect Frame Count",  Float)      = 8.0
+        _EffectFrameSize    ("Effect Frame Size",   Float)      = 33.0
         _EffectCount        ("Effect Count",        Float)      = 10
         _EffectLifetime     ("Effect Lifetime",     Float)      = 5.0
         _EffectSpeedY       ("Effect Speed Y",      Float)      = 15.0
@@ -100,6 +102,8 @@ Shader "Custom/UI_BG_Normal"
             float4    _Color6;
 
             sampler2D _EffectTex;
+            float     _EffectFrameCount;
+            float     _EffectFrameSize;
             float     _EffectCount;
             float     _EffectLifetime;
             float     _EffectSpeedY;
@@ -226,70 +230,66 @@ Shader "Custom/UI_BG_Normal"
                 half expandTime = max((half)_EffectExpandTime, 0.001);
                 half fadeOutTime = (half)_EffectFadeOutTime;
 
-                for (int layer = 7; layer >= 0; layer--) {
-                    for (int i = 0; i < 30; i++) {
-                        if (i >= effectCount) break;
+                int frameCount = max((int)_EffectFrameCount, 1);
+                half frameSize = max((half)_EffectFrameSize, 1.0);
 
-                        half offset = (half)Hash(i * 101) * effectLifetime;
-                        half localT = t + offset;
-                        half cycle = floor(localT / effectLifetime);
+                for (int i = 0; i < 30; i++) {
+                    if (i >= effectCount) break;
+
+                    half offset = (half)Hash(i * 101) * effectLifetime;
+                    half localT = t + offset;
+                    half cycle = floor(localT / effectLifetime);
+                    
+                    int baseSeed = i * 1337 + (int)cycle * 3141;
+                    int texIdx = (int)floor(Hash(baseSeed * 11) * (float)frameCount);
+                    texIdx = clamp(texIdx, 0, frameCount - 1);
+                    
+                    half nTime = frac(localT / effectLifetime);
+                    half startX = (half)Hash(baseSeed * 17) * res.x;
+                    half startY = (half)Hash(baseSeed * 23) * res.y;
+                    
+                    half speedY = (half)_EffectSpeedY * (0.8 + 0.4 * (half)Hash(baseSeed * 29));
+                    // Snap vertical movement to absolute pixels
+                    half currentY = floor(startY + nTime * effectLifetime * speedY);
+                    
+                    half swayFreq = (half)_EffectSwayFreq * (0.8 + 0.4 * (half)Hash(baseSeed * 31));
+                    half swayAmp = (half)_EffectSwayAmp * (0.5 + 0.5 * (half)Hash(baseSeed * 37));
+                    // Snap sway to absolute pixels
+                    half currentX = floor(startX + sin(nTime * swayFreq * 6.2831 + (half)Hash(baseSeed * 41) * 6.2831) * swayAmp);
+                    
+                    half pScale = min(nTime * effectLifetime / expandTime, 1.0);
+                    half size = floor(frameSize * pScale);
+                    if (size < 1.0) continue;
+                    
+                    half2 minPos = (half2)float2(currentX, currentY) - floor(size * 0.5);
+                    half2 maxPos = minPos + size;
+                    
+                    if (pixelPos.x >= minPos.x && pixelPos.x < maxPos.x &&
+                        pixelPos.y >= minPos.y && pixelPos.y < maxPos.y) 
+                    {
+                        half fadeOutStart = 1.0 - clamp(fadeOutTime / effectLifetime, 0.0, 1.0);
+                        half pAlpha = 1.0;
+                        if (nTime > fadeOutStart) {
+                            pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
+                        }
                         
-                        int baseSeed = i * 1337 + (int)cycle * 3141;
-                        int texIdx = (int)floor(Hash(baseSeed * 11) * 8.0);
-                        texIdx = clamp(texIdx, 0, 7);
+                        half2 localPos = pixelPos - minPos;
+                        half2 texUV = localPos * (frameSize / size);
                         
-                        if (texIdx == layer) {
-                            half nTime = frac(localT / effectLifetime);
-                            half startX = (half)Hash(baseSeed * 17) * res.x;
-                            half startY = (half)Hash(baseSeed * 23) * res.y;
-                            
-                            half speedY = (half)_EffectSpeedY * (0.8 + 0.4 * (half)Hash(baseSeed * 29));
-                            // Snap vertical movement to absolute pixels
-                            half currentY = floor(startY + nTime * effectLifetime * speedY);
-                            
-                            half swayFreq = (half)_EffectSwayFreq * (0.8 + 0.4 * (half)Hash(baseSeed * 31));
-                            half swayAmp = (half)_EffectSwayAmp * (0.5 + 0.5 * (half)Hash(baseSeed * 37));
-                            // Snap sway to absolute pixels
-                            half currentX = floor(startX + sin(nTime * swayFreq * 6.2831 + (half)Hash(baseSeed * 41) * 6.2831) * swayAmp);
-                            
-                            half pScale = min(nTime * effectLifetime / expandTime, 1.0);
-                            half size = floor(33.0 * pScale);
-                            if (size < 1.0) continue;
-                            
-                            half2 minPos = (half2)float2(currentX, currentY) - floor(size * 0.5);
-                            half2 maxPos = minPos + size;
-                            
-                            if (pixelPos.x >= minPos.x && pixelPos.x < maxPos.x &&
-                                pixelPos.y >= minPos.y && pixelPos.y < maxPos.y) 
-                            {
-                                half fadeOutStart = 1.0 - clamp(fadeOutTime / effectLifetime, 0.0, 1.0);
-                                half pAlpha = 1.0;
-                                if (nTime > fadeOutStart) {
-                                    pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
-                                }
-                                
-                                half2 localPos = pixelPos - minPos;
-                                half2 texUV = localPos * (33.0 / size);
-                                
-                                int colIdx = texIdx % 4;
-                                int rowIdx = 1 - (texIdx / 4);
-                                
-                                half fx = clamp(floor(texUV.x), 0.0, 32.0);
-                                half fy = clamp(floor(texUV.y), 0.0, 32.0);
-                                
-                                float u = (colIdx * 33.0 + (float)fx + 0.5) / 132.0;
-                                float v = (rowIdx * 33.0 + (float)fy + 0.5) / 66.0;
-                                
-                                fixed4 texColor = tex2D(_EffectTex, float2(u, v));
-                                if (texColor.a > 0.01) {
-                                    texColor.a *= (fixed)pAlpha;
-                                    float3 hl;
-                                    hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
-                                    hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
-                                    hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
-                                    col.rgb = lerp(col.rgb, (fixed3)hl, texColor.a);
-                                }
-                            }
+                        half fx = clamp(floor(texUV.x), 0.0, frameSize - 1.0);
+                        half fy = clamp(floor(texUV.y), 0.0, frameSize - 1.0);
+                        
+                        float u = ((float)texIdx * frameSize + (float)fx + 0.5) / ((float)frameCount * frameSize);
+                        float v = ((float)fy + 0.5) / frameSize;
+                        
+                        fixed4 texColor = tex2D(_EffectTex, float2(u, v));
+                        if (texColor.a > 0.01) {
+                            texColor.a *= (fixed)pAlpha;
+                            float3 hl;
+                            hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
+                            hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
+                            hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
+                            col.rgb = lerp(col.rgb, (fixed3)hl, texColor.a);
                         }
                     }
                 }
