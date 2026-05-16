@@ -102,7 +102,7 @@ public class LevelPanelSprite : MonoBehaviour
         {
             // 解锁状态
             if (buttonText != null)
-                buttonText.text = "挑战";
+                buttonText.text = " ";
 
             if (lockIconSprite != null)
                 lockIconSprite.gameObject.SetActive(false);
