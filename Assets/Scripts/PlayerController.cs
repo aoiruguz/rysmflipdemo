@@ -255,7 +255,12 @@ public class PlayerController : MonoBehaviour
         SettingsUI settings = Object.FindFirstObjectByType<SettingsUI>(FindObjectsInactive.Include);
         if (settings != null)
         {
-            if (settings.gameObject.activeSelf)
+            // 倒计时期间按 ESC：取消倒计时，重新打开设置菜单
+            if (settings.IsCountingDown)
+            {
+                settings.Open();
+            }
+            else if (settings.gameObject.activeSelf)
             {
                 settings.Close();
             }
