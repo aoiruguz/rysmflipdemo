@@ -3501,7 +3501,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoteManager
   notePrefab: {fileID: 7312989398368265476, guid: 121b9d315d0b2044d8f3e05f7fe5893a, type: 3}
   noteTextData: {fileID: 4900000, guid: 41c3acf5d2e38954dacd9f8593a2b4d2, type: 3}
-  currentChart: {fileID: 11400000, guid: 5409055f4d3446a40b21162dcc23c6a6, type: 2}
+  currentChart: {fileID: 0}
   audioSource: {fileID: 610100206}
   autoStartGame: 0
   noteTravelTime: 1
@@ -5728,8 +5728,8 @@ MonoBehaviour:
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
   namesData: {fileID: 4900000, guid: e463c614cbdc263469b3ef131f264b6f, type: 3}
-  enableSpatial: 0
-  spatialProbability: 0.2
+  enableSpatial: 1
+  spatialProbability: 0.5
   giftSprites:
   - {fileID: 21300000, guid: 9f62053a8c955b44ba4712601440b92b, type: 3}
   - {fileID: 21300000, guid: c37fcddc851c53c4688dd042e6fc39e1, type: 3}
