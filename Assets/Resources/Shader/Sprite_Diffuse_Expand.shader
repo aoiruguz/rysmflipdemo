@@ -8,20 +8,13 @@ Shader "Custom/Sprite_Diffuse_Expand"
         // --- 着色颜色 ---
         _TintColor      ("Tint Color",          Color)  = (1, 1, 1, 1)
 
-        // --- 扩散控制 ---
-        // 同时可见的贴图副本层数（有限层，非无限循环）
-        _ExpandCount    ("Expand Count",        Float)  = 4.0
-        // 每一层从生成到消失的时长倒数（越大扩散越快）
-        _ExpandSpeed    ("Expand Speed",        Float)  = 1.0
-
-        // --- 噪声扰动 ---
-        _NoiseStrength  ("Noise Strength",      Float)  = 0.04
+        // --- 动画控制 ---
+        _FrameCount     ("Frame Count",         Float)  = 5.0
+        _FrameSize      ("Frame Size",          Float)  = 100.0
+        _PlaySpeed      ("Play Speed (FPS)",    Float)  = 12.0
 
         // --- 触发控制 ---
         _StartTime      ("Start Time",          Float)  = -999.0
-
-        // --- 像素化 ---
-        _Resolution     ("Resolution (XY)",     Vector) = (480, 270, 0, 0)
 
         // --- Sprite 标准 Stencil / Masking（Mask 兼容）---
         _StencilComp        ("Stencil Comparison",  Float)  = 8
@@ -72,10 +65,9 @@ Shader "Custom/Sprite_Diffuse_Expand"
             float4    _MainTex_ST;
             fixed4    _TintColor;
 
-            float     _ExpandCount;
-            float     _ExpandSpeed;
-            float     _NoiseStrength;
-            float4    _Resolution;
+            float     _FrameCount;
+            float     _FrameSize;
+            float     _PlaySpeed;
             float4    _ClipRect;
             float     _StartTime;
 
@@ -110,43 +102,6 @@ Shader "Custom/Sprite_Diffuse_Expand"
                 return OUT;
             }
 
-            // ── 程序化噪声（Wang Hash，与 UI_BG_Normal 算法相同）─────────────
-            float Hash(int n)
-            {
-                uint u = (uint)n;
-                u = (u ^ 61u) ^ (u >> 16u);
-                u *= 9u;
-                u ^= u >> 4u;
-                u *= 0x27d4eb2du;
-                u ^= u >> 15u;
-                return float(u) * 2.3283064365e-10; // → [0, 1)
-            }
-
-            // 基于 UV 的 2D 值噪声，返回 [-1, 1] 的二维扰动向量
-            float2 ValueNoise2D(float2 uv)
-            {
-                float2 p  = uv * 6.0;
-                int2   ip = (int2)floor(p);
-                float2 fp = frac(p);
-                float2 w  = fp * fp * (3.0 - 2.0 * fp); // Hermite 平滑
-
-                // 通道 A
-                float hA  = Hash(ip.x       + ip.y       * 1619);
-                float hB  = Hash(ip.x + 1   + ip.y       * 1619);
-                float hC  = Hash(ip.x       + (ip.y + 1) * 1619);
-                float hD  = Hash(ip.x + 1   + (ip.y + 1) * 1619);
-                float nx  = lerp(lerp(hA, hB, w.x), lerp(hC, hD, w.x), w.y);
-
-                // 通道 B（用不同偏置）
-                float hA2 = Hash(ip.x       + ip.y       * 1619 + 7919);
-                float hB2 = Hash(ip.x + 1   + ip.y       * 1619 + 7919);
-                float hC2 = Hash(ip.x       + (ip.y + 1) * 1619 + 7919);
-                float hD2 = Hash(ip.x + 1   + (ip.y + 1) * 1619 + 7919);
-                float ny  = lerp(lerp(hA2, hB2, w.x), lerp(hC2, hD2, w.x), w.y);
-
-                return float2(nx, ny) * 2.0 - 1.0;
-            }
-
             // ── Fragment ──────────────────────────────────────────────────────
             fixed4 frag(v2f IN) : SV_Target
             {
@@ -158,86 +113,35 @@ Shader "Custom/Sprite_Diffuse_Expand"
 
                 float2 uv = IN.texcoord; // [0, 1] Sprite UV
 
-                // ① 像素化：将 UV 量化到 _Resolution 网格
-                float2 res = max(_Resolution.xy, float2(1.0, 1.0));
-                uv = floor(uv * res) / res;
+                // 像素化：将 UV 量化到 _FrameSize 网格，并偏移到像素中心进行采样
+                float frameSize = max(_FrameSize, 1.0);
+                uv = (floor(uv * frameSize) + 0.5) / frameSize;
 
-                // 全局时间，驱动每层副本的生命周期
                 // 计算触发后的相对时间进度
-                float localT = (_Time.y - _StartTime) * _ExpandSpeed;
+                float elapsedTime = _Time.y - _StartTime;
                 
-                // 如果还没触发或者已经播放完毕（所有层都超过 1.0），直接剪裁
-                // 最大进度大约是 1.0 (最后一层的时间) + 1.0 (生命周期)
-                if (localT < 0.0 || localT > 2.0) discard;
+                // 如果还没触发，直接剪裁
+                if (elapsedTime < 0.0) discard;
 
-                // 最多支持 16 层
-                int count = clamp((int)_ExpandCount, 1, 16);
+                int frameCount = max((int)_FrameCount, 1);
+                int currentFrame = (int)floor(elapsedTime * _PlaySpeed);
 
-                // 最终合成颜色
-                float4 result = float4(0.0, 0.0, 0.0, 0.0);
+                // 一次性播放：如果播放完毕，直接剪裁
+                if (currentFrame >= frameCount) discard;
 
-                // 从后往前叠合
-                for (int i = 15; i >= 0; i--)
-                {
-                    if (i >= count) continue;
+                // 计算图集中的实际 UV
+                // 图集是水平排列的，总宽度为 frameCount * frameSize
+                // 原有的 UV (0~1) 需要被压缩到当前帧的区域
+                float2 atlasUV = uv;
+                atlasUV.x = (uv.x + (float)currentFrame) / (float)frameCount;
 
-                    // 每一层的时间偏移：0 是第一层，随着 i 增加，延迟出现
-                    float delay = (float)i / (float)count;
-                    float layerT = localT - delay; 
-
-                    // 只有在生命周期 [0, 1] 内的层才显示
-                    if (layerT < 0.0 || layerT > 1.0) continue;
-
-                    // 缩放因子
-                    float scale = layerT;
-                    if (scale < 0.005) continue;
-
-                    // ── 将当前像素 UV 逆变换回该层的纹理 UV ──────────────────
-                    // Sprite 中心 = (0.5, 0.5)，以中心为原点缩放
-                    float2 centered = uv - 0.5;
-                    float2 texUV    = centered / scale + 0.5;
-
-                    // 超出贴图范围 [0,1] 的区域不属于该层，跳过
-                    if (texUV.x < 0.0 || texUV.x > 1.0 ||
-                        texUV.y < 0.0 || texUV.y > 1.0)
-                        continue;
-
-                    // ── 程序化噪声 UV 扰动（随时间缓慢漂移）─────────────────
-                    // 用层索引做种子，各层噪声独立互不干扰
-                    float noiseTime = _Time.y * 0.15 + (float)i * 3.7;
-                    float2 noise    = ValueNoise2D(texUV + float2(noiseTime, noiseTime * 0.7));
-                    float2 distUV   = texUV + noise * _NoiseStrength;
-                    distUV          = clamp(distUV, 0.0, 1.0);
-
-                    // ── 采样主贴图 ─────────────────────────────────────────────
-                    fixed4 texColor = tex2D(_MainTex, distUV);
-
-                    // ── Alpha 曲线：淡入→全亮→淡出（接近边界时消失）─────────
-                    // 淡入段：layerT 0~0.1 快速淡入
-                    float fadeIn  = smoothstep(0.0, 0.1, layerT);
-                    // 淡出段：layerT 0.5~1.0 线性淡出（越大越透明）
-                    float fadeOut = 1.0 - smoothstep(0.5, 1.0, layerT);
-                    float layerAlpha = fadeIn * fadeOut;
-
-                    // 叠合贴图自带 Alpha + 生命周期 Alpha
-                    float srcA = texColor.a * layerAlpha;
-
-                    // ── Alpha Over 合成（从后向前）────────────────────────────
-                    // result 是已合成的背景，当前层覆盖在其上
-                    float outA   = srcA + result.a * (1.0 - srcA);
-                    float3 outRGB;
-                    if (outA > 0.0001)
-                        outRGB = (texColor.rgb * srcA + result.rgb * result.a * (1.0 - srcA)) / outA;
-                    else
-                        outRGB = float3(0.0, 0.0, 0.0);
-
-                    result = float4(outRGB, outA);
-                }
+                // 采样主贴图
+                fixed4 texColor = tex2D(_MainTex, atlasUV);
 
                 // ── 最终染色：结合顶点色（SpriteRenderer Color × Inspector TintColor）──
                 fixed4 col;
-                col.rgb = result.rgb * IN.color.rgb;
-                col.a   = result.a   * IN.color.a;
+                col.rgb = texColor.rgb * IN.color.rgb;
+                col.a   = texColor.a   * IN.color.a;
 
                 return col;
             }

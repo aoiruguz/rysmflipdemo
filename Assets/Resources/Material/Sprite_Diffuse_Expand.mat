@@ -45,8 +45,11 @@ Material:
     - _EnableExternalAlpha: 0
     - _ExpandCount: 3
     - _ExpandSpeed: 3
+    - _FrameCount: 5
+    - _FrameSize: 108
     - _NoiseStrength: 0.06
-    - _StartTime: 32.7983
+    - _PlaySpeed: 12
+    - _StartTime: 23.584911
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
@@ -57,6 +60,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Resolution: {r: 480, g: 270, b: 0, a: 0}
-    - _TintColor: {r: 0.427451, g: 0.9490197, b: 0.59607846, a: 1}
+    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

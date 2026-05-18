@@ -87,21 +87,16 @@ public class PlayerController : MonoBehaviour
     [Header("Hit Overlay Effect")]
     [Tooltip("击中时闪烁的子物体Image组件")]
     public Image hitOverlayImage;
-    public float overlayFadeInTime = 0.05f;
-    public float overlayStayTime = 0.05f;
-    public float overlayFadeOutTime = 0.2f;
     
-    [Header("Hit Overlay Colors")]
-    public Color overlayColorJ = Color.red;
-    public Color overlayColorL = Color.yellow;
-    public Color overlayColorK = Color.blue;
-    public Color overlayColorA = Color.white;
-    public Color overlayColorD = Color.white;
+    [Header("Hit Overlay Sprites (Atlas)")]
+    public Sprite overlaySpriteJ;
+    public Sprite overlaySpriteL;
+    public Sprite overlaySpriteK;
+    public Sprite overlaySpriteA;
+    public Sprite overlaySpriteD;
 
     [Tooltip("击中时闪烁的辅助反馈子物体 (Image)")]
     public Image hitFeedback;
-
-    private Tween overlayTween;
 
     public int CurrentLane { get; private set; } = 3;
     public GameColor CurrentPresetColor { get; private set; } = GameColor.J_Color0_Red;
@@ -133,11 +128,11 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         UpdateVisual();
 
-        // Ensure hit overlay is hidden at start
+        // Ensure hit overlay has full alpha so the shader can control its visibility
         if (hitOverlayImage != null)
         {
             Color c = hitOverlayImage.color;
-            c.a = 0;
+            c.a = 1f;
             hitOverlayImage.color = c;
         }
 
@@ -503,21 +498,33 @@ public class PlayerController : MonoBehaviour
 
         SpawnCatchEffect(note.transform.position, note);
         
-        // Determine hit color for overlay
-        Color hitColor = Color.white;
+        // Determine hit sprite for overlay
+        Sprite hitOverlaySprite = null;
         if (note.NoteType == NoteType.Color)
         {
             switch (note.Color)
             {
-                case GameColor.J_Color0_Red: hitColor = overlayColorJ; break;
-                case GameColor.L_Color1_Yellow: hitColor = overlayColorL; break;
-                case GameColor.K_Color2_Blue: hitColor = overlayColorK; break;
+                case GameColor.J_Color0_Red: 
+                    hitOverlaySprite = overlaySpriteJ;
+                    break;
+                case GameColor.L_Color1_Yellow: 
+                    hitOverlaySprite = overlaySpriteL;
+                    break;
+                case GameColor.K_Color2_Blue: 
+                    hitOverlaySprite = overlaySpriteK;
+                    break;
             }
         }
-        else if (note.NoteType == NoteType.DirectionalLeft) hitColor = overlayColorA;
-        else if (note.NoteType == NoteType.DirectionalRight) hitColor = overlayColorD;
+        else if (note.NoteType == NoteType.DirectionalLeft) 
+        {
+            hitOverlaySprite = overlaySpriteA;
+        }
+        else if (note.NoteType == NoteType.DirectionalRight) 
+        {
+            hitOverlaySprite = overlaySpriteD;
+        }
 
-        TriggerHitOverlay(hitColor);
+        TriggerHitOverlay(hitOverlaySprite);
 
         if (hitAudioSource != null)
         {
@@ -601,8 +608,7 @@ public class PlayerController : MonoBehaviour
             }
 
             Debug.Log($"[Effect] Spawning at angle: {angle}°");
-            effect.Initialize(pos, angle, effectSpeed, hitSprite, labelText, 
-                             hitFeedback, overlayFadeInTime, overlayStayTime, overlayFadeOutTime);
+            effect.Initialize(pos, angle, effectSpeed, hitSprite, labelText, hitFeedback);
         }
     }
 
@@ -771,23 +777,24 @@ public class PlayerController : MonoBehaviour
         img.color = c;
     }
 
-    private void TriggerHitOverlay(Color color)
+    private void TriggerHitOverlay(Sprite overlaySprite)
     {
         if (hitOverlayImage == null) return;
 
-        // 设置 Shader 的启动时间，触发一次性扩散效果
+        // 根据按键动态替换图集 Sprite
+        if (overlaySprite != null)
+        {
+            hitOverlayImage.sprite = overlaySprite;
+            // 确保 Alpha 为 1 以让 Shader 的透明度控制生效
+            Color c = hitOverlayImage.color;
+            c.a = 1f;
+            hitOverlayImage.color = c;
+        }
+
+        // 设置 Shader 的启动时间，触发一次性播放效果
         if (hitOverlayImage.material != null)
         {
             hitOverlayImage.material.SetFloat("_StartTime", Time.time);
-            hitOverlayImage.material.SetColor("_TintColor", color);
         }
-
-        overlayTween?.Kill();
-
-        // 虽然 Shader 内部有一位时间控制，但保留 Tween 可以确保 UI 对象本身的透明度被正确管理
-        overlayTween = DOTween.Sequence()
-            .Append(hitOverlayImage.DOFade(1f, overlayFadeInTime).SetEase(Ease.OutQuad))
-            .AppendInterval(overlayStayTime)
-            .Append(hitOverlayImage.DOFade(0f, overlayFadeOutTime).SetEase(Ease.InQuad));
     }
 }

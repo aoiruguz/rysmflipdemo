@@ -3499,7 +3499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoteManager
   notePrefab: {fileID: 7312989398368265476, guid: 121b9d315d0b2044d8f3e05f7fe5893a, type: 3}
   noteTextData: {fileID: 4900000, guid: 41c3acf5d2e38954dacd9f8593a2b4d2, type: 3}
-  currentChart: {fileID: 0}
+  currentChart: {fileID: 11400000, guid: 5409055f4d3446a40b21162dcc23c6a6, type: 2}
   audioSource: {fileID: 610100206}
   autoStartGame: 0
   noteTravelTime: 1
@@ -6018,11 +6018,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1112928041}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 87, y: 92}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 14}
+  m_SizeDelta: {x: 108, y: 108}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &978000678
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6051,7 +6051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 4ba473328778aaf45b650a729d56dff2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7206,14 +7206,11 @@ MonoBehaviour:
   uiImage_D: {fileID: 621839840}
   inactiveAlpha: 0.5
   hitOverlayImage: {fileID: 978000679}
-  overlayFadeInTime: 0.05
-  overlayStayTime: 0.1
-  overlayFadeOutTime: 0.2
-  overlayColorJ: {r: 1, g: 0.5647059, b: 0.6901961, a: 1}
-  overlayColorL: {r: 0.46274513, g: 0.86666673, b: 1, a: 1}
-  overlayColorK: {r: 1, g: 0.91372555, b: 0.38823533, a: 1}
-  overlayColorA: {r: 0.427451, g: 0.9490197, b: 0.59607846, a: 1}
-  overlayColorD: {r: 0.427451, g: 0.9490197, b: 0.59607846, a: 1}
+  overlaySpriteJ: {fileID: 21300000, guid: 2152d55dbbe6aed41bab11a928de4106, type: 3}
+  overlaySpriteL: {fileID: 21300000, guid: 4ba473328778aaf45b650a729d56dff2, type: 3}
+  overlaySpriteK: {fileID: 21300000, guid: c493c29de40e9be4a8fe5b81bd633256, type: 3}
+  overlaySpriteA: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
+  overlaySpriteD: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
   hitFeedback: {fileID: 1831771966}
 --- !u!224 &1112928041
 RectTransform:
