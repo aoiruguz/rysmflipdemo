@@ -22,9 +22,15 @@ public class InterferenceManager : MonoBehaviour
     [Tooltip("故障快遮挡技能")]
     public GlitchEffectSkill glitchEffectSkill;
 
+    [Tooltip("屏幕震动技能")]
+    public ShakeEffectSkill shakeEffectSkill;
+
     [Header("技能配置")]
     [Tooltip("Glitch Material（拖入用于故障效果的Material）")]
     public Material glitchMaterial;
+
+    [Tooltip("游戏主窗口 (用于屏幕震动)")]
+    public RectTransform gameWindowRect;
 
     [Header("调试")]
     [Tooltip("显示调试信息")]
@@ -113,6 +119,15 @@ public class InterferenceManager : MonoBehaviour
             skillObj.transform.SetParent(transform);
             glitchEffectSkill = skillObj.AddComponent<GlitchEffectSkill>();
             glitchEffectSkill.glitchMaterial = glitchMaterial;
+        }
+
+        // 初始化屏幕震动技能
+        if (shakeEffectSkill == null)
+        {
+            GameObject skillObj = new GameObject("ShakeEffectSkill");
+            skillObj.transform.SetParent(transform);
+            shakeEffectSkill = skillObj.AddComponent<ShakeEffectSkill>();
+            shakeEffectSkill.gameWindow = gameWindowRect;
         }
 
         // 加载触发配置
@@ -281,7 +296,7 @@ public class InterferenceManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 激活屏幕震动技能（占位）
+    /// 激活屏幕震动技能
     /// </summary>
     private IEnumerator ActivateScreenShake()
     {
@@ -293,8 +308,18 @@ public class InterferenceManager : MonoBehaviour
             StoryManager.Instance.ShowDialogue(2, "对手", "大地震！", -1);
         }
 
-        Debug.Log("[InterferenceManager] ScreenShake skill not implemented yet!");
-        yield return new WaitForSeconds(2f);
+        if (shakeEffectSkill != null)
+        {
+            shakeEffectSkill.Activate();
+
+            // 等待技能持续时间
+            yield return new WaitForSeconds(shakeEffectSkill.GetDuration());
+        }
+        else
+        {
+            Debug.LogWarning("[InterferenceManager] ShakeEffectSkill is not initialized!");
+            yield return new WaitForSeconds(2f);
+        }
 
         isSkillActive = false;
     }
