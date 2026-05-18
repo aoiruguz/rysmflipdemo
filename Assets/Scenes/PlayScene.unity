@@ -4448,7 +4448,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ddb437df5028dc945a72735bddfe31cf, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -7213,8 +7213,8 @@ MonoBehaviour:
   overlaySpriteK: {fileID: 21300000, guid: c493c29de40e9be4a8fe5b81bd633256, type: 3}
   overlaySpriteA: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
   overlaySpriteD: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
-  hitOverlaySpeed: 2
-  hitOverlayAlpha: 0.5
+  hitOverlaySpeed: 1.5
+  hitOverlayAlpha: 0.9
   hitFeedback: {fileID: 1831771966}
 --- !u!224 &1112928041
 RectTransform:

@@ -48,8 +48,8 @@ Material:
     - _FrameCount: 5
     - _FrameSize: 108
     - _NoiseStrength: 0.06
-    - _PlaySpeed: 12
-    - _StartTime: 6.706368
+    - _PlaySpeed: 18
+    - _StartTime: 84.54691
     - _Stencil: 0
     - _StencilComp: 8
     - _StencilOp: 0
