@@ -60,6 +60,8 @@ public class TransitionManager : MonoBehaviour
         }
 
         // 4. 两个条件都满足后，允许场景跳转
+        // 修复：确保在切换场景前恢复时间缩放，防止从暂停状态（如设置面板）切换时导致新场景时间静止
+        Time.timeScale = 1f;
         operation.allowSceneActivation = true;
 
         // 5. 等待场景真正切换完成后，播放结束动画

@@ -44,6 +44,8 @@ public class SceneLoader : MonoBehaviour
         else
         {
             // 否则直接加载场景
+            // 修复：确保在切换场景前恢复时间缩放，防止从暂停状态切换时导致新场景时间静止
+            Time.timeScale = 1f;
             StartCoroutine(LoadSceneAsync());
         }
     }
