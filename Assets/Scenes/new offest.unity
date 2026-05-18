@@ -3844,11 +3844,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed3440fbb1805540afb6c0c9da6975b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsUI
-  musicVolumeSlider: {fileID: 1882473300}
-  noteVolumeSlider: {fileID: 744775121}
   modeButton: {fileID: 1449660033}
   modeText: {fileID: 1624940259}
+  retryButton: {fileID: 0}
+  exitButton: {fileID: 0}
   closeButton: {fileID: 584454030}
+  countdownImage: {fileID: 0}
+  countdownSprites: []
+  panelFadeDuration: 0.25
+  countdownPunchScale: 1.3
+  countdownPunchDuration: 0.4
 --- !u!114 &1074508388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4761,11 +4766,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed3440fbb1805540afb6c0c9da6975b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsUI
-  musicVolumeSlider: {fileID: 1377815198}
-  noteVolumeSlider: {fileID: 669166816}
   modeButton: {fileID: 0}
   modeText: {fileID: 0}
+  retryButton: {fileID: 0}
+  exitButton: {fileID: 0}
   closeButton: {fileID: 455436833}
+  countdownImage: {fileID: 0}
+  countdownSprites: []
+  panelFadeDuration: 0.25
+  countdownPunchScale: 1.3
+  countdownPunchDuration: 0.4
 --- !u!114 &1272026568
 MonoBehaviour:
   m_ObjectHideFlags: 0

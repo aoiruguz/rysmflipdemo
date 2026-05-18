@@ -54,6 +54,13 @@ public class BackgroundMaterialController : MonoBehaviour
         backgroundMaterial.SetColor("_Color4", settings.color4);
         backgroundMaterial.SetColor("_Color5", settings.color5);
 
+        // 设置效果纹理参数
+        if (settings.effectTexture != null)
+        {
+            backgroundMaterial.SetTexture("_EffectTex", settings.effectTexture);
+        }
+        backgroundMaterial.SetFloat("_EffectFrameCount", settings.effectFrameCount);
+
         Debug.Log($"[BackgroundMaterialController] Applied material settings for level: {currentLevel.levelName}");
     }
 
@@ -78,6 +85,13 @@ public class BackgroundMaterialController : MonoBehaviour
         backgroundMaterial.SetColor("_Color3", settings.color3);
         backgroundMaterial.SetColor("_Color4", settings.color4);
         backgroundMaterial.SetColor("_Color5", settings.color5);
+
+        // 设置效果纹理参数
+        if (settings.effectTexture != null)
+        {
+            backgroundMaterial.SetTexture("_EffectTex", settings.effectTexture);
+        }
+        backgroundMaterial.SetFloat("_EffectFrameCount", settings.effectFrameCount);
     }
 
     private void OnDestroy()

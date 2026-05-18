@@ -230,7 +230,7 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
-  namesData: {fileID: 0}
+  namesData: {fileID: 4900000, guid: e463c614cbdc263469b3ef131f264b6f, type: 3}
   enableSpatial: 0
   spatialProbability: 0.2
   giftSprites: []
@@ -1710,7 +1710,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aaef19a8debe3044e8079c3de0e73ae7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: efcf1d6cbbc29c444970ab8bcde5dc42, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2239,8 +2239,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 9.66, y: -1.69}
+  m_SizeDelta: {x: 91.54, y: 16.42}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &402665711
 CanvasRenderer:
@@ -3499,7 +3499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NoteManager
   notePrefab: {fileID: 7312989398368265476, guid: 121b9d315d0b2044d8f3e05f7fe5893a, type: 3}
   noteTextData: {fileID: 4900000, guid: 41c3acf5d2e38954dacd9f8593a2b4d2, type: 3}
-  currentChart: {fileID: 11400000, guid: b8f401b539b4dfd4cb28f161e9ef43c5, type: 2}
+  currentChart: {fileID: 0}
   audioSource: {fileID: 610100206}
   autoStartGame: 0
   noteTravelTime: 1
@@ -4781,7 +4781,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e30b7c8a7d779504190814991b9858bf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7b35c23941f01bf4cbff38c9c623ee55, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5725,7 +5725,7 @@ MonoBehaviour:
   spacing: 3
   animDuration: 0.3
   textData: {fileID: 4900000, guid: f2838decba1bb9d468be74ee71d1c091, type: 3}
-  namesData: {fileID: 0}
+  namesData: {fileID: 4900000, guid: e463c614cbdc263469b3ef131f264b6f, type: 3}
   enableSpatial: 0
   spatialProbability: 0.2
   giftSprites:
@@ -7181,13 +7181,15 @@ MonoBehaviour:
   accuratePositionTolerance: 1.5
   effectContainer: {fileID: 1664728136}
   effectPrefab: {fileID: 8498010073603739563, guid: 9d1a5671d41041448904c0557ca8a375, type: 3}
-  effectSpeed: 10
+  effectSpeed: 5
   minEffectAngle: 20
-  maxEffectAngle: 80
+  maxEffectAngle: 60
   hitAudioSource: {fileID: 1112928045}
-  effectSprite0_J_Red: {fileID: 21300000, guid: 7dc24be17b4af8f40b813f7caf8f4a48, type: 3}
-  effectSprite1_L_Yellow: {fileID: 21300000, guid: 7c6a373f220c7504cb42e8a09f7a82dd, type: 3}
-  effectSprite2_K_Blue: {fileID: 21300000, guid: 0b20a0f3c4c10f64c93d30ee337541fb, type: 3}
+  effectSprite0_J_Red: {fileID: 21300000, guid: 5a55f8df3b116804bba8556327905324, type: 3}
+  effectSprite1_L_Yellow: {fileID: 21300000, guid: 0748d590ee69e1c40bc72645b689adc9, type: 3}
+  effectSprite2_K_Blue: {fileID: 21300000, guid: c33ba5bf256ee354a87c825900ccb944, type: 3}
+  effectSpriteA_Left: {fileID: 21300000, guid: 79699116a6d58074cb3e497b976fdb9a, type: 3}
+  effectSpriteD_Right: {fileID: 21300000, guid: 79699116a6d58074cb3e497b976fdb9a, type: 3}
   effectTextData: {fileID: 4900000, guid: e8bdc410097fc4b4881f8933f9a52dd3, type: 3}
   defaultSprite: {fileID: 21300000, guid: b81eaea813eb4734989af9b204049b26, type: 3}
   sprite0_J_Red: {fileID: 21300000, guid: 0b7817065d6bd194680eff6d8a779c00, type: 3}
@@ -7997,7 +7999,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u7C89\u4E1D\u91CF"
+  m_text: "\u65B0\u589E\u7C89\u4E1D\u6570"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4356af6533289ad4f93be5c4f04ae530, type: 2}
   m_sharedMaterial: {fileID: 1886000739280366587, guid: 4356af6533289ad4f93be5c4f04ae530, type: 2}
@@ -8638,8 +8640,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 7.68, y: -2.38}
+  m_SizeDelta: {x: 93.33, y: 13.98}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1327703884
 CanvasRenderer:
@@ -9668,6 +9670,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1442808298}
   - component: {fileID: 1442808299}
+  - component: {fileID: 1442808300}
   m_Layer: 0
   m_Name: SettingsPanel
   m_TagString: Untagged
@@ -9719,6 +9722,23 @@ Canvas:
   m_SortingLayerID: -971218735
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1442808300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442808297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &1449660031
 GameObject:
   m_ObjectHideFlags: 0
@@ -10751,11 +10771,12 @@ MonoBehaviour:
   offsetText: {fileID: 0}
   songTitleText: {fileID: 851999156}
   songClearText: {fileID: 814316651}
+  showSongClearText: 0
   judgmentImage: {fileID: 37752354}
-  perfectSprite: {fileID: 21300000, guid: a28556149121eae4fbf8fd8f8fc0f690, type: 3}
-  greatSprite: {fileID: 21300000, guid: 0293571b62f1452469a7f95cf238572d, type: 3}
-  goodSprite: {fileID: 21300000, guid: 60eef621fc79e674fab422870f2e18b3, type: 3}
-  missSprite: {fileID: 21300000, guid: bc96e7bad390c5f4c91f10fc03a1bb69, type: 3}
+  perfectSprite: {fileID: 21300000, guid: 72d3b17fbf440764899973e50f33cfa7, type: 3}
+  greatSprite: {fileID: 21300000, guid: 3264b40e164bf54408e65861e065cffc, type: 3}
+  goodSprite: {fileID: 21300000, guid: 77e64ee1ecfc00f4e9ba25aa60f59328, type: 3}
+  missSprite: {fileID: 21300000, guid: bc111b10dfb987344b06d7aa90f066ff, type: 3}
 --- !u!4 &1565150915
 Transform:
   m_ObjectHideFlags: 0
@@ -13272,7 +13293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cdd84aa8fd36dbd46a76dba74085e685, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 40ea6ac650ecc974090ee094285a6aa9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

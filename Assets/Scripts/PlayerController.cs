@@ -34,13 +34,17 @@ public class PlayerController : MonoBehaviour
     public float maxEffectAngle = 60f;
     public AudioSource hitAudioSource;
 
-    [Header("Effect Sprites (对应JKL三种Note颜色)")]
+    [Header("Effect Sprites (对应JKL三种Note颜色 + AD方向)")]
     [Tooltip("【J（color 0）】击中红色 Note 时特效显示的图片")]
     public Sprite effectSprite0_J_Red;
     [Tooltip("【L（color 1）】击中黄色 Note 时特效显示的图片")]
     public Sprite effectSprite1_L_Yellow;
     [Tooltip("【K（color 2）】击中蓝色 Note 时特效显示的图片")]
     public Sprite effectSprite2_K_Blue;
+    [Tooltip("【A】击中左方向 Note 时特效显示的图片")]
+    public Sprite effectSpriteA_Left;
+    [Tooltip("【D】击中右方向 Note 时特效显示的图片")]
+    public Sprite effectSpriteD_Right;
 
     [Header("Effect Text Preset")]
     [Tooltip("特效TMP随机文字预设文件（每行一条）")]
@@ -564,13 +568,24 @@ public class PlayerController : MonoBehaviour
 
             // 根据击中Note颜色选择对应贴图
             Sprite hitSprite = null;
-            if (note != null && note.NoteType == NoteType.Color)
+            if (note != null)
             {
-                switch (note.Color)
+                if (note.NoteType == NoteType.Color)
                 {
-                    case GameColor.J_Color0_Red: hitSprite = effectSprite0_J_Red; break;
-                    case GameColor.L_Color1_Yellow: hitSprite = effectSprite1_L_Yellow; break;
-                    case GameColor.K_Color2_Blue: hitSprite = effectSprite2_K_Blue; break;
+                    switch (note.Color)
+                    {
+                        case GameColor.J_Color0_Red: hitSprite = effectSprite0_J_Red; break;
+                        case GameColor.L_Color1_Yellow: hitSprite = effectSprite1_L_Yellow; break;
+                        case GameColor.K_Color2_Blue: hitSprite = effectSprite2_K_Blue; break;
+                    }
+                }
+                else if (note.NoteType == NoteType.DirectionalLeft)
+                {
+                    hitSprite = effectSpriteA_Left;
+                }
+                else if (note.NoteType == NoteType.DirectionalRight)
+                {
+                    hitSprite = effectSpriteD_Right;
                 }
             }
 

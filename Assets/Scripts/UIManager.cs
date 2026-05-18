@@ -12,6 +12,10 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI songTitleText;
     public TextMeshProUGUI songClearText; // 歌曲完成文本
 
+    [Header("Song Clear Text Settings")]
+    [Tooltip("是否显示歌曲完成文本（Song Clear / Full Combo / All Perfect）")]
+    public bool showSongClearText = true;
+
     [Header("Judgment Image Display")]
     [Tooltip("用于显示判定结果图片的 Image 组件")]
     public Image judgmentImage;
@@ -76,8 +80,9 @@ private Coroutine titleRoutine;
             if (targetSprite != null)
             {
                 judgmentImage.sprite = targetSprite;
+                judgmentImage.SetNativeSize(); // 使用原始尺寸，避免拉伸
                 judgmentImage.gameObject.SetActive(true);
-                
+
                 // 初始化动画状态：透明度 0，缩放 1.1
                 Color col = judgmentImage.color;
                 col.a = 0;
@@ -87,6 +92,7 @@ private Coroutine titleRoutine;
             else
             {
                 judgmentImage.gameObject.SetActive(false);
+                Debug.LogWarning($"[UIManager] No sprite assigned for judgment: {judgment}");
             }
         }
 
@@ -162,6 +168,13 @@ private Coroutine titleRoutine;
     /// </summary>
     public void ShowSongClearText(string text)
     {
+        // 检查开关
+        if (!showSongClearText)
+        {
+            Debug.Log($"[UIManager] Song clear text is disabled: {text}");
+            return;
+        }
+
         if (songClearText == null)
         {
             Debug.LogWarning("[UIManager] songClearText is not assigned!");

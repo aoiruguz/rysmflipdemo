@@ -77,7 +77,7 @@ public class LevelPanelSprite : MonoBehaviour
         // 设置敌人名字
         if (enemyNameText != null)
         {
-            enemyNameText.text = levelData.levelName;
+            enemyNameText.text = levelData.enemyName;
         }
 
         // 设置粉丝量

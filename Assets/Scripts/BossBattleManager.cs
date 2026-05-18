@@ -562,6 +562,7 @@ public class BossBattleManager : MonoBehaviour
         // 显示结算面板
         if (resultPanel != null)
         {
+            // 先激活面板，触发 ResultPanelEntryAnimator 的 Awake 从而记录位置并隐藏内容
             resultPanel.SetActive(true);
 
             // 通知 ResultScreenUI 更新显示
@@ -569,6 +570,13 @@ public class BossBattleManager : MonoBehaviour
             if (resultUI != null)
             {
                 resultUI.DisplayResultsFromPlayData(PlayDataCollector.Instance?.CurrentPlayData);
+            }
+
+            // 获取动画控制器并执行【退场 -> 禁用 -> 进场】流水线
+            ResultPanelEntryAnimator entryAnimator = resultPanel.GetComponent<ResultPanelEntryAnimator>();
+            if (entryAnimator != null)
+            {
+                entryAnimator.PlayExitThenEntryAnimation();
             }
         }
 
@@ -613,6 +621,7 @@ public class BossBattleManager : MonoBehaviour
         // 显示结算面板
         if (resultPanel != null)
         {
+            // 先激活面板，触发 ResultPanelEntryAnimator 的 Awake 从而记录位置并隐藏内容
             resultPanel.SetActive(true);
 
             // 通知 ResultScreenUI 更新显示
@@ -620,6 +629,13 @@ public class BossBattleManager : MonoBehaviour
             if (resultUI != null)
             {
                 resultUI.DisplayResultsFromPlayData(PlayDataCollector.Instance?.CurrentPlayData);
+            }
+
+            // 获取动画控制器并执行【退场 -> 禁用 -> 进场】流水线
+            ResultPanelEntryAnimator entryAnimator = resultPanel.GetComponent<ResultPanelEntryAnimator>();
+            if (entryAnimator != null)
+            {
+                entryAnimator.PlayExitThenEntryAnimation();
             }
         }
 

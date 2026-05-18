@@ -497,7 +497,7 @@ public class SaveManager : MonoBehaviour
         if (currentFans < config.requiredFans)
         {
             long needed = config.requiredFans - currentFans;
-            condition += $"需要 {ScoreCalculator.FormatLargeNumber(needed)} 粉丝";
+            condition += $"还需 {ScoreCalculator.FormatLargeNumber(needed)} 粉丝";
         }
 
         // 如果都满足了

@@ -105,7 +105,7 @@ public class ResultScreenUI : MonoBehaviour
             return;
         }
 
-        // Song Info
+        // Song Info (只显示歌曲名，不显示难度)
         if (songNameText != null)
             songNameText.text = playData.songName;
 

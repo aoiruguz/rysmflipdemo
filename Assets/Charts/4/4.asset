@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b36c649c42e63084487e5a5e34658791, type: 3}
   m_Name: 4
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  levelName: "\u5408"
-  composer: 
-  displayBPM: 0
+  levelName: Cocoon of echos
+  composer: "KoiNs_\u5B54\u4E16\u5CF0"
+  displayBPM: 80
   previewMusic: {fileID: 8300000, guid: 70d17de1cdff593498cba4d0355c8605, type: 3}
   enemyName: "\uFF1F\uFF1F\uFF1F"
   enemyAvatar: {fileID: 21300000, guid: 03b93495dcfc7b244aec9f8dd7396cc3, type: 3}
@@ -47,28 +47,29 @@ MonoBehaviour:
     text: "\u4F60\u4EEC\u5E72\u4EC0\u4E48\uFF1F\u4E0D\u662F\u8BF4\u597D\u4E00\u751F\u63A8\u5417\uFF1F"
   - panelIndex: 3
     speakerName: 
-    text: "\u4F60\u592A\u8BA9\u6211\u4EEC\u5931\u671B\u4E86\u2026\u2026\u584C\u623F...\u623F..."
+    text: "\u4F60\u592A\u8BA9\u6211\u4EEC\u5931\u671B\u4E86\u2026perfect\u592A\u5C11\u2026\u584C\u623F...\u623F..."
   - panelIndex: 1
     speakerName: 
-    text: "\u5BB6\u4EBA\u4EEC\u966A\u6211\u4E00\u8DEF\u8D70\u6765\uFF0C\u90FD\u5FD8\u4E86\u5417\uFF1F"
+    text: "\u4F60\u4EEC\u90FD\u662F\u966A\u6211\u4E00\u8DEF\u8D70\u6765\u7684\u5BB6\u4EBA\uFF0C\u96BE\u9053\u90FD\u5FD8\u4E86\u6211\u662F\u600E\u4E48\u6837\u6253\u51FA\u6765\u7684\u5417\uFF1F"
   - panelIndex: 3
     speakerName: 
-    text: "\u4F60...\u53D8...\u4E86...\u4E0D\u662F\u5F53\u521D\u6211\u4EEC\u559C\u6B22\u7684\u6837\u5B50..."
+    text: "\u4F60...\u53D8...\u4E86...\u4E0D\u662F\u5F53\u521D\u6211\u4EEC\u559C\u6B22\u7684\u6837\u5B50...\u8868\u73B0\u592A\u5DEE\uFF01"
   - panelIndex: 1
     speakerName: 
-    text: "\u4F60\u4EEC\u60F3\u600E\u4E48\u6837\uFF1F"
+    text: "\u4F60\u4EEC\u5230\u5E95\u60F3\u8981\u6211\u600E\u4E48\u6837\uFF1F"
   - panelIndex: 3
     speakerName: 
-    text: "\u4F60\u5C31\u8BE5\u542C\u6211\u4EEC\u7684\uFF0C\u670D...\u4ECE...\u4ECE\u2026\u2026\u6309\u6211\u4EEC\u7684\u60F3\u6CD5\u6765\uFF01"
+    text: "\u8981perfect\uFF01\u670D...\u4ECE...\u4ECE\u2026\u2026\u8981perfect\uFF01All
+      perfect\uFF01"
   - panelIndex: 1
     speakerName: 
-    text: "\u767D\u65E5\u505A\u68A6\uFF01\u4F60\u4EEC\u8FD9\u7FA4\u53DB\u5F92\uFF01"
+    text: "\u4F60\u4EEC\u8FD9\u662F\u9738\u51CC\uFF01\u4F60\u4EEC\u4E0D\u80FD\u8FD9\u6837\uFF01"
   - panelIndex: 3
     speakerName: 
-    text: "\u4E0D\u542C\u7C89\u4E1D\u7684\u662F\u5427\uFF1F"
+    text: "\u65E2\u7136\u4F60\u4E5F\u4E0D\u5728\u4E4E\u6211\u4EEC\u7684\u671F\u76FC\uFF0C\u4E0D\u5728\u4E4E\u6389\u7C89\u591A\u5C11"
   - panelIndex: 3
     speakerName: 
-    text: "\u8131\u7C89\u56DE\u8E29\uFF0C\u6BC1\u6389\u4F60\uFF01"
+    text: "\u90A3\u6211\u4EEC\u5C31\u8131\u7C89\uFF01\u56DE\u8E29\uFF01\u6BC1\u6389\u4F60\uFF01"
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: 
@@ -81,9 +82,11 @@ MonoBehaviour:
     wobbleAmount: 0.04
     expansionSpeed: 1.75
     ringDensity: 15.32
-    color1: {r: 0.965, g: 0.765, b: 0.969, a: 1}
-    color2: {r: 0.918, g: 0.604, b: 0.941, a: 1}
-    color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
-    color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
-    color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+    color1: {r: 0.89019614, g: 0.121568635, b: 0.63529414, a: 1}
+    color2: {r: 0.654902, g: 0.015686275, b: 0.6509804, a: 1}
+    color3: {r: 0.26666668, g: 0.007843138, b: 0.6901961, a: 1}
+    color4: {r: 0.17254902, g: 0.007843138, b: 0.46274513, a: 1}
+    color5: {r: 0, g: 0.4156863, b: 0.5803922, a: 1}
+    effectTexture: {fileID: 2800000, guid: 35197a0cc119e2b4c80e5700ed5de8d6, type: 3}
+    effectFrameCount: 8
   interferenceCount: 0

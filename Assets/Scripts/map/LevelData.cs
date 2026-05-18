@@ -32,6 +32,13 @@ public struct BackgroundMaterialSettings
     public Color color4;
     public Color color5;
 
+    [Header("浮动效果配置")]
+    [Tooltip("效果纹理")]
+    public Texture2D effectTexture;
+
+    [Tooltip("UV偏移数（纹理水平排列的图案数量）")]
+    public int effectFrameCount;
+
     public static BackgroundMaterialSettings Default()
     {
         return new BackgroundMaterialSettings

@@ -217,7 +217,12 @@ private int totalNotes = 0;
         }
 
       // 显示歌曲标题，持续时间为 prePlayDelay + 1 秒
-        UIManager.Instance?.ShowSongTitle(currentChart.songName);
+        LevelData levelData = LevelUIManager.GetCurrentLevelData();
+        ChartDifficulty difficulty = currentChart.difficulty; // 从 chartData 读取难度
+        string titleWithDifficulty = levelData != null
+            ? $"{levelData.levelName} [{difficulty}]"
+            : currentChart.songName;
+        UIManager.Instance?.ShowSongTitle(titleWithDifficulty);
 
         // 计算音乐开始播放的实时时间
         musicStartTime = Time.time + prePlayDelay;

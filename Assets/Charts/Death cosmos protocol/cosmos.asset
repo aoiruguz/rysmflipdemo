@@ -16,17 +16,17 @@ MonoBehaviour:
   composer: phoStar
   displayBPM: 178
   previewMusic: {fileID: 8300000, guid: 0eccf221052a6094ba8b6fdc61e877ee, type: 3}
-  enemyName: FOX
+  enemyName: "\u6D0B\u6817\u5B50"
   enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
   enemyAvatarAnimator: {fileID: 9100000, guid: 8efbdfb9309c110459259092df336713, type: 2}
   mapIconUndefeated: {fileID: 21300000, guid: e8e214ae3956a7b478403ccb7e78b922, type: 3}
   mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
   enemyInfo: "\u72D0\uFF01"
-  enemyFans: 10000
-  enemyTitleUncleared: "\u6311\u6218\u8005"
-  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
-  chapterGroup: 1
+  enemyFans: 10086
+  enemyTitleUncleared: "\u996D\u5708\u5341\u4F73\u7406\u4E2D\u5BA2"
+  enemyTitleCleared: "\u524D\u996D\u5708\u5341\u4F73\u7406\u4E2D\u5BA2"
+  chapterGroup: 2
   isMainStoryLevel: 0
   difficulties:
   - difficulty: 0
@@ -57,4 +57,6 @@ MonoBehaviour:
     color3: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
     color4: {r: 1, g: 1, b: 1, a: 1}
     color5: {r: 0, g: 0, b: 0, a: 1}
+    effectTexture: {fileID: 2800000, guid: 6b76fdeb4118a2d48962b04503e055d8, type: 3}
+    effectFrameCount: 3
   interferenceCount: 0

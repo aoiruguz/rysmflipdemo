@@ -73,8 +73,9 @@ public class SelectableButtonAlpha : MonoBehaviour, ISelectHandler, IDeselectHan
     /// </summary>
     public void OnSelect(BaseEventData eventData)
     {
-        isSelected = true;
-        UpdateVisuals(true);
+        // 不再自动更新视觉，由外部控制
+        // isSelected = true;
+        // UpdateVisuals(true);
     }
 
     /// <summary>
@@ -82,8 +83,9 @@ public class SelectableButtonAlpha : MonoBehaviour, ISelectHandler, IDeselectHan
     /// </summary>
     public void OnDeselect(BaseEventData eventData)
     {
-        isSelected = false;
-        UpdateVisuals(false);
+        // 不再自动更新视觉，由外部控制
+        // isSelected = false;
+        // UpdateVisuals(false);
     }
 
     /// <summary>
@@ -127,6 +129,15 @@ public class SelectableButtonAlpha : MonoBehaviour, ISelectHandler, IDeselectHan
             // 取消选中：让 EventSystem 选中 null
             EventSystem.current.SetSelectedGameObject(null);
         }
+    }
+
+    /// <summary>
+    /// 仅更新视觉效果，不触碰 EventSystem（供外部批量更新使用）
+    /// </summary>
+    public void SetSelectedVisualOnly(bool selected)
+    {
+        isSelected = selected;
+        UpdateVisuals(selected);
     }
 
     /// <summary>

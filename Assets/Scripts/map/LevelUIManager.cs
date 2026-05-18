@@ -178,10 +178,13 @@ public class LevelUIManager : MonoBehaviour
         // 显示三个难度的 rating
         UpdateAllDifficultyRatings(data);
 
-        // 选择默认难度：优先选择玩家上次打过的难度，否则选择 Normal
-        selectedDifficulty = GetLastPlayedDifficulty(data);
+        // 选择默认难度：优先选择 Easy
+        selectedDifficulty = ChartDifficulty.Easy;
         RefreshDifficultyUI(data, selectedDifficulty);
         UpdateActionButton();
+
+        // 延迟一帧更新按钮选中态，确保按钮已完全初始化
+        StartCoroutine(UpdateButtonStatesNextFrame());
 
         // 播放预览音乐并降低背景音乐音量
         PlayPreviewMusic(data.previewMusic);
@@ -256,6 +259,7 @@ public class LevelUIManager : MonoBehaviour
         selectedDifficulty = difficulty;
         RefreshDifficultyUI(currentLevelData, difficulty);
         UpdateActionButton();
+        UpdateDifficultyButtonStates(); // 更新按钮选中态
     }
 
     public void RefreshDifficultyUI(LevelData data, ChartDifficulty diff)
@@ -465,6 +469,12 @@ public class LevelUIManager : MonoBehaviour
         return selectedLevelData;
     }
 
+    // 供其他场景获取选中的难度
+    public static ChartDifficulty GetCurrentDifficulty()
+    {
+        return Instance != null ? Instance.selectedDifficulty : ChartDifficulty.Normal;
+    }
+
     public void ClosePanel()
     {
         detailsPanel.SetActive(false);
@@ -545,5 +555,50 @@ public class LevelUIManager : MonoBehaviour
         }
 
         originalActiveStates.Clear();
+    }
+
+    /// <summary>
+    /// 延迟一帧更新按钮状态，确保按钮完全初始化
+    /// </summary>
+    private System.Collections.IEnumerator UpdateButtonStatesNextFrame()
+    {
+        yield return null; // 等待一帧
+        UpdateDifficultyButtonStates();
+    }
+
+    /// <summary>
+    /// 更新难度按钮的选中态
+    /// </summary>
+    private void UpdateDifficultyButtonStates()
+    {
+        // 更新 Easy 按钮
+        if (easyButton != null)
+        {
+            SelectableButtonAlpha easyAlpha = easyButton.GetComponent<SelectableButtonAlpha>();
+            if (easyAlpha != null)
+            {
+                easyAlpha.SetSelectedVisualOnly(selectedDifficulty == ChartDifficulty.Easy);
+            }
+        }
+
+        // 更新 Normal 按钮
+        if (normalButton != null)
+        {
+            SelectableButtonAlpha normalAlpha = normalButton.GetComponent<SelectableButtonAlpha>();
+            if (normalAlpha != null)
+            {
+                normalAlpha.SetSelectedVisualOnly(selectedDifficulty == ChartDifficulty.Normal);
+            }
+        }
+
+        // 更新 Hard 按钮
+        if (hardButton != null)
+        {
+            SelectableButtonAlpha hardAlpha = hardButton.GetComponent<SelectableButtonAlpha>();
+            if (hardAlpha != null)
+            {
+                hardAlpha.SetSelectedVisualOnly(selectedDifficulty == ChartDifficulty.Hard);
+            }
+        }
     }
 }

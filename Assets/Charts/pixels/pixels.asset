@@ -16,7 +16,7 @@ MonoBehaviour:
   composer: "\u53CB\u5B50"
   displayBPM: 160
   previewMusic: {fileID: 8300000, guid: 0a2790d233631a849a754a750e9a143e, type: 3}
-  enemyName: "\u5BF9\u624B"
+  enemyName: "\u80E1\u9648\u75AF"
   enemyAvatar: {fileID: 21300000, guid: 636c4e08e144ae14d9ad8610dc92b3f4, type: 3}
   enemyAvatarDefeated: {fileID: 21300000, guid: 136f889188349a947b50571209ddb620, type: 3}
   enemyAvatarAnimator: {fileID: 9100000, guid: 8efbdfb9309c110459259092df336713, type: 2}
@@ -24,8 +24,8 @@ MonoBehaviour:
   mapIconDefeated: {fileID: 21300000, guid: 61037c260958d514cbe4f13315a13fa1, type: 3}
   enemyInfo: "\u50CF\u7D20\u5192\u9669"
   enemyFans: 10000
-  enemyTitleUncleared: "\u6311\u6218\u8005"
-  enemyTitleCleared: "\u5DF2\u51FB\u8D25"
+  enemyTitleUncleared: "\u7F51\u6291\u767E\u5927\u77EB\u60C5\u602A"
+  enemyTitleCleared: "\u524D\u7F51\u6291\u767E\u5927\u77EB\u60C5\u602A"
   chapterGroup: 1
   isMainStoryLevel: 0
   difficulties:
@@ -63,4 +63,6 @@ MonoBehaviour:
     color3: {r: 0.784, g: 0.537, b: 0.98, a: 1}
     color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
     color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
+    effectTexture: {fileID: 2800000, guid: a3cc664ae94382b489c56673385ee3b0, type: 3}
+    effectFrameCount: 2
   interferenceCount: 0
