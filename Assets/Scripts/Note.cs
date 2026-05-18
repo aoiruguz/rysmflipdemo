@@ -174,10 +174,10 @@ public class Note : MonoBehaviour
         }
 
         // --- 新增：同步替换 VFX 拖尾贴图 ---
-        VFXSpriteSetup vfxSetup = GetComponentInChildren<VFXSpriteSetup>();
-        if (vfxSetup != null)
+        TrailRenderer trailRenderer = GetComponentInChildren<TrailRenderer>();
+        if (trailRenderer != null && targetTrailSprite != null)
         {
-            vfxSetup.SetDynamicSprite(targetTrailSprite);
+            trailRenderer.material.mainTexture = targetTrailSprite.texture;
         }
     }
 
@@ -209,6 +209,14 @@ public class Note : MonoBehaviour
             mainRenderer.DOFade(1f, spawnAnimDuration).SetEase(Ease.OutQuad);
         }
 
+        if (secondaryRenderer != null)
+        {
+            Color c = secondaryRenderer.color;
+            c.a = 0f;
+            secondaryRenderer.color = c;
+            secondaryRenderer.DOFade(1f, spawnAnimDuration).SetEase(Ease.OutQuad);
+        }
+
         // 2. TextMeshPro 渐现
         if (tmpText != null)
         {
@@ -229,9 +237,21 @@ public class Note : MonoBehaviour
             mainRenderer.DOColor(missTargetColor, missAnimDuration).SetEase(Ease.OutQuad);
         }
 
+        if (secondaryRenderer != null)
+        {
+            secondaryRenderer.DOColor(missTargetColor, missAnimDuration).SetEase(Ease.OutQuad);
+        }
+
         if (tmpText != null)
         {
             tmpText.DOColor(missTargetColor, missAnimDuration).SetEase(Ease.OutQuad);
+        }
+
+        TrailRenderer trailRenderer = GetComponentInChildren<TrailRenderer>();
+        if (trailRenderer != null && trailRenderer.material != null)
+        {
+            // 通过材质的 _Color 属性渐隐（依赖 Shader 支持 _Color 且开启了透明混合）
+            trailRenderer.material.DOFade(0f, missAnimDuration).SetEase(Ease.OutQuad);
         }
 
         // 2. 颤抖效果
