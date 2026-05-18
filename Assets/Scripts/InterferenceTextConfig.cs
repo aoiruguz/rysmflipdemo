@@ -24,20 +24,7 @@ public class InterferenceTextConfig : ScriptableObject
     [Range(1, 10)]
     public int simultaneousCount = 3;
 
-    [Header("运动设置")]
-    [Tooltip("滚动速度（像素/秒）- 暂未使用，通过duration控制")]
-    [Range(50f, 500f)]
-    public float scrollSpeed = 200f;
-
-    [Tooltip("持续时间（秒），弹幕从右侧飞到左侧的时间，建议5-8秒")]
-    [Range(1f, 15f)]
-    public float duration = 6f;
-
     [Header("视觉设置")]
-    [Tooltip("字体大小")]
-    [Range(20f, 80f)]
-    public float fontSize = 36f;
-
     [Tooltip("文字颜色")]
     public Color textColor = Color.white;
 

@@ -107,9 +107,17 @@ public class InterferenceManager : MonoBehaviour
             GameObject skillObj = new GameObject("ScrollingTextSkill");
             skillObj.transform.SetParent(transform);
             scrollingTextSkill = skillObj.AddComponent<ScrollingTextSkill>();
+        }
+
+        // 无论如何，都自动注入配置和画布依赖
+        if (scrollingTextSkill != null)
+        {
             scrollingTextSkill.config = textConfig;
             scrollingTextSkill.interferenceCanvas = interferenceCanvas;
-            scrollingTextSkill.canvasRect = interferenceCanvas.GetComponent<RectTransform>();
+            if (interferenceCanvas != null)
+            {
+                scrollingTextSkill.canvasRect = interferenceCanvas.GetComponent<RectTransform>();
+            }
         }
 
         // 初始化故障快遮挡技能

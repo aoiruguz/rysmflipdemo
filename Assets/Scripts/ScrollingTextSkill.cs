@@ -8,11 +8,13 @@ using System.Collections;
 /// </summary>
 public class ScrollingTextSkill : MonoBehaviour
 {
-    [Header("配置")]
+    [HideInInspector]
     public InterferenceTextConfig config;
 
-    [Header("UI引用")]
+    [HideInInspector]
     public Canvas interferenceCanvas;
+    
+    [HideInInspector]
     public RectTransform canvasRect;
 
     [Header("弹幕进阶设置")]
