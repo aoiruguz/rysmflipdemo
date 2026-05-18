@@ -87,13 +87,21 @@ public class PlayerController : MonoBehaviour
     [Header("Hit Overlay Effect")]
     [Tooltip("击中时闪烁的子物体Image组件")]
     public Image hitOverlayImage;
-    
+
     [Header("Hit Overlay Sprites (Atlas)")]
     public Sprite overlaySpriteJ;
     public Sprite overlaySpriteL;
     public Sprite overlaySpriteK;
     public Sprite overlaySpriteA;
     public Sprite overlaySpriteD;
+
+    [Header("Hit Overlay Settings")]
+    [Tooltip("击中特效播放速度倍率")]
+    [Range(0.1f, 5f)]
+    public float hitOverlaySpeed = 1.0f;
+    [Tooltip("击中特效透明度")]
+    [Range(0f, 1f)]
+    public float hitOverlayAlpha = 1.0f;
 
     [Tooltip("击中时闪烁的辅助反馈子物体 (Image)")]
     public Image hitFeedback;
@@ -128,11 +136,11 @@ public class PlayerController : MonoBehaviour
         UpdatePosition();
         UpdateVisual();
 
-        // Ensure hit overlay has full alpha so the shader can control its visibility
+        // Initialize hit overlay alpha from settings
         if (hitOverlayImage != null)
         {
             Color c = hitOverlayImage.color;
-            c.a = 1f;
+            c.a = hitOverlayAlpha;
             hitOverlayImage.color = c;
         }
 
@@ -785,16 +793,17 @@ public class PlayerController : MonoBehaviour
         if (overlaySprite != null)
         {
             hitOverlayImage.sprite = overlaySprite;
-            // 确保 Alpha 为 1 以让 Shader 的透明度控制生效
+            // 使用设置的透明度值
             Color c = hitOverlayImage.color;
-            c.a = 1f;
+            c.a = hitOverlayAlpha;
             hitOverlayImage.color = c;
         }
 
-        // 设置 Shader 的启动时间，触发一次性播放效果
+        // 设置 Shader 的启动时间和播放速度，触发一次性播放效果
         if (hitOverlayImage.material != null)
         {
             hitOverlayImage.material.SetFloat("_StartTime", Time.time);
+            hitOverlayImage.material.SetFloat("_PlaySpeed", hitOverlaySpeed * 12.0f); // 默认 12 FPS，乘以倍率
         }
     }
 }

@@ -1618,7 +1618,9 @@ MonoBehaviour:
   interferenceCanvas: {fileID: 0}
   scrollingTextSkill: {fileID: 0}
   glitchEffectSkill: {fileID: 172848416}
+  shakeEffectSkill: {fileID: 0}
   glitchMaterial: {fileID: 2100000, guid: 18b8765ddae0f8e45997464d8c38ce6d, type: 2}
+  gameWindowRect: {fileID: 0}
   showDebugInfo: 1
 --- !u!4 &172848415
 Transform:
@@ -7211,6 +7213,8 @@ MonoBehaviour:
   overlaySpriteK: {fileID: 21300000, guid: c493c29de40e9be4a8fe5b81bd633256, type: 3}
   overlaySpriteA: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
   overlaySpriteD: {fileID: 21300000, guid: ee2d0d8cc997d734c943ec87ec206581, type: 3}
+  hitOverlaySpeed: 2
+  hitOverlayAlpha: 0.5
   hitFeedback: {fileID: 1831771966}
 --- !u!224 &1112928041
 RectTransform:
