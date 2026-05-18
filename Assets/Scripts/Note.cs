@@ -28,6 +28,36 @@ public class Note : MonoBehaviour
     [Tooltip("右划状态的精灵图 (对应D / DirectionalRight)")]
     public Sprite rightSwipeSprite;
 
+    [Header("VFX Trail Sprites")]
+    [Tooltip("默认/正常状态的拖尾图")]
+    public Sprite normalTrailSprite;
+    [Tooltip("【J（color 0）】红色状态的拖尾图")]
+    public Sprite trailSprite0_J_Red;
+    [Tooltip("【L（color 1）】黄色状态的拖尾图")]
+    public Sprite trailSprite1_L_Yellow;
+    [Tooltip("【K（color 2）】蓝色状态的拖尾图")]
+    public Sprite trailSprite2_K_Blue;
+    [Tooltip("左划状态的拖尾图 (对应A / DirectionalLeft)")]
+    public Sprite leftSwipeTrailSprite;
+    [Tooltip("右划状态的拖尾图 (对应D / DirectionalRight)")]
+    public Sprite rightSwipeTrailSprite;
+
+    [Header("Secondary Sprites (For Another Child)")]
+    [Tooltip("需要同步替换贴图的次要渲染器（请在Inspector中拖入）")]
+    public SpriteRenderer secondaryRenderer;
+    [Tooltip("默认/正常状态的次要图")]
+    public Sprite secondaryNormalSprite;
+    [Tooltip("【J（color 0）】红色状态的次要图")]
+    public Sprite secondarySprite0_J_Red;
+    [Tooltip("【L（color 1）】黄色状态的次要图")]
+    public Sprite secondarySprite1_L_Yellow;
+    [Tooltip("【K（color 2）】蓝色状态的次要图")]
+    public Sprite secondarySprite2_K_Blue;
+    [Tooltip("左划状态的次要图 (对应A / DirectionalLeft)")]
+    public Sprite secondaryLeftSwipeSprite;
+    [Tooltip("右划状态的次要图 (对应D / DirectionalRight)")]
+    public Sprite secondaryRightSwipeSprite;
+
     public int Lane { get; private set; }
     public GameColor Color { get; private set; }
     public NoteType NoteType { get; private set; }
@@ -88,6 +118,12 @@ public class Note : MonoBehaviour
 
         // 恢复默认颜色，防止被之前的代码逻辑污染成纯色
         mainRenderer.color = UnityEngine.Color.white;
+        if (secondaryRenderer != null)
+        {
+            secondaryRenderer.color = UnityEngine.Color.white;
+        }
+
+        Sprite targetTrailSprite = normalTrailSprite;
 
         if (NoteType == NoteType.Color)
         {
@@ -95,25 +131,37 @@ public class Note : MonoBehaviour
             {
                 case GameColor.J_Color0_Red:
                     mainRenderer.sprite = sprite0_J_Red;
+                    if (secondaryRenderer != null) secondaryRenderer.sprite = secondarySprite0_J_Red;
+                    targetTrailSprite = trailSprite0_J_Red;
                     break;
                 case GameColor.L_Color1_Yellow:
                     mainRenderer.sprite = sprite1_L_Yellow;
+                    if (secondaryRenderer != null) secondaryRenderer.sprite = secondarySprite1_L_Yellow;
+                    targetTrailSprite = trailSprite1_L_Yellow;
                     break;
                 case GameColor.K_Color2_Blue:
                     mainRenderer.sprite = sprite2_K_Blue;
+                    if (secondaryRenderer != null) secondaryRenderer.sprite = secondarySprite2_K_Blue;
+                    targetTrailSprite = trailSprite2_K_Blue;
                     break;
                 default:
                     mainRenderer.sprite = normalSprite;
+                    if (secondaryRenderer != null) secondaryRenderer.sprite = secondaryNormalSprite;
+                    targetTrailSprite = normalTrailSprite;
                     break;
             }
         }
         else if (NoteType == NoteType.DirectionalLeft)
         {
             mainRenderer.sprite = leftSwipeSprite;
+            if (secondaryRenderer != null) secondaryRenderer.sprite = secondaryLeftSwipeSprite;
+            targetTrailSprite = leftSwipeTrailSprite;
         }
         else if (NoteType == NoteType.DirectionalRight)
         {
             mainRenderer.sprite = rightSwipeSprite;
+            if (secondaryRenderer != null) secondaryRenderer.sprite = secondaryRightSwipeSprite;
+            targetTrailSprite = rightSwipeTrailSprite;
         }
 
         // --- 新增：对于 A/D 键方向 Note，清空子物体的 TMP 文字 ---
@@ -123,6 +171,13 @@ public class Note : MonoBehaviour
             {
                 tmpText.text = "";
             }
+        }
+
+        // --- 新增：同步替换 VFX 拖尾贴图 ---
+        VFXSpriteSetup vfxSetup = GetComponentInChildren<VFXSpriteSetup>();
+        if (vfxSetup != null)
+        {
+            vfxSetup.SetDynamicSprite(targetTrailSprite);
         }
     }
 
