@@ -4,6 +4,7 @@ using DG.Tweening;
 /// <summary>
 /// 音频淡入淡出控制器
 /// 使用 DOTween 实现平滑的音量过渡效果
+/// 自动响应全局音乐音量设置
 /// </summary>
 public class AudioFadeController : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class AudioFadeController : MonoBehaviour
     [Tooltip("默认淡入时长（秒）")]
     public float defaultFadeDuration = 2f;
 
-    [Tooltip("目标音量（0-1）")]
+    [Tooltip("目标音量（0-1，会乘以全局音乐音量）")]
     [Range(0f, 1f)]
     public float targetVolume = 1f;
 
@@ -27,6 +28,7 @@ public class AudioFadeController : MonoBehaviour
     public bool enableDebugLog = true;
 
     private Tweener _currentTween;
+    private float _lastGlobalVolume = -1f;
 
     private void Awake()
     {
@@ -46,6 +48,38 @@ public class AudioFadeController : MonoBehaviour
         if (playOnStart && audioSource != null)
         {
             FadeIn();
+        }
+    }
+
+    private void Update()
+    {
+        // 实时监听全局音量变化
+        float currentGlobalVolume = GameSettings.MusicVolume;
+        if (Mathf.Abs(currentGlobalVolume - _lastGlobalVolume) > 0.001f)
+        {
+            _lastGlobalVolume = currentGlobalVolume;
+            UpdateVolume();
+        }
+    }
+
+    /// <summary>
+    /// 根据全局音量设置更新当前音量
+    /// </summary>
+    private void UpdateVolume()
+    {
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            // 如果正在淡入淡出，不干预动画
+            if (_currentTween != null && _currentTween.IsActive())
+            {
+                return;
+            }
+
+            // 直接应用全局音量
+            audioSource.volume = targetVolume * GameSettings.MusicVolume;
+
+            if (enableDebugLog)
+                Debug.Log($"[AudioFadeController] 全局音量更新: {GameSettings.MusicVolume:F2}, 实际音量: {audioSource.volume:F2}", this);
         }
     }
 
@@ -76,16 +110,19 @@ public class AudioFadeController : MonoBehaviour
         {
             audioSource.Play();
             if (enableDebugLog)
-                Debug.Log($"[AudioFadeController] 开始播放并淡入: {audioSource.clip?.name}, 时长={duration}秒, 目标音量={targetVol}", this);
+                Debug.Log($"[AudioFadeController] 开始播放并淡入: {audioSource.clip?.name}, 时长={duration}秒, 目标音量={targetVol}, 全局音量={GameSettings.MusicVolume:F2}", this);
         }
         else
         {
             if (enableDebugLog)
-                Debug.Log($"[AudioFadeController] 淡入音量: 时长={duration}秒, 目标音量={targetVol}", this);
+                Debug.Log($"[AudioFadeController] 淡入音量: 时长={duration}秒, 目标音量={targetVol}, 全局音量={GameSettings.MusicVolume:F2}", this);
         }
 
+        // 计算实际目标音量（目标音量 × 全局音量）
+        float actualTargetVolume = targetVol * GameSettings.MusicVolume;
+
         // 执行淡入动画
-        _currentTween = audioSource.DOFade(targetVol, duration)
+        _currentTween = audioSource.DOFade(actualTargetVolume, duration)
             .SetEase(Ease.Linear)
             .OnUpdate(() =>
             {
@@ -96,6 +133,7 @@ public class AudioFadeController : MonoBehaviour
             {
                 if (enableDebugLog)
                     Debug.Log($"[AudioFadeController] 淡入完成，最终音量: {audioSource.volume:F2}", this);
+                _lastGlobalVolume = GameSettings.MusicVolume;
             });
     }
 
@@ -174,7 +212,9 @@ public class AudioFadeController : MonoBehaviour
     public void SetVolumeImmediate(float volume)
     {
         StopFade();
-        audioSource.volume = Mathf.Clamp01(volume);
+        // 应用全局音量倍数
+        audioSource.volume = Mathf.Clamp01(volume * GameSettings.MusicVolume);
+        _lastGlobalVolume = GameSettings.MusicVolume;
     }
 
     private void OnDestroy()
