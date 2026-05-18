@@ -7202,6 +7202,8 @@ MonoBehaviour:
   uiImage0_J: {fileID: 1136030330}
   uiImage1_L: {fileID: 1405356179}
   uiImage2_K: {fileID: 470708995}
+  uiImage_A: {fileID: 1590562660}
+  uiImage_D: {fileID: 621839840}
   inactiveAlpha: 0.5
   hitOverlayImage: {fileID: 978000679}
   overlayFadeInTime: 0.05

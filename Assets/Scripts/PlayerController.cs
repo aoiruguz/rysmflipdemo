@@ -76,6 +76,10 @@ public class PlayerController : MonoBehaviour
     public Image uiImage1_L;
     [Tooltip("【K（color 2）】对应的 UI 图片")]
     public Image uiImage2_K;
+    [Tooltip("【A】对应的 UI 图片")]
+    public Image uiImage_A;
+    [Tooltip("【D】对应的 UI 图片")]
+    public Image uiImage_D;
     [Range(0f, 1f)]
     [Tooltip("未激活按键的默认透明度")]
     public float inactiveAlpha = 0.5f;
@@ -282,7 +286,7 @@ public class PlayerController : MonoBehaviour
         // Check for directional note judgment first
         if (keyboard.aKey.wasPressedThisFrame)
         {
-            TriggerDirectionalFeedback(leftSwipeSprite);
+            TriggerDirectionalFeedback(leftSwipeSprite, true);
             if (!TryDirectionalCatch(NoteType.DirectionalLeft))
             {
                 // If no directional note was caught, move lane left
@@ -291,7 +295,7 @@ public class PlayerController : MonoBehaviour
         }
         if (keyboard.dKey.wasPressedThisFrame)
         {
-            TriggerDirectionalFeedback(rightSwipeSprite);
+            TriggerDirectionalFeedback(rightSwipeSprite, false);
             if (!TryDirectionalCatch(NoteType.DirectionalRight))
             {
                 // If no directional note was caught, move lane right
@@ -659,10 +663,10 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// AD键的方向反馈：临时切换贴图后恢复到当前持久状态
     /// </summary>
-    private void TriggerDirectionalFeedback(Sprite sprite)
+    private void TriggerDirectionalFeedback(Sprite sprite, bool isLeft)
     {
         if (feedbackRoutine != null) StopCoroutine(feedbackRoutine);
-        feedbackRoutine = StartCoroutine(FeedbackSequence(sprite));
+        feedbackRoutine = StartCoroutine(FeedbackSequence(sprite, null, isLeft));
     }
 
     /// <summary>
@@ -674,14 +678,16 @@ public class PlayerController : MonoBehaviour
         feedbackRoutine = StartCoroutine(FeedbackSequence(GetSpriteForColor(color), color));
     }
 
-    private System.Collections.IEnumerator FeedbackSequence(Sprite sprite, GameColor? color = null)
+    private System.Collections.IEnumerator FeedbackSequence(Sprite sprite, GameColor? color = null, bool? isLeft = null)
     {
         spriteRenderer.color = Color.white;
         spriteRenderer.sprite = sprite;
         transform.localScale = originalScale * feedbackScaleMultiplier;
 
-        // 如果是 JKL 按键（传入了 color），则临时高亮 UI
-        UpdateKeyUI(color);
+        // 如果是 JKL 按键（传入了 color），则临时高亮 UI；如果是 AD 按键（传入了 isLeft），也临时高亮
+        bool isAPressed = isLeft.HasValue && isLeft.Value;
+        bool isDPressed = isLeft.HasValue && !isLeft.Value;
+        UpdateKeyUI(color, isAPressed, isDPressed);
 
         yield return new WaitForSeconds(feedbackDuration);
 
@@ -709,14 +715,16 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新 J/K/L 按键 UI 的高亮状态
+    /// 更新 J/K/L/A/D 按键 UI 的高亮状态
     /// </summary>
     /// <param name="overrideColor">如果有临时覆盖颜色（如按键瞬间），优先使用</param>
-    private void UpdateKeyUI(GameColor? overrideColor = null)
+    private void UpdateKeyUI(GameColor? overrideColor = null, bool isAPressed = false, bool isDPressed = false)
     {
         float jAlpha = inactiveAlpha;
         float kAlpha = inactiveAlpha;
         float lAlpha = inactiveAlpha;
+        float aAlpha = isAPressed ? 1.0f : inactiveAlpha;
+        float dAlpha = isDPressed ? 1.0f : inactiveAlpha;
 
         GameColor? activeColor = overrideColor;
 
@@ -751,6 +759,8 @@ public class PlayerController : MonoBehaviour
         if (uiImage0_J != null) SetImageAlpha(uiImage0_J, jAlpha);
         if (uiImage1_L != null) SetImageAlpha(uiImage1_L, lAlpha);
         if (uiImage2_K != null) SetImageAlpha(uiImage2_K, kAlpha);
+        if (uiImage_A != null) SetImageAlpha(uiImage_A, aAlpha);
+        if (uiImage_D != null) SetImageAlpha(uiImage_D, dAlpha);
     }
 
     private void SetImageAlpha(Image img, float alpha)
