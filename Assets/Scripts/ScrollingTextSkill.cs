@@ -15,6 +15,19 @@ public class ScrollingTextSkill : MonoBehaviour
     public Canvas interferenceCanvas;
     public RectTransform canvasRect;
 
+    [Header("弹幕进阶设置")]
+    [Tooltip("存放弹幕文本的空物体容器，并作为生成范围限制")]
+    public RectTransform textContainer;
+    
+    [Tooltip("字体大小随机范围")]
+    public Vector2 fontSizeRange = new Vector2(30f, 60f);
+    
+    [Tooltip("生成位置的额外随机偏移范围(X和Y)")]
+    public Vector2 positionOffsetRange = new Vector2(-50f, 50f);
+    
+    [Tooltip("移动速度(持续时间)的随机范围")]
+    public Vector2 durationRange = new Vector2(4f, 8f);
+
     private Coroutine spawnCoroutine; // 保存生成协程的引用
 
     /// <summary>
@@ -28,9 +41,9 @@ public class ScrollingTextSkill : MonoBehaviour
             return;
         }
 
-        if (interferenceCanvas == null)
+        if (interferenceCanvas == null && textContainer == null)
         {
-            Debug.LogError("[ScrollingTextSkill] Interference Canvas is null!");
+            Debug.LogError("[ScrollingTextSkill] Interference Canvas and textContainer are both null!");
             return;
         }
 
@@ -68,15 +81,18 @@ public class ScrollingTextSkill : MonoBehaviour
     /// </summary>
     private void SpawnSingleBullet()
     {
+        // 确定父容器
+        RectTransform container = textContainer != null ? textContainer : canvasRect;
+
         // 创建弹幕GameObject
         GameObject bulletObj = new GameObject("ScrollingBullet");
-        bulletObj.transform.SetParent(interferenceCanvas.transform, false);
+        bulletObj.transform.SetParent(container, false);
 
         // 添加RectTransform
         RectTransform rectTransform = bulletObj.AddComponent<RectTransform>();
 
         // 设置锚点和轴心点（重要！）
-        rectTransform.anchorMin = new Vector2(0.5f, 0.5f); // 锚点在Canvas中心
+        rectTransform.anchorMin = new Vector2(0.5f, 0.5f); // 锚点在容器中心
         rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         rectTransform.pivot = new Vector2(0.5f, 0.5f);     // 轴心点在文本中心
         rectTransform.sizeDelta = new Vector2(800f, 100f); // 设置文本框大小
@@ -84,7 +100,7 @@ public class ScrollingTextSkill : MonoBehaviour
         // 添加TextMeshProUGUI组件
         TextMeshProUGUI textComponent = bulletObj.AddComponent<TextMeshProUGUI>();
         textComponent.text = config.GetRandomText();
-        textComponent.fontSize = config.fontSize;
+        textComponent.fontSize = Random.Range(fontSizeRange.x, fontSizeRange.y);
         textComponent.color = new Color(config.textColor.r, config.textColor.g, config.textColor.b, config.alpha);
         textComponent.alignment = TextAlignmentOptions.Center;
         textComponent.textWrappingMode = TextWrappingModes.NoWrap;
@@ -103,35 +119,50 @@ public class ScrollingTextSkill : MonoBehaviour
             Debug.LogWarning("[ScrollingTextSkill] No Chinese font assigned in config! Chinese characters will not display correctly.");
         }
 
-        // 设置初始位置（屏幕右侧外）
-        float canvasWidth = canvasRect.rect.width;
-        float canvasHeight = canvasRect.rect.height;
+        // 设置初始位置（容器右侧外）
+        float containerWidth = container.rect.width;
+        float containerHeight = container.rect.height;
 
-        // 随机Y坐标（屏幕上半部分）
+        // 基础随机Y坐标
         float yPositionRatio = config.GetRandomYPosition();
-        float yPosition = (yPositionRatio - 0.5f) * canvasHeight;
+        float baseYPosition = (yPositionRatio - 0.5f) * containerHeight;
 
-        // 起始位置在屏幕右侧外
-        rectTransform.anchoredPosition = new Vector2(canvasWidth / 2 + 200f, yPosition);
+        // 添加随机偏移
+        float randomOffsetX = Random.Range(positionOffsetRange.x, positionOffsetRange.y);
+        float randomOffsetY = Random.Range(positionOffsetRange.x, positionOffsetRange.y);
+
+        // 计算带偏移的最终位置
+        float finalX = containerWidth / 2 + 200f + randomOffsetX;
+        float finalY = baseYPosition + randomOffsetY;
+
+        // 将Y坐标限制在容器范围内 (减去一半的文本高度避免出界)
+        float maxY = containerHeight / 2 - 50f;
+        float minY = -containerHeight / 2 + 50f;
+        finalY = Mathf.Clamp(finalY, minY, maxY);
+
+        rectTransform.anchoredPosition = new Vector2(finalX, finalY);
+
+        // 获取随机持续时间(速度)
+        float randomDuration = Random.Range(durationRange.x, durationRange.y);
 
         // 启动滚动协程
-        StartCoroutine(ScrollBullet(rectTransform, canvasWidth));
+        StartCoroutine(ScrollBullet(rectTransform, containerWidth, randomDuration));
     }
 
     /// <summary>
     /// 弹幕滚动协程
     /// </summary>
-    private IEnumerator ScrollBullet(RectTransform rectTransform, float canvasWidth)
+    private IEnumerator ScrollBullet(RectTransform rectTransform, float containerWidth, float duration)
     {
         if (rectTransform == null) yield break;
 
         float elapsedTime = 0f;
         Vector2 startPos = rectTransform.anchoredPosition;
-        Vector2 endPos = new Vector2(-canvasWidth / 2 - 200f, startPos.y); // 终点在屏幕左侧外
+        Vector2 endPos = new Vector2(-containerWidth / 2 - 200f, startPos.y); // 终点在容器左侧外
 
-        Debug.Log($"[ScrollingTextSkill] Bullet start: {startPos}, end: {endPos}, duration: {config.duration}");
+        Debug.Log($"[ScrollingTextSkill] Bullet start: {startPos}, end: {endPos}, duration: {duration}");
 
-        while (elapsedTime < config.duration)
+        while (elapsedTime < duration)
         {
             // 检查对象是否还存在
             if (rectTransform == null || rectTransform.gameObject == null)
@@ -141,7 +172,7 @@ public class ScrollingTextSkill : MonoBehaviour
             }
 
             elapsedTime += Time.deltaTime;
-            float progress = elapsedTime / config.duration;
+            float progress = elapsedTime / duration;
 
             // 线性插值移动
             rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, progress);
@@ -162,6 +193,6 @@ public class ScrollingTextSkill : MonoBehaviour
     /// </summary>
     public float GetDuration()
     {
-        return config != null ? config.duration : 3f;
+        return durationRange.y;
     }
 }
