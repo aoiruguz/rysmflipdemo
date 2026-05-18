@@ -224,7 +224,7 @@ Shader "Custom/UI_BG_Normal"
 
                 // --- NEW: Floating Effects ---
                 half2 pixelPos = floor((half2)uv * res + 0.5); 
-                int effectCount = clamp((int)_EffectCount, 0, 30);
+                int effectCount = clamp((int)_EffectCount, 0, 128);
                 
                 half effectLifetime = (half)_EffectLifetime;
                 half expandTime = max((half)_EffectExpandTime, 0.001);
@@ -233,7 +233,7 @@ Shader "Custom/UI_BG_Normal"
                 int frameCount = max((int)_EffectFrameCount, 1);
                 half frameSize = max((half)_EffectFrameSize, 1.0);
 
-                for (int i = 0; i < 30; i++) {
+                for (int i = 0; i < 128; i++) {
                     if (i >= effectCount) break;
 
                     half offset = (half)Hash(i * 101) * effectLifetime;
