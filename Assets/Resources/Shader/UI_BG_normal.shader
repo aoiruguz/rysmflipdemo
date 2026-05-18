@@ -222,9 +222,14 @@ Shader "Custom/UI_BG_Normal"
                 // ⑦ Palette lookup
                 fixed4 col = PaletteColor(ringIndex);
 
-                // --- NEW: Floating Effects ---
-                half2 pixelPos = floor((half2)uv * res + 0.5); 
-                int effectCount = clamp((int)_EffectCount, 0, 400);
+                // --- Floating Effects (Grid-Based O(1) — cost independent of _EffectCount) ---
+                // Strategy: divide the screen into a grid of cells. Each cell
+                // hosts one floating icon whose parameters are derived purely
+                // from a hash of (cellX, cellY, time-cycle). The current pixel
+                // only checks its own cell + 8 neighbours (constant 9 iterations).
+                
+                half2 pixelPos = floor((half2)uv * res + 0.5);
+                int effectCount = max((int)_EffectCount, 0);
                 
                 half effectLifetime = (half)_EffectLifetime;
                 half expandTime = max((half)_EffectExpandTime, 0.001);
@@ -233,67 +238,109 @@ Shader "Custom/UI_BG_Normal"
                 int frameCount = max((int)_EffectFrameCount, 1);
                 half frameSize = max((half)_EffectFrameSize, 1.0);
 
-                for (int i = 0; i < 400; i++) {
-                    if (i >= effectCount) break;
-
-                    half offset = (half)Hash(i * 101) * effectLifetime;
-                    half localT = t + offset;
-                    half cycle = floor(localT / effectLifetime);
+                if (effectCount > 0) {
+                    // Decompose effectCount into a grid: cols x rows ≈ effectCount
+                    // Maintain roughly square cells by using aspect ratio
+                    float fCount = (float)effectCount;
+                    float cellRatio = sqrt(fCount * (float)res.y / max((float)res.x, 1.0));
+                    int gridRows = max((int)ceil(cellRatio), 1);
+                    int gridCols = max((int)ceil(fCount / (float)gridRows), 1);
                     
-                    int baseSeed = i * 1337 + (int)cycle * 3141;
-                    int texIdx = (int)floor(Hash(baseSeed * 11) * (float)frameCount);
-                    texIdx = clamp(texIdx, 0, frameCount - 1);
+                    // Cell size in pixels
+                    half cellW = (half)res.x / (half)gridCols;
+                    half cellH = (half)res.y / (half)gridRows;
                     
-                    half nTime = frac(localT / effectLifetime);
-                    half startX = (half)Hash(baseSeed * 17) * res.x;
-                    half startY = (half)Hash(baseSeed * 23) * res.y;
+                    // Compute extended search range based on max icon displacement.
+                    // Icons move UPWARD (+Y), so pixel must search DOWNWARD for source cells.
+                    // Max vertical travel in one lifecycle: lifetime * speedY * 1.2 (max speed factor)
+                    half maxTravelY = effectLifetime * (half)_EffectSpeedY * 1.2;
+                    // Max horizontal sway: swayAmp * 1.0 (max amp factor)
+                    half maxSwayX = (half)_EffectSwayAmp * 1.0;
+                    half halfIcon = frameSize * 0.5;
                     
-                    half speedY = (half)_EffectSpeedY * (0.8 + 0.4 * (half)Hash(baseSeed * 29));
-                    // Snap vertical movement to absolute pixels
-                    half currentY = floor(startY + nTime * effectLifetime * speedY);
+                    int extraCellsY = min((int)ceil((maxTravelY + halfIcon) / max(cellH, 1.0)), 20);
+                    int extraCellsX = min((int)ceil((maxSwayX + halfIcon) / max(cellW, 1.0)), 5);
                     
-                    half swayFreq = (half)_EffectSwayFreq * (0.8 + 0.4 * (half)Hash(baseSeed * 31));
-                    half swayAmp = (half)_EffectSwayAmp * (0.5 + 0.5 * (half)Hash(baseSeed * 37));
-                    // Snap sway to absolute pixels
-                    half currentX = floor(startX + sin(nTime * swayFreq * 6.2831 + (half)Hash(baseSeed * 41) * 6.2831) * swayAmp);
+                    // Which cell does this pixel belong to?
+                    int myCellX = (int)floor(pixelPos.x / cellW);
+                    int myCellY = (int)floor(pixelPos.y / cellH);
                     
-                    half pScale = min(nTime * effectLifetime / expandTime, 1.0);
-                    half size = floor(frameSize * pScale);
-                    if (size < 1.0) continue;
-                    
-                    half2 minPos = (half2)float2(currentX, currentY) - floor(size * 0.5);
-                    half2 maxPos = minPos + size;
-                    
-                    if (pixelPos.x >= minPos.x && pixelPos.x < maxPos.x &&
-                        pixelPos.y >= minPos.y && pixelPos.y < maxPos.y) 
-                    {
-                        half fadeOutStart = 1.0 - clamp(fadeOutTime / effectLifetime, 0.0, 1.0);
-                        half pAlpha = 1.0;
-                        if (nTime > fadeOutStart) {
-                            pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
-                        }
-                        
-                        half2 localPos = pixelPos - minPos;
-                        half2 texUV = localPos * (frameSize / size);
-                        
-                        half fx = clamp(floor(texUV.x), 0.0, frameSize - 1.0);
-                        half fy = clamp(floor(texUV.y), 0.0, frameSize - 1.0);
-                        
-                        float u = ((float)texIdx * frameSize + (float)fx + 0.5) / ((float)frameCount * frameSize);
-                        float v = ((float)fy + 0.5) / frameSize;
-                        
-                        fixed4 texColor = tex2D(_EffectTex, float2(u, v));
-                        if (texColor.a > 0.01) {
-                            texColor.a *= (fixed)pAlpha;
-                            float3 hl;
-                            hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
-                            hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
-                            hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
-                            col.rgb = lerp(col.rgb, (fixed3)hl, texColor.a);
+                    // Search neighborhood: fixed compile-time bounds with runtime skip.
+                    // Y: -21..1 (cap extraCellsY=20), X: -6..6 (cap extraCellsX=5)
+                    // [loop] prevents D3D11 from attempting to unroll.
+                    [loop] for (int dy = -21; dy <= 1; dy++) {
+                        if (dy < -(extraCellsY + 1)) continue;
+                        [loop] for (int dx = -6; dx <= 6; dx++) {
+                            if (dx < -(extraCellsX + 1) || dx > (extraCellsX + 1)) continue;
+                            int cx = myCellX + dx;
+                            int cy = myCellY + dy;
+                            if (cx < 0 || cx >= gridCols || cy < 0 || cy >= gridRows) continue;
+                            
+                            int cellIdx = cy * gridCols + cx;
+                            
+                            // Per-cell time offset for staggered spawning
+                            half offset = (half)Hash(cellIdx * 101) * effectLifetime;
+                            half localT = t + offset;
+                            half cycle = floor(localT / effectLifetime);
+                            
+                            int baseSeed = cellIdx * 1337 + (int)cycle * 3141;
+                            int texIdx = (int)floor(Hash(baseSeed * 11) * (float)frameCount);
+                            texIdx = clamp(texIdx, 0, frameCount - 1);
+                            
+                            half nTime = frac(localT / effectLifetime);
+                            
+                            // Spawn position: random within the cell's pixel range
+                            half cellOriginX = (half)cx * cellW;
+                            half cellOriginY = (half)cy * cellH;
+                            half startX = cellOriginX + (half)Hash(baseSeed * 17) * cellW;
+                            half startY = cellOriginY + (half)Hash(baseSeed * 23) * cellH;
+                            
+                            half speedY = (half)_EffectSpeedY * (0.8 + 0.4 * (half)Hash(baseSeed * 29));
+                            half currentY = floor(startY + nTime * effectLifetime * speedY);
+                            
+                            half swayFreq = (half)_EffectSwayFreq * (0.8 + 0.4 * (half)Hash(baseSeed * 31));
+                            half swayAmp = (half)_EffectSwayAmp * (0.5 + 0.5 * (half)Hash(baseSeed * 37));
+                            half currentX = floor(startX + sin(nTime * swayFreq * 6.2831 + (half)Hash(baseSeed * 41) * 6.2831) * swayAmp);
+                            
+                            half pScale = min(nTime * effectLifetime / expandTime, 1.0);
+                            half size = floor(frameSize * pScale);
+                            if (size < 1.0) continue;
+                            
+                            half2 minP = (half2)float2(currentX, currentY) - floor(size * 0.5);
+                            half2 maxP = minP + size;
+                            
+                            if (pixelPos.x >= minP.x && pixelPos.x < maxP.x &&
+                                pixelPos.y >= minP.y && pixelPos.y < maxP.y)
+                            {
+                                half fadeOutStart = 1.0 - clamp(fadeOutTime / effectLifetime, 0.0, 1.0);
+                                half pAlpha = 1.0;
+                                if (nTime > fadeOutStart) {
+                                    pAlpha = clamp((1.0 - nTime) / max(1.0 - fadeOutStart, 0.001), 0.0, 1.0);
+                                }
+                                
+                                half2 localPos = pixelPos - minP;
+                                half2 texUV = localPos * (frameSize / size);
+                                
+                                half fx = clamp(floor(texUV.x), 0.0, frameSize - 1.0);
+                                half fy = clamp(floor(texUV.y), 0.0, frameSize - 1.0);
+                                
+                                float u = ((float)texIdx * frameSize + (float)fx + 0.5) / ((float)frameCount * frameSize);
+                                float v = ((float)fy + 0.5) / frameSize;
+                                
+                                fixed4 texColor = tex2D(_EffectTex, float2(u, v));
+                                if (texColor.a > 0.01) {
+                                    texColor.a *= (fixed)pAlpha;
+                                    float3 hl;
+                                    hl.r = (texColor.r < 0.5) ? (2.0 * texColor.r * col.r) : (1.0 - 2.0 * (1.0 - texColor.r) * (1.0 - col.r));
+                                    hl.g = (texColor.g < 0.5) ? (2.0 * texColor.g * col.g) : (1.0 - 2.0 * (1.0 - texColor.g) * (1.0 - col.g));
+                                    hl.b = (texColor.b < 0.5) ? (2.0 * texColor.b * col.b) : (1.0 - 2.0 * (1.0 - texColor.b) * (1.0 - col.b));
+                                    col.rgb = lerp(col.rgb, (fixed3)hl, texColor.a);
+                                }
+                            }
                         }
                     }
                 }
-                // --- END NEW ---
+                // --- END Floating Effects ---
 
                 // ⑧ Multiply by vertex colour (UGUI tint / alpha) and clip mask
                 col   *= IN.color;
