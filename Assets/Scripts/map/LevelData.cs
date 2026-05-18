@@ -36,6 +36,9 @@ public struct BackgroundMaterialSettings
     [Tooltip("效果纹理")]
     public Texture2D effectTexture;
 
+    [Tooltip("效果数量（同时显示的效果个数）")]
+    public int effectCount;
+
     [Tooltip("UV偏移数（纹理水平排列的图案数量）")]
     public int effectFrameCount;
 

@@ -43,31 +43,31 @@ MonoBehaviour:
     chartAsset: {fileID: 11400000, guid: 16ef9d3af7426384d8b75a848a986b31, type: 2}
   openingDialogues:
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u4E3A\u4EC0\u4E48\u6700\u8FD1\u4F1A\u6389\u7C89\uFF1F\u4E4B\u524D\u4E0D\u90FD\u5F88\u6367\u6211\u7684\u573A\u5417\uFF1F"
   - panelIndex: 2
-    speakerName: 
+    speakerName: "\u61C2\u5927\u738B"
     text: "\u5C11\u5E74\u554ALet me tell you\uFF0C\u662F\u4F60\u8868\u73B0\u4E0D\u597D\u554A\uFF0C"
   - panelIndex: 2
-    speakerName: 
+    speakerName: "\u61C2\u5927\u738B"
     text: "\u8001MISS\uFF0C\u6253\u7684\u592A\u632B\u4F1A\u5931\u53BB\u7C89\u4E1D\u7684\u5FC3\u554A\uFF01"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u80E1\u8BF4\uFF01\u6211\u6CA1\u5F97\u7F6A\u4EFB\u4F55\u7C89\u4E1D\uFF0C\u4E00\u5B9A\u662F\u7B97\u6CD5\u6545\u610F\u628A\u6211\u63A8\u7ED9\u9ED1\u5B50\uFF01"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u6211\u77E5\u9053\uFF0C\u5E73\u53F0\u4E3A\u4E86\u6D41\u91CF\uFF0C\u5C31\u4F1A\u6709\u66F4\u591A\u4EBA\u9760\u9ED1\u6211\u8D77\u53F7\uFF01"
   - panelIndex: 2
-    speakerName: 
+    speakerName: "\u61C2\u5927\u738B"
     text: "\u6CA1\u6709\u4EBA\u6BD4\u6211\u66F4\u61C2\u6D41\u91CF\uFF01\u7F51\u7EDC\u6C34\u592A\u6DF1\u4E86\uFF0C\u4F60\u592A\u5E74\u8F7B\u628A\u63E1\u4E0D\u4F4F\u3002"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u771F\u6B63\u7684\u7C89\u4E1D\u90FD\u4F1A\u7231\u6211\uFF01\u6CA1\u6709\u4EBA\u53EF\u4EE5\u6BC1\u6389\u6211\uFF01"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u6211\u77E5\u9053\u4E86\uFF0C\u4F60\u624D\u662F\u90AA\u6076\u7684\u6E90\u5934\uFF0C\u9ED1\u7C89\u5934\u5B50\uFF01\r\n\u6211\u8D62\u4E86\u4F60\u5C31\u80FD\u8BC1\u660E\u6211\u6CA1\u9519\uFF01"
   - panelIndex: 2
-    speakerName: 
+    speakerName: "\u61C2\u5927\u738B"
     text: "\u4E0D\u542C\u8001\u4EBA\u8A00\uFF0C\u5403\u4E8F\u5728\u773C\u524D\u3002Miss\u4F1A\u8BA9\u4F60\u540E\u6094\u7684\u3002"
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
@@ -91,5 +91,6 @@ MonoBehaviour:
     color4: {r: 0.17254902, g: 0.007843138, b: 0.46274513, a: 1}
     color5: {r: 0, g: 0.4156863, b: 0.5803922, a: 1}
     effectTexture: {fileID: 2800000, guid: 6b76fdeb4118a2d48962b04503e055d8, type: 3}
+    effectCount: 100
     effectFrameCount: 3
   interferenceCount: 0

@@ -59,6 +59,7 @@ public class BackgroundMaterialController : MonoBehaviour
         {
             backgroundMaterial.SetTexture("_EffectTex", settings.effectTexture);
         }
+        backgroundMaterial.SetFloat("_EffectCount", settings.effectCount);
         backgroundMaterial.SetFloat("_EffectFrameCount", settings.effectFrameCount);
 
         Debug.Log($"[BackgroundMaterialController] Applied material settings for level: {currentLevel.levelName}");
@@ -91,6 +92,7 @@ public class BackgroundMaterialController : MonoBehaviour
         {
             backgroundMaterial.SetTexture("_EffectTex", settings.effectTexture);
         }
+        backgroundMaterial.SetFloat("_EffectCount", settings.effectCount);
         backgroundMaterial.SetFloat("_EffectFrameCount", settings.effectFrameCount);
     }
 

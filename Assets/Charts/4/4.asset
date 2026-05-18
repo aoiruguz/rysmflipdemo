@@ -55,14 +55,14 @@ MonoBehaviour:
     speakerName: 
     text: "\u4F60...\u53D8...\u4E86...\u4E0D\u662F\u5F53\u521D\u6211\u4EEC\u559C\u6B22\u7684\u6837\u5B50...\u8868\u73B0\u592A\u5DEE\uFF01"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u4F60\u4EEC\u5230\u5E95\u60F3\u8981\u6211\u600E\u4E48\u6837\uFF1F"
   - panelIndex: 3
     speakerName: 
     text: "\u8981perfect\uFF01\u670D...\u4ECE...\u4ECE\u2026\u2026\u8981perfect\uFF01All
       perfect\uFF01"
   - panelIndex: 1
-    speakerName: 
+    speakerName: me me
     text: "\u4F60\u4EEC\u8FD9\u662F\u9738\u51CC\uFF01\u4F60\u4EEC\u4E0D\u80FD\u8FD9\u6837\uFF01"
   - panelIndex: 3
     speakerName: 
@@ -88,5 +88,6 @@ MonoBehaviour:
     color4: {r: 0.17254902, g: 0.007843138, b: 0.46274513, a: 1}
     color5: {r: 0, g: 0.4156863, b: 0.5803922, a: 1}
     effectTexture: {fileID: 2800000, guid: 35197a0cc119e2b4c80e5700ed5de8d6, type: 3}
+    effectCount: 200
     effectFrameCount: 8
   interferenceCount: 0

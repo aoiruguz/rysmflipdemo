@@ -43,31 +43,31 @@ MonoBehaviour:
     chartAsset: {fileID: 11400000, guid: f87ac34ba07d39040b79aa53b25170a7, type: 2}
   openingDialogues:
   - panelIndex: 1
-    speakerName: 'me  '
+    speakerName: me me
     text: "\u653E\u5F00\u5185\u4E2A\u7F51\u53CB\uFF01\uFF01\uFF01\u4F60\u4E3A\u4EC0\u4E48\u7F51\u66B4\u4ED6\uFF1F"
   - panelIndex: 2
-    speakerName: frog
+    speakerName: "\u5047\u4EA2\u5E1D"
     text: "\u9E21\u4F60\u592A\u7F8E\uFF01\u6211\u60F3\u55B7\u8C01\u5C31\u55B7\u8C01\uFF0C\u5173\u4F60\u5C41\u4E8B"
   - panelIndex: 1
-    speakerName: me
+    speakerName: me me
     text: "\u6211\u8981\u4FDD\u62A4\u5185\u4E2A\u3001\u5185\u4E2A\u8FD8\u6709\u5185\u4E2A\u88AB\u4F60\u55B7\u7684\u7F51\u53CB"
   - panelIndex: 2
-    speakerName: frog
+    speakerName: "\u5047\u4EA2\u5E1D"
     text: "SIUUUUUUUUUUUU\uFF01"
   - panelIndex: 2
-    speakerName: frog
+    speakerName: "\u5047\u4EA2\u5E1D"
     text: "Bro\uFF0C\u4F60\u4EC0\u4E48\u6863\u6B21\uFF1F\u5C31\u51E0\u4E2A\u7C89\u4E1D\uFF0C\u8FD8\u6562\u8DDF\u6211\u5BF9\u7EBF\uFF1F "
   - panelIndex: 1
-    speakerName: me
+    speakerName: me me
     text: "\u4F60\u4E0D\u8FC7\u662F\u4ED7\u7740\u7C89\u4E1D\u591A\uFF0C\u6325\u5200\u5411\u5F31\u8005\u7F62\u4E86"
   - panelIndex: 2
-    speakerName: frog
+    speakerName: "\u5047\u4EA2\u5E1D"
     text: "\u7C89\u4E1D\u6CA1\u6211\u591A\uFF0C\u4F60\u4E5F\u6562\u6559\u6211\u505A\u4E8B\uFF1F"
   - panelIndex: 1
-    speakerName: me
+    speakerName: me me
     text: "\u6211\u4F1A\u4EE5\u4F60\u7684\u65B9\u5F0F\u6253\u8D25\u4F60\uFF01\u8BA9\u4F60\u5FC3\u670D\u53E3\u670D\uFF01"
   - panelIndex: 2
-    speakerName: frog
+    speakerName: "\u5047\u4EA2\u5E1D"
     text: "\u4F60 \u2014\u2014 \u7B97 \u2014\u2014 \u4E2A \u2014\u2014 \u5C41\uFF01\uFF01\uFF01"
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
@@ -91,5 +91,6 @@ MonoBehaviour:
     color4: {r: 0.47450984, g: 0.49803925, b: 0.9921569, a: 1}
     color5: {r: 0.5176471, g: 0.7607844, b: 0.9921569, a: 1}
     effectTexture: {fileID: 2800000, guid: a3cc664ae94382b489c56673385ee3b0, type: 3}
+    effectCount: 50
     effectFrameCount: 2
   interferenceCount: 0

@@ -64,5 +64,6 @@ MonoBehaviour:
     color4: {r: 0.471, g: 0.494, b: 0.992, a: 1}
     color5: {r: 0.31, g: 0.549, b: 0.992, a: 1}
     effectTexture: {fileID: 2800000, guid: 6b76fdeb4118a2d48962b04503e055d8, type: 3}
+    effectCount: 50
     effectFrameCount: 3
   interferenceCount: 0
