@@ -30,6 +30,19 @@ public class FadeImageController : MonoBehaviour
     [Tooltip("淡出时长（秒）")]
     public float fadeOutDuration = 0.5f;
 
+    [Header("音效设置")]
+    [Tooltip("开始PK时播放的音效")]
+    public AudioClip startBattleSFX;
+
+    [Tooltip("You Win时播放的音效")]
+    public AudioClip youWinSFX;
+
+    [Tooltip("You Lose时播放的音效")]
+    public AudioClip youLoseSFX;
+
+    [Tooltip("音效播放的AudioSource（如果为空则自动创建）")]
+    public AudioSource sfxAudioSource;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,6 +52,14 @@ public class FadeImageController : MonoBehaviour
         }
 
         Instance = this;
+
+        // 初始化AudioSource
+        if (sfxAudioSource == null)
+        {
+            sfxAudioSource = gameObject.AddComponent<AudioSource>();
+            sfxAudioSource.playOnAwake = false;
+            sfxAudioSource.loop = false;
+        }
 
         // 初始化：隐藏所有图片
         if (startBattleImage != null)
@@ -67,6 +88,7 @@ public class FadeImageController : MonoBehaviour
     {
         if (startBattleImage != null)
         {
+            PlaySFX(startBattleSFX);
             StartCoroutine(FadeInOutCoroutine(startBattleImage));
         }
         else
@@ -82,6 +104,7 @@ public class FadeImageController : MonoBehaviour
     {
         if (youWinImage != null)
         {
+            PlaySFX(youWinSFX);
             StartCoroutine(FadeInOutCoroutine(youWinImage));
         }
         else
@@ -97,6 +120,7 @@ public class FadeImageController : MonoBehaviour
     {
         if (youLoseImage != null)
         {
+            PlaySFX(youLoseSFX);
             StartCoroutine(FadeInOutCoroutine(youLoseImage));
         }
         else
@@ -168,6 +192,18 @@ public class FadeImageController : MonoBehaviour
             Color color = image.color;
             color.a = alpha;
             image.color = color;
+        }
+    }
+
+    /// <summary>
+    /// 播放音效（应用全局音效音量）
+    /// </summary>
+    private void PlaySFX(AudioClip clip)
+    {
+        if (clip != null && sfxAudioSource != null)
+        {
+            // 使用全局音效音量设置
+            sfxAudioSource.PlayOneShot(clip, GameSettings.NoteVolume);
         }
     }
 }
