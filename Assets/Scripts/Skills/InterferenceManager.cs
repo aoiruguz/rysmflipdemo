@@ -33,9 +33,6 @@ public class InterferenceManager : MonoBehaviour
     [Tooltip("游戏主窗口 (用于屏幕震动)")]
     public RectTransform gameWindowRect;
 
-    [Tooltip("全局弹幕中文字体")]
-    public TMP_FontAsset globalInterferenceFont;
-
     [Header("调试")]
     [Tooltip("显示调试信息")]
     public bool showDebugInfo = true;
@@ -113,12 +110,11 @@ public class InterferenceManager : MonoBehaviour
             scrollingTextSkill = skillObj.AddComponent<ScrollingTextSkill>();
         }
 
-        // 无论如何，都自动注入配置和画布依赖
+        // 注入配置和画布依赖
         if (scrollingTextSkill != null)
         {
             scrollingTextSkill.config = textConfig;
             scrollingTextSkill.interferenceCanvas = interferenceCanvas;
-            scrollingTextSkill.globalFont = globalInterferenceFont;
             if (interferenceCanvas != null)
             {
                 scrollingTextSkill.canvasRect = interferenceCanvas.GetComponent<RectTransform>();

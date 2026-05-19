@@ -69,7 +69,7 @@ MonoBehaviour:
   - panelIndex: 2
     speakerName: "\u61C2\u5927\u738B"
     text: "\u4E0D\u542C\u8001\u4EBA\u8A00\uFF0C\u5403\u4E8F\u5728\u773C\u524D\u3002Miss\u4F1A\u8BA9\u4F60\u540E\u6094\u7684\u3002"
-  dialogDisplayDuration: 3
+  dialogDisplayDuration: 1.5
   dialogTransitionDelay: 0.5
   clearStoryId: MainStory_Chapter3_Stage1_Clear
   interferenceTriggers:

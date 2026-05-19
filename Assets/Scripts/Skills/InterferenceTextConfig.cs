@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
-using TMPro;
 
 /// <summary>
 /// 弹幕文本配置文件
-/// 用于配置横向滚动弹幕的参数
+/// 用于配置横向滚动弹幕的文本内容
 /// </summary>
 [CreateAssetMenu(fileName = "NewInterferenceTextConfig", menuName = "RhythmGame/Interference/Text Config")]
 public class InterferenceTextConfig : ScriptableObject
@@ -19,15 +18,6 @@ public class InterferenceTextConfig : ScriptableObject
         "太慢了！"
     };
 
-    [Header("显示设置")]
-    [Tooltip("同时出现的弹幕数量")]
-    [Range(1, 10)]
-    public int simultaneousCount = 3;
-
-    [Header("视觉设置")]
-    [Tooltip("文字颜色（包含透明度Alpha）")]
-    public Color textColor = Color.white;
-
     /// <summary>
     /// 从配置的文本列表中随机获取一条文本
     /// </summary>
@@ -39,5 +29,4 @@ public class InterferenceTextConfig : ScriptableObject
         }
         return textContents[Random.Range(0, textContents.Count)];
     }
-
 }

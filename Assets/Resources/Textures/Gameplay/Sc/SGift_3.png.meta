@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a8dfe3c6975731444923544717e42a59
+guid: 2dbd43c38c867c743b46752e58255cfe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5180082512430802856
-    second: Gift_5_0
+      213: -886726735713267513
+    second: SGift_3_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gift_5_0
+      name: SGift_3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 38
-        height: 38
+        width: 19
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 85859537666ac18b0800000000000000
-      internalID: -5180082512430802856
+      spriteID: 7c018f06bb6b1b3f0800000000000000
+      internalID: -886726735713267513
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gift_5_0: -5180082512430802856
+      SGift_3_0: -886726735713267513
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -248,6 +248,34 @@ MonoBehaviour:
   highlightsEnd:
     m_OverrideState: 1
     m_Value: 1
+--- !u!114 &-6272694970638074991
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7f88993f1d6dd04b80e31682ecd9592, type: 3}
+  m_Name: BlinkEffectVolume
+  m_EditorClassIdentifier: Assembly-CSharp::BlinkEffectVolume
+  active: 1
+  enable:
+    m_OverrideState: 1
+    m_Value: 0
+  blinkStrength:
+    m_OverrideState: 1
+    m_Value: 0
+  edgeBlur:
+    m_OverrideState: 1
+    m_Value: 0
+  eyelidColor:
+    m_OverrideState: 1
+    m_Value: {r: 0.05, g: 0.03, b: 0.02, a: 1}
+  blendAmount:
+    m_OverrideState: 1
+    m_Value: 1
 --- !u!114 &-4210620904635426390
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -509,6 +537,7 @@ MonoBehaviour:
   - {fileID: -8186968272690591729}
   - {fileID: -3978695733392391637}
   - {fileID: -1083910812058648046}
+  - {fileID: -6272694970638074991}
 --- !u!114 &156332030701414761
 MonoBehaviour:
   m_ObjectHideFlags: 3

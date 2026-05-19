@@ -69,7 +69,7 @@ MonoBehaviour:
   - panelIndex: 2
     speakerName: "\u5047\u4EA2\u5E1D"
     text: "\u4F60 \u2014\u2014 \u7B97 \u2014\u2014 \u4E2A \u2014\u2014 \u5C41\uFF01\uFF01\uFF01"
-  dialogDisplayDuration: 3
+  dialogDisplayDuration: 1.5
   dialogTransitionDelay: 0.5
   clearStoryId: MainStory_Chapter1_Stage1_Clear
   interferenceTriggers:
@@ -79,9 +79,9 @@ MonoBehaviour:
     skillType: 1
   - triggerProgress: 0.75
     skillType: 2
-  - triggerProgress: 0.1
+  - triggerProgress: 0.05
     skillType: 0
-  interferenceTextConfig: {fileID: 0}
+  interferenceTextConfig: {fileID: 11400000, guid: ce9610c6e799277498f0c0db0b057f81, type: 2}
   backgroundMaterial:
     wobbleSpeed: 5.15
     wobbleAmount: 0.04

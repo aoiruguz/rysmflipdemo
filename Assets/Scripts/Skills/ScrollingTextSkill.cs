@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// 横向滚动弹幕技能
@@ -13,34 +14,47 @@ public class ScrollingTextSkill : MonoBehaviour
 
     [HideInInspector]
     public Canvas interferenceCanvas;
-    
+
     [HideInInspector]
     public RectTransform canvasRect;
 
-    [HideInInspector]
-    public TMP_FontAsset globalFont;
+    [Header("轨道设置")]
+    [Tooltip("弹幕轨道的Y坐标位置（屏幕比例，0.5为中心）")]
+    public float[] trackYPositions = new float[] { 0.7f, 0.75f, 0.8f, 0.85f };
+
+    [Header("视觉设置")]
+    [Tooltip("文字颜色（包含透明度Alpha）")]
+    public Color textColor = Color.white;
+
+    [Tooltip("文字字体")]
+    public TMP_FontAsset font;
+
+    [Tooltip("文字大小")]
+    [Range(10, 200)]
+    public float fontSize = 36;
+
+    [Header("滚动边界设置")]
+    [Tooltip("弹幕起点X坐标（屏幕像素，正值，屏幕最右侧外）")]
+    public float spawnXOffset = 400f;
+
+    [Tooltip("弹幕终点X坐标（屏幕像素，负值，屏幕最左侧外）")]
+    public float exitXOffset = -400f;
+
+    [Header("移动设置")]
+    [Tooltip("弹幕横穿屏幕的持续时间（秒）")]
+    [Range(3f, 20f)]
+    public float scrollDuration = 10f;
+
+    [Tooltip("技能持续时间（秒）- 控制弹幕生成多久")]
+    [Range(5f, 30f)]
+    public float skillDuration = 15f;
 
     [Header("弹幕进阶设置")]
     [Tooltip("存放弹幕文本的空物体容器，并作为生成范围限制")]
     public RectTransform textContainer;
-    
-    [Tooltip("字体大小随机范围")]
-    public Vector2 fontSizeRange = new Vector2(30f, 60f);
 
-    [Tooltip("弹幕出现的Y坐标范围比例（例如0.6到0.9代表屏幕上半部分）")]
-    public Vector2 yPositionRange = new Vector2(0.6f, 0.9f);
-    
-    [Tooltip("生成位置的额外随机偏移范围(X和Y)")]
-    public Vector2 positionOffsetRange = new Vector2(-50f, 50f);
-    
-    [Tooltip("移动速度(持续时间)的随机范围")]
-    public Vector2 durationRange = new Vector2(4f, 8f);
+    private Coroutine spawnCoroutine;
 
-    private Coroutine spawnCoroutine; // 保存生成协程的引用
-
-    /// <summary>
-    /// 激活技能，生成弹幕
-    /// </summary>
     public void Activate()
     {
         if (config == null)
@@ -58,12 +72,8 @@ public class ScrollingTextSkill : MonoBehaviour
         spawnCoroutine = StartCoroutine(SpawnBullets());
     }
 
-    /// <summary>
-    /// 停用技能
-    /// </summary>
     public void Deactivate()
     {
-        // 只停止生成协程，不停止已经在飞行的弹幕协程
         if (spawnCoroutine != null)
         {
             StopCoroutine(spawnCoroutine);
@@ -71,132 +81,132 @@ public class ScrollingTextSkill : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 生成多条弹幕
-    /// </summary>
     private IEnumerator SpawnBullets()
     {
-        for (int i = 0; i < config.simultaneousCount; i++)
+        // 获取所有文本内容
+        List<string> texts = new List<string>(config.textContents);
+
+        // 如果文本数量少于轨道数量，循环使用
+        for (int trackIndex = 0; trackIndex < trackYPositions.Length; trackIndex++)
         {
-            SpawnSingleBullet();
-            // 每条弹幕之间间隔一小段时间
-            yield return new WaitForSeconds(0.2f);
+            string text = texts[trackIndex % texts.Count];
+            SpawnSingleBullet(trackIndex, text);
         }
+
+        yield return null;
     }
 
-    /// <summary>
-    /// 生成单条弹幕
-    /// </summary>
-    private void SpawnSingleBullet()
+    private void SpawnSingleBullet(int trackIndex, string text)
     {
-        // 确定父容器
         RectTransform container = textContainer != null ? textContainer : canvasRect;
 
-        // 创建弹幕GameObject
         GameObject bulletObj = new GameObject("ScrollingBullet");
         bulletObj.transform.SetParent(container, false);
 
-        // 添加RectTransform
         RectTransform rectTransform = bulletObj.AddComponent<RectTransform>();
+        rectTransform.anchorMin = new Vector2(0f, 0.5f);
+        rectTransform.anchorMax = new Vector2(0f, 0.5f);
+        rectTransform.pivot = new Vector2(0f, 0.5f);
+        rectTransform.sizeDelta = new Vector2(800f, 100f);
 
-        // 设置锚点和轴心点（重要！）
-        rectTransform.anchorMin = new Vector2(0.5f, 0.5f); // 锚点在容器中心
-        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-        rectTransform.pivot = new Vector2(0.5f, 0.5f);     // 轴心点在文本中心
-        rectTransform.sizeDelta = new Vector2(800f, 100f); // 设置文本框大小
-
-        // 添加TextMeshProUGUI组件
         TextMeshProUGUI textComponent = bulletObj.AddComponent<TextMeshProUGUI>();
-        textComponent.text = config.GetRandomText();
-        textComponent.fontSize = Random.Range(fontSizeRange.x, fontSizeRange.y);
-        textComponent.color = config.textColor; // 直接使用配置颜色的Alpha
-        textComponent.alignment = TextAlignmentOptions.Center;
+        textComponent.text = text;
+        textComponent.fontSize = fontSize;
+        textComponent.color = textColor;
+        textComponent.alignment = TextAlignmentOptions.Left;
         textComponent.textWrappingMode = TextWrappingModes.NoWrap;
 
-        // 使用全局配置的中文字体
-        if (globalFont != null)
+        if (font != null)
         {
-            textComponent.font = globalFont;
-        }
-        else
-        {
-            Debug.LogWarning("[ScrollingTextSkill] No global Chinese font assigned in InterferenceManager!");
+            textComponent.font = font;
         }
 
-        // 设置初始位置（容器右侧外）
         float containerWidth = container.rect.width;
         float containerHeight = container.rect.height;
 
-        // 基础随机Y坐标
-        float yPositionRatio = Random.Range(yPositionRange.x, yPositionRange.y);
-        float baseYPosition = (yPositionRatio - 0.5f) * containerHeight;
+        float trackYRatio = trackYPositions[trackIndex];
+        float yPosition = (trackYRatio - 0.5f) * containerHeight;
 
-        // 添加随机偏移
-        float randomOffsetX = Random.Range(positionOffsetRange.x, positionOffsetRange.y);
-        float randomOffsetY = Random.Range(positionOffsetRange.x, positionOffsetRange.y);
+        float startX = containerWidth / 2 + spawnXOffset;
+        rectTransform.anchoredPosition = new Vector2(startX, yPosition);
 
-        // 计算带偏移的最终位置
-        float finalX = containerWidth / 2 + 200f + randomOffsetX;
-        float finalY = baseYPosition + randomOffsetY;
+        Debug.Log($"[ScrollingTextSkill] Track {trackIndex}: ratio={trackYRatio}, containerHeight={containerHeight}, yPosition={yPosition}, worldPos={rectTransform.position}");
 
-        // 将Y坐标限制在容器范围内 (减去一半的文本高度避免出界)
-        float maxY = containerHeight / 2 - 50f;
-        float minY = -containerHeight / 2 + 50f;
-        finalY = Mathf.Clamp(finalY, minY, maxY);
+        float endX = -containerWidth / 2 + exitXOffset;
 
-        rectTransform.anchoredPosition = new Vector2(finalX, finalY);
-
-        // 获取随机持续时间(速度)
-        float randomDuration = Random.Range(durationRange.x, durationRange.y);
-
-        // 启动滚动协程
-        StartCoroutine(ScrollBullet(rectTransform, containerWidth, randomDuration));
+        StartCoroutine(ScrollBullet(rectTransform, startX, endX, yPosition, scrollDuration));
     }
 
-    /// <summary>
-    /// 弹幕滚动协程
-    /// </summary>
-    private IEnumerator ScrollBullet(RectTransform rectTransform, float containerWidth, float duration)
+    private IEnumerator ScrollBullet(RectTransform rectTransform, float startX, float endX, float yPosition, float duration)
     {
         if (rectTransform == null) yield break;
 
         float elapsedTime = 0f;
-        Vector2 startPos = rectTransform.anchoredPosition;
-        Vector2 endPos = new Vector2(-containerWidth / 2 - 200f, startPos.y); // 终点在容器左侧外
-
-        Debug.Log($"[ScrollingTextSkill] Bullet start: {startPos}, end: {endPos}, duration: {duration}");
+        Vector2 startPos = new Vector2(startX, yPosition);
+        Vector2 endPos = new Vector2(endX, yPosition);
 
         while (elapsedTime < duration)
         {
-            // 检查对象是否还存在
             if (rectTransform == null || rectTransform.gameObject == null)
             {
-                Debug.LogWarning("[ScrollingTextSkill] Bullet destroyed prematurely");
                 yield break;
             }
 
             elapsedTime += Time.deltaTime;
             float progress = elapsedTime / duration;
-
-            // 线性插值移动
             rectTransform.anchoredPosition = Vector2.Lerp(startPos, endPos, progress);
-
             yield return null;
         }
 
-        // 销毁弹幕对象
         if (rectTransform != null && rectTransform.gameObject != null)
         {
-            Debug.Log($"[ScrollingTextSkill] Destroying bullet at position: {rectTransform.anchoredPosition}");
             Destroy(rectTransform.gameObject);
         }
     }
 
-    /// <summary>
-    /// 获取技能持续时间
-    /// </summary>
     public float GetDuration()
     {
-        return durationRange.y;
+        return skillDuration;
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (trackYPositions == null || trackYPositions.Length == 0) return;
+
+        RectTransform container = textContainer != null ? textContainer : canvasRect;
+        if (container == null) return;
+
+        float containerWidth = container.rect.width;
+        float containerHeight = container.rect.height;
+
+        Gizmos.color = Color.yellow;
+        for (int i = 0; i < trackYPositions.Length; i++)
+        {
+            float trackYRatio = trackYPositions[i];
+            float yPosition = (trackYRatio - 0.5f) * containerHeight;
+
+            Vector3 worldPos = container.TransformPoint(new Vector2(0, yPosition));
+
+            float startX = containerWidth / 2 + spawnXOffset;
+            float endX = -containerWidth / 2 + exitXOffset;
+
+            Vector3 startWorld = container.TransformPoint(new Vector2(startX, yPosition));
+            Vector3 endWorld = container.TransformPoint(new Vector2(endX, yPosition));
+
+            Gizmos.DrawLine(startWorld, endWorld);
+
+            #if UNITY_EDITOR
+            UnityEditor.Handles.Label(worldPos, $"Track {i}");
+            #endif
+        }
+
+        Gizmos.color = Color.green;
+        float midY = 0f;
+        Vector3 spawnPoint = container.TransformPoint(new Vector2(containerWidth / 2 + spawnXOffset, midY));
+        Gizmos.DrawWireSphere(spawnPoint, 20f);
+
+        Gizmos.color = Color.red;
+        Vector3 exitPoint = container.TransformPoint(new Vector2(-containerWidth / 2 + exitXOffset, midY));
+        Gizmos.DrawWireSphere(exitPoint, 20f);
     }
 }

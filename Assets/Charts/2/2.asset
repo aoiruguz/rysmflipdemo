@@ -72,7 +72,7 @@ MonoBehaviour:
   - panelIndex: 1
     speakerName: me me
     text: "\u4E0E\u5176\u8BA9\u4F60\u8D70\u7EA2\u6536\u5272\u7C89\u4E1D\uFF0C\u4E0D\u5982\u8BA9\u6211\u6765\u4F38\u5F20\u6B63\u4E49\uFF01"
-  dialogDisplayDuration: 3
+  dialogDisplayDuration: 1.5
   dialogTransitionDelay: 0.5
   clearStoryId: MainStory_Chapter2_Stage1_Clear
   interferenceTriggers:

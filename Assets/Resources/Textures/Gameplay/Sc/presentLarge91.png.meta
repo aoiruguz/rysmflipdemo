@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 76072645bdfa658479dc1d9ec956bfec
+guid: a11caad952ebd8b4381b30d578aea70f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7728563961381545065
-    second: presentLarge2 1_0
-  - first:
-      213: 8092859856040283975
-    second: presentLarge2 1_1
-  - first:
-      213: 7407893187827219473
-    second: presentLarge2 1_2
-  - first:
-      213: 6352309647990346796
-    second: presentLarge2 1_3
+      213: 8175411169904364027
+    second: presentLarge91_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -81,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -135,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: presentLarge2 1_0
+      name: presentLarge91_0
       rect:
         serializedVersion: 2
-        x: 14
-        y: 30
-        width: 11
-        height: 12
+        x: 0
+        y: 0
+        width: 55
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,74 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9646806a9ff514b60800000000000000
-      internalID: 7728563961381545065
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: presentLarge2 1_1
-      rect:
-        serializedVersion: 2
-        x: 21
-        y: 11
-        width: 48
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 74fcc48492d9f4070800000000000000
-      internalID: 8092859856040283975
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: presentLarge2 1_2
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 38
-        width: 10
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 11c3a7a0b9f1ec660800000000000000
-      internalID: 7407893187827219473
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: presentLarge2 1_3
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 24
-        width: 12
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c2450c708ffe72850800000000000000
-      internalID: 6352309647990346796
+      spriteID: bf909e2d425e47170800000000000000
+      internalID: 8175411169904364027
       vertices: []
       indices: 
       edges: []
@@ -236,10 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      presentLarge2 1_0: 7728563961381545065
-      presentLarge2 1_1: 8092859856040283975
-      presentLarge2 1_2: 7407893187827219473
-      presentLarge2 1_3: 6352309647990346796
+      presentLarge91_0: 8175411169904364027
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
