@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 public class BlinkEffectVolume : VolumeComponent, IPostProcessComponent
 {
     [Tooltip("是否启用眨眼效果")]
-    public BoolParameter enable = new BoolParameter(true);
+    public BoolParameter enable = new BoolParameter(false);
     
     [Tooltip("眨眼强度：0=完全睁开，1=完全闭上")]
     public ClampedFloatParameter blinkStrength = new ClampedFloatParameter(0f, 0f, 1f);
