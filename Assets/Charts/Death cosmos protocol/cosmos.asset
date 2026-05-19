@@ -45,7 +45,11 @@ MonoBehaviour:
   dialogDisplayDuration: 3
   dialogTransitionDelay: 0.5
   clearStoryId: 
-  interferenceTriggers: []
+  interferenceTriggers:
+  - triggerProgress: 0.3
+    skillType: 1
+  - triggerProgress: 0.6
+    skillType: 2
   interferenceTextConfig: {fileID: 0}
   backgroundMaterial:
     wobbleSpeed: 5.15
