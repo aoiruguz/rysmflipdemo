@@ -9911,10 +9911,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileLauncher
   vfxPrefab: {fileID: 7520757536830095586, guid: 673914004cdfe8749bdd76faa52efc12, type: 3}
   textureList:
-  - {fileID: 2800000, guid: e7a6478f5f583b141a09df3de0d19377, type: 3}
-  - {fileID: 2800000, guid: 5489a973015ea734c9e6364786bd8e9d, type: 3}
-  - {fileID: 2800000, guid: e50118586e93b314f9a4459a6581c2c3, type: 3}
-  - {fileID: 2800000, guid: 0b4c153e8736ea3459f10fe6e52c30e5, type: 3}
+  - {fileID: 2800000, guid: 9f62053a8c955b44ba4712601440b92b, type: 3}
+  - {fileID: 2800000, guid: c37fcddc851c53c4688dd042e6fc39e1, type: 3}
+  - {fileID: 2800000, guid: a819a01ba7533374984ef8a084ca5cc2, type: 3}
+  - {fileID: 2800000, guid: b57f2884516ae744eb1a8a947fb08d20, type: 3}
+  - {fileID: 2800000, guid: a8dfe3c6975731444923544717e42a59, type: 3}
   - {fileID: 2800000, guid: 76072645bdfa658479dc1d9ec956bfec, type: 3}
   - {fileID: 2800000, guid: 4983ac3c386973b478ea1ff094db9073, type: 3}
   - {fileID: 2800000, guid: 18296e116f677bd48aa2b96be4acdfda, type: 3}
@@ -9922,8 +9923,8 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 246b68434dfee3247b36624807080051, type: 3}
   textureParameterName: MainTex
   autoLaunch: 1
-  launchInterval: 0.2
-  destroyDelay: 3
+  launchInterval: 0.4
+  destroyDelay: 1.3
 --- !u!224 &1446708013
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12101,10 +12102,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileLauncher
   vfxPrefab: {fileID: 7520757536830095586, guid: 673914004cdfe8749bdd76faa52efc12, type: 3}
   textureList:
-  - {fileID: 2800000, guid: e7a6478f5f583b141a09df3de0d19377, type: 3}
-  - {fileID: 2800000, guid: 5489a973015ea734c9e6364786bd8e9d, type: 3}
-  - {fileID: 2800000, guid: e50118586e93b314f9a4459a6581c2c3, type: 3}
-  - {fileID: 2800000, guid: 0b4c153e8736ea3459f10fe6e52c30e5, type: 3}
+  - {fileID: 2800000, guid: 9f62053a8c955b44ba4712601440b92b, type: 3}
+  - {fileID: 2800000, guid: c37fcddc851c53c4688dd042e6fc39e1, type: 3}
+  - {fileID: 2800000, guid: a819a01ba7533374984ef8a084ca5cc2, type: 3}
+  - {fileID: 2800000, guid: b57f2884516ae744eb1a8a947fb08d20, type: 3}
+  - {fileID: 2800000, guid: a8dfe3c6975731444923544717e42a59, type: 3}
   - {fileID: 2800000, guid: 76072645bdfa658479dc1d9ec956bfec, type: 3}
   - {fileID: 2800000, guid: 4983ac3c386973b478ea1ff094db9073, type: 3}
   - {fileID: 2800000, guid: 18296e116f677bd48aa2b96be4acdfda, type: 3}
@@ -12112,7 +12114,7 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 246b68434dfee3247b36624807080051, type: 3}
   textureParameterName: MainTex
   autoLaunch: 1
-  launchInterval: 0.1
+  launchInterval: 0.4
   destroyDelay: 1.3
 --- !u!224 &1696136771
 RectTransform:
