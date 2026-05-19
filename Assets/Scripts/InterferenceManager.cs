@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 /// <summary>
 /// 干扰系统主控制器
@@ -31,6 +32,9 @@ public class InterferenceManager : MonoBehaviour
 
     [Tooltip("游戏主窗口 (用于屏幕震动)")]
     public RectTransform gameWindowRect;
+
+    [Tooltip("全局弹幕中文字体")]
+    public TMP_FontAsset globalInterferenceFont;
 
     [Header("调试")]
     [Tooltip("显示调试信息")]
@@ -114,6 +118,7 @@ public class InterferenceManager : MonoBehaviour
         {
             scrollingTextSkill.config = textConfig;
             scrollingTextSkill.interferenceCanvas = interferenceCanvas;
+            scrollingTextSkill.globalFont = globalInterferenceFont;
             if (interferenceCanvas != null)
             {
                 scrollingTextSkill.canvasRect = interferenceCanvas.GetComponent<RectTransform>();

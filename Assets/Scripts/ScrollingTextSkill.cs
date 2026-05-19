@@ -17,12 +17,18 @@ public class ScrollingTextSkill : MonoBehaviour
     [HideInInspector]
     public RectTransform canvasRect;
 
+    [HideInInspector]
+    public TMP_FontAsset globalFont;
+
     [Header("弹幕进阶设置")]
     [Tooltip("存放弹幕文本的空物体容器，并作为生成范围限制")]
     public RectTransform textContainer;
     
     [Tooltip("字体大小随机范围")]
     public Vector2 fontSizeRange = new Vector2(30f, 60f);
+
+    [Tooltip("弹幕出现的Y坐标范围比例（例如0.6到0.9代表屏幕上半部分）")]
+    public Vector2 yPositionRange = new Vector2(0.6f, 0.9f);
     
     [Tooltip("生成位置的额外随机偏移范围(X和Y)")]
     public Vector2 positionOffsetRange = new Vector2(-50f, 50f);
@@ -103,22 +109,18 @@ public class ScrollingTextSkill : MonoBehaviour
         TextMeshProUGUI textComponent = bulletObj.AddComponent<TextMeshProUGUI>();
         textComponent.text = config.GetRandomText();
         textComponent.fontSize = Random.Range(fontSizeRange.x, fontSizeRange.y);
-        textComponent.color = new Color(config.textColor.r, config.textColor.g, config.textColor.b, config.alpha);
+        textComponent.color = config.textColor; // 直接使用配置颜色的Alpha
         textComponent.alignment = TextAlignmentOptions.Center;
         textComponent.textWrappingMode = TextWrappingModes.NoWrap;
 
-        // 使用配置中的中文字体
-        if (config.chineseFont != null)
+        // 使用全局配置的中文字体
+        if (globalFont != null)
         {
-            textComponent.font = config.chineseFont;
-            Debug.Log($"[ScrollingTextSkill] Using font: {config.chineseFont.name}");
-            Debug.Log($"[ScrollingTextSkill] Font atlas population mode: {config.chineseFont.atlasPopulationMode}");
-            Debug.Log($"[ScrollingTextSkill] Source font file: {config.chineseFont.sourceFontFile}");
-            Debug.Log($"[ScrollingTextSkill] Text to display: {config.GetRandomText()}");
+            textComponent.font = globalFont;
         }
         else
         {
-            Debug.LogWarning("[ScrollingTextSkill] No Chinese font assigned in config! Chinese characters will not display correctly.");
+            Debug.LogWarning("[ScrollingTextSkill] No global Chinese font assigned in InterferenceManager!");
         }
 
         // 设置初始位置（容器右侧外）
@@ -126,7 +128,7 @@ public class ScrollingTextSkill : MonoBehaviour
         float containerHeight = container.rect.height;
 
         // 基础随机Y坐标
-        float yPositionRatio = config.GetRandomYPosition();
+        float yPositionRatio = Random.Range(yPositionRange.x, yPositionRange.y);
         float baseYPosition = (yPositionRatio - 0.5f) * containerHeight;
 
         // 添加随机偏移

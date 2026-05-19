@@ -1622,7 +1622,8 @@ MonoBehaviour:
   shakeEffectSkill: {fileID: 998521795}
   glitchMaterial: {fileID: 2100000, guid: 18b8765ddae0f8e45997464d8c38ce6d, type: 2}
   gameWindowRect: {fileID: 0}
-  showDebugInfo: 1
+  globalInterferenceFont: {fileID: 11400000, guid: 4356af6533289ad4f93be5c4f04ae530, type: 2}
+  showDebugInfo: 0
 --- !u!4 &172848415
 Transform:
   m_ObjectHideFlags: 0
@@ -14159,8 +14160,10 @@ MonoBehaviour:
   config: {fileID: 0}
   interferenceCanvas: {fileID: 0}
   canvasRect: {fileID: 0}
+  globalFont: {fileID: 0}
   textContainer: {fileID: 925762440}
   fontSizeRange: {x: 30, y: 60}
+  yPositionRange: {x: 0.6, y: 0.9}
   positionOffsetRange: {x: -50, y: 50}
   durationRange: {x: 4, y: 8}
 --- !u!1 &2090271753

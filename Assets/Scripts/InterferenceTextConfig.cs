@@ -25,19 +25,8 @@ public class InterferenceTextConfig : ScriptableObject
     public int simultaneousCount = 3;
 
     [Header("视觉设置")]
-    [Tooltip("文字颜色")]
+    [Tooltip("文字颜色（包含透明度Alpha）")]
     public Color textColor = Color.white;
-
-    [Tooltip("透明度")]
-    [Range(0f, 1f)]
-    public float alpha = 0.8f;
-
-    [Tooltip("中文字体（TextMeshPro SDF字体）")]
-    public TMP_FontAsset chineseFont;
-
-    [Header("位置设置")]
-    [Tooltip("弹幕出现的Y坐标范围（屏幕上半部分）")]
-    public Vector2 yPositionRange = new Vector2(0.6f, 0.9f); // 屏幕高度的60%-90%
 
     /// <summary>
     /// 从配置的文本列表中随机获取一条文本
@@ -51,11 +40,4 @@ public class InterferenceTextConfig : ScriptableObject
         return textContents[Random.Range(0, textContents.Count)];
     }
 
-    /// <summary>
-    /// 获取随机的Y坐标（屏幕坐标比例）
-    /// </summary>
-    public float GetRandomYPosition()
-    {
-        return Random.Range(yPositionRange.x, yPositionRange.y);
-    }
 }
