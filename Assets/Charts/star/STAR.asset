@@ -49,7 +49,7 @@ MonoBehaviour:
   - triggerProgress: 0.25
     skillType: 2
   - triggerProgress: 0.5
-    skillType: 2
+    skillType: 1
   - triggerProgress: 0.75
     skillType: 2
   interferenceTextConfig: {fileID: 0}

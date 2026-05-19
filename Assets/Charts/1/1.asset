@@ -76,9 +76,11 @@ MonoBehaviour:
   - triggerProgress: 0.25
     skillType: 2
   - triggerProgress: 0.5
-    skillType: 2
+    skillType: 1
   - triggerProgress: 0.75
     skillType: 2
+  - triggerProgress: 0.1
+    skillType: 0
   interferenceTextConfig: {fileID: 0}
   backgroundMaterial:
     wobbleSpeed: 5.15
