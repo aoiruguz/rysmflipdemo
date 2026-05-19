@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class EyeBlinkEffect : MonoBehaviour
 {
@@ -14,22 +14,25 @@ public class EyeBlinkEffect : MonoBehaviour
     [Tooltip("是否在游戏开始时自动执行睁眼动画")]
     public bool openOnStart = true;
     
-    [Tooltip("眼皮的颜色（通常是黑色）")]
-    public Color eyelidColor = Color.black;
+    [Tooltip("睁眼结束后，混合强度的渐隐消失时间（秒）")]
+    public float fadeOutDuration = 0.2f;
 
-    private RectTransform topEyelid;
-    private RectTransform bottomEyelid;
-    
-    private Image topImage;
-    private Image bottomImage;
-    private Image topFiller;
-    private Image bottomFiller;
-    
+    [Header("Volume Setup")]
+    [Tooltip("场景中包含 Blink Effect 的 Volume 组件。如果不填，会尝试自动寻找。")]
+    public Volume targetVolume;
+
+    private BlinkEffectVolume blinkComponent;
     private float currentProgress = 0f;
+    private float currentBlendFactor = 1f;
+    
+    // 从 Volume 中读取的基础配置，避免脚本变量与 Volume 覆盖层发生冲突
+    private float baseEdgeBlur;
+    private float baseBlendAmount;
+    private Color baseEyelidColor;
 
     private void Awake()
     {
-        InitializeUI();
+        InitializeVolume();
     }
 
     private void Start()
@@ -41,124 +44,61 @@ public class EyeBlinkEffect : MonoBehaviour
         }
     }
 
-    private void InitializeUI()
+    private void InitializeVolume()
     {
-        Canvas canvas = GetComponent<Canvas>();
-        if (canvas == null)
+        if (targetVolume == null)
         {
-            canvas = gameObject.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 32767;
-
-            CanvasScaler scaler = gameObject.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-
-            gameObject.AddComponent<GraphicRaycaster>();
+            targetVolume = GetComponent<Volume>();
+            if (targetVolume == null)
+            {
+#if UNITY_2023_1_OR_NEWER
+                targetVolume = FindFirstObjectByType<Volume>();
+#else
+                targetVolume = FindObjectOfType<Volume>();
+#endif
+            }
         }
 
-        topEyelid = CreateEyelid("TopEyelid", true, out topImage, out topFiller);
-        bottomEyelid = CreateEyelid("BottomEyelid", false, out bottomImage, out bottomFiller);
-        
-        SetEyesStateImmediately(0f);
-    }
-
-    private RectTransform CreateEyelid(string name, bool isTop, out Image edgeImg, out Image fillerImg)
-    {
-        // 1. 创建父容器
-        GameObject containerObj = new GameObject(name);
-        containerObj.transform.SetParent(transform, false);
-        RectTransform containerRect = containerObj.AddComponent<RectTransform>();
-        
-        // 2. 创建带有弧度的边缘图片 (Edge)
-        GameObject edgeObj = new GameObject("Edge");
-        edgeObj.transform.SetParent(containerObj.transform, false);
-        edgeImg = edgeObj.AddComponent<Image>();
-        edgeImg.color = eyelidColor;
-        edgeImg.sprite = GenerateEyelidSprite(isTop);
-        edgeImg.raycastTarget = true;
-        
-        RectTransform edgeRect = edgeObj.GetComponent<RectTransform>();
-        edgeRect.anchorMin = new Vector2(0, 0);
-        edgeRect.anchorMax = new Vector2(1, 1);
-        edgeRect.offsetMin = Vector2.zero;
-        edgeRect.offsetMax = Vector2.zero;
-
-        // 3. 创建用来填补背景漏出部分的纯色图片 (Filler)
-        GameObject fillerObj = new GameObject("Filler");
-        fillerObj.transform.SetParent(containerObj.transform, false);
-        fillerImg = fillerObj.AddComponent<Image>();
-        fillerImg.color = eyelidColor;
-        fillerImg.raycastTarget = true;
-        
-        RectTransform fillerRect = fillerObj.GetComponent<RectTransform>();
-        if (isTop)
+        if (targetVolume != null && targetVolume.profile != null)
         {
-            // 上眼皮的填充物：固定在边缘图片的顶部，向上延伸3000像素防漏
-            fillerRect.anchorMin = new Vector2(0, 1);
-            fillerRect.anchorMax = new Vector2(1, 1);
-            fillerRect.offsetMin = new Vector2(0, 0);
-            fillerRect.offsetMax = new Vector2(0, 3000); 
+            if (!targetVolume.profile.TryGet(out blinkComponent))
+            {
+                blinkComponent = targetVolume.profile.Add<BlinkEffectVolume>(false);
+            }
+            
+            // 核心：在初始化时，读取 Volume 面板里配置的原始数值作为基础最大值！
+            // 这样你只需在 Volume 里调参数即可，无需在脚本里再调一遍。
+            baseEdgeBlur = blinkComponent.edgeBlur.value;
+            baseBlendAmount = blinkComponent.blendAmount.value;
+            baseEyelidColor = blinkComponent.eyelidColor.value;
         }
         else
         {
-            // 下眼皮的填充物：固定在边缘图片的底部，向下延伸3000像素防漏
-            fillerRect.anchorMin = new Vector2(0, 0);
-            fillerRect.anchorMax = new Vector2(1, 0);
-            fillerRect.offsetMin = new Vector2(0, -3000); 
-            fillerRect.offsetMax = new Vector2(0, 0);
+            Debug.LogWarning("EyeBlinkEffect: 场景中未找到 Volume 组件，眨眼动画将不会生效！");
         }
-
-        return containerRect;
-    }
-
-    private Sprite GenerateEyelidSprite(bool isTop)
-    {
-        int width = 512;
-        int height = 512;
-        Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
-        tex.wrapMode = TextureWrapMode.Clamp;
-        
-        Color[] pixels = new Color[width * height];
-        
-        for (int x = 0; x < width; x++)
-        {
-            float u = (float)x / (width - 1);
-            float arc = Mathf.Sin(u * Mathf.PI);
-            
-            float edgeV = isTop ? (0.5f + arc * 0.3f) : (0.5f - arc * 0.3f);
-            
-            for (int y = 0; y < height; y++)
-            {
-                float v = (float)y / (height - 1);
-                float distPixels = (v - edgeV) * height;
-                
-                float alpha = isTop ? Mathf.Clamp01(distPixels + 0.5f) : Mathf.Clamp01(-distPixels + 0.5f);
-                pixels[y * width + x] = new Color(1, 1, 1, alpha);
-            }
-        }
-        
-        tex.SetPixels(pixels);
-        tex.Apply();
-        
-        return Sprite.Create(tex, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f), 100f, 0, SpriteMeshType.FullRect);
     }
 
     public void OpenEyes()
     {
         StopAllCoroutines();
+        currentBlendFactor = 1f;
+        SetVolumeEnable(true);
+
         if (blinkBeforeOpening)
         {
             StartCoroutine(AnimateBlinkSequence());
         }
         else
         {
-            StartCoroutine(MoveToProgress(1f, animationDuration));
+            StartCoroutine(SimpleOpenSequence());
         }
     }
 
     public void CloseEyes()
     {
         StopAllCoroutines();
+        currentBlendFactor = 1f;
+        SetVolumeEnable(true);
         StartCoroutine(MoveToProgress(0f, animationDuration));
     }
 
@@ -166,8 +106,21 @@ public class EyeBlinkEffect : MonoBehaviour
     {
         StopAllCoroutines();
         currentProgress = Mathf.Clamp01(progress);
-        SetEyelidPosition(currentProgress);
-        SetRaycastState(currentProgress < 1f);
+        currentBlendFactor = 1f;
+        
+        SetVolumeEnable(currentProgress < 1f);
+        UpdateVolumeState();
+    }
+
+    private IEnumerator SimpleOpenSequence()
+    {
+        yield return StartCoroutine(MoveToProgress(1f, animationDuration));
+        
+        // 播放结束后快速渐隐 blendAmount
+        yield return StartCoroutine(FadeBlendAmount(0f, fadeOutDuration));
+        
+        // 渐隐结束才真正禁用，优化性能
+        SetVolumeEnable(false);
     }
 
     private IEnumerator AnimateBlinkSequence()
@@ -181,14 +134,18 @@ public class EyeBlinkEffect : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         yield return StartCoroutine(MoveToProgress(1.0f, animationDuration));
+        
+        // 播放结束后快速渐隐 blendAmount
+        yield return StartCoroutine(FadeBlendAmount(0f, fadeOutDuration));
+        
+        // 渐隐结束才真正禁用
+        SetVolumeEnable(false);
     }
 
     private IEnumerator MoveToProgress(float targetProgress, float duration)
     {
         float startProgress = currentProgress;
         float elapsed = 0f;
-
-        SetRaycastState(true);
 
         while (elapsed < duration)
         {
@@ -197,47 +154,57 @@ public class EyeBlinkEffect : MonoBehaviour
             float easeT = t * t * (3f - 2f * t); 
             
             currentProgress = Mathf.Lerp(startProgress, targetProgress, easeT);
-            SetEyelidPosition(currentProgress);
+            UpdateVolumeState();
             
             yield return null;
         }
 
         currentProgress = targetProgress;
-        SetEyelidPosition(currentProgress);
-
-        SetRaycastState(currentProgress < 1f);
+        UpdateVolumeState();
     }
 
-    private void SetEyelidPosition(float progress)
+    private IEnumerator FadeBlendAmount(float targetBlendFactor, float duration)
     {
-        float topOffset = Mathf.Lerp(-0.3f, 0.5f, progress);
-        topEyelid.anchorMin = new Vector2(0, topOffset);
-        topEyelid.anchorMax = new Vector2(1, 1f + topOffset);
-        
-        float bottomOffset = Mathf.Lerp(0.3f, -0.5f, progress);
-        bottomEyelid.anchorMin = new Vector2(0, bottomOffset);
-        bottomEyelid.anchorMax = new Vector2(1, 1f + bottomOffset);
-    }
+        float startBlend = currentBlendFactor;
+        float elapsed = 0f;
 
-    private void SetRaycastState(bool state)
-    {
-        if (topImage != null) topImage.raycastTarget = state;
-        if (bottomImage != null) bottomImage.raycastTarget = state;
-        if (topFiller != null) topFiller.raycastTarget = state;
-        if (bottomFiller != null) bottomFiller.raycastTarget = state;
-    }
-
-    private void OnDestroy()
-    {
-        if (topImage != null && topImage.sprite != null)
+        while (elapsed < duration)
         {
-            Destroy(topImage.sprite.texture);
-            Destroy(topImage.sprite);
+            elapsed += Time.deltaTime;
+            currentBlendFactor = Mathf.Lerp(startBlend, targetBlendFactor, elapsed / duration);
+            UpdateVolumeState();
+            yield return null;
         }
-        if (bottomImage != null && bottomImage.sprite != null)
+
+        currentBlendFactor = targetBlendFactor;
+        UpdateVolumeState();
+    }
+
+    private void UpdateVolumeState()
+    {
+        if (blinkComponent != null)
         {
-            Destroy(bottomImage.sprite.texture);
-            Destroy(bottomImage.sprite);
+            blinkComponent.blinkStrength.overrideState = true;
+            blinkComponent.blinkStrength.value = 1f - currentProgress;
+            
+            blinkComponent.eyelidColor.overrideState = true;
+            blinkComponent.eyelidColor.value = baseEyelidColor;
+
+            // blur 映射：blinkStrength=1(全闭)时blur=0；睁开时最大值为 Volume 配置的 baseEdgeBlur
+            blinkComponent.edgeBlur.overrideState = true;
+            blinkComponent.edgeBlur.value = baseEdgeBlur * currentProgress;
+
+            blinkComponent.blendAmount.overrideState = true;
+            blinkComponent.blendAmount.value = baseBlendAmount * currentBlendFactor;
+        }
+    }
+
+    private void SetVolumeEnable(bool state)
+    {
+        if (blinkComponent != null)
+        {
+            blinkComponent.enable.overrideState = true;
+            blinkComponent.enable.value = state;
         }
     }
 }

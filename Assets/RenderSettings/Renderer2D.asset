@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2591388651189346762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d2c9d62a095e34f8d8f5d2ebae1f57, type: 3}
+  m_Name: BlinkEffect
+  m_EditorClassIdentifier: Assembly-CSharp::BlinkEffect
+  m_Active: 1
+  injectionPoint: 500
+  blinkShader: {fileID: 4800000, guid: 2c0fe7afa8436584e964326ac0601ce4, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +41,8 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 0}
   m_RendererFeatures:
   - {fileID: 5612772836460978462}
-  m_RendererFeatureMap: 1ee137322893e44d
+  - {fileID: -2591388651189346762}
+  m_RendererFeatureMap: 1ee137322893e44d365ee162c08909dc
   m_UseNativeRenderPass: 0
   m_LayerMask:
     serializedVersion: 2
